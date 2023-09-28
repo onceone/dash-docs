@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Clientside Callbacks &#8212; Dash 中文文档</title>
+    <title>客户端回调 &#8212; Dash 中文文档</title>
   
   
   
@@ -172,7 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> 高级回调函数</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Clientside Callbacks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> 客户端回调</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
 </ul>
@@ -358,7 +358,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1> Clientside Callbacks</h1>
+    <h1> 客户端回调</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -368,11 +368,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example">A Simple Example</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-plotly-express-to-generate-a-figure">Using Plotly Express to Generate a Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">简单例子</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotly-express">使用Plotly Express生成图形</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clientside-callbacks-with-promises">Clientside Callbacks with Promises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-data-example">Fetching Data Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notifications-example">Notifications Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">获取数据示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">通知的例子</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
@@ -387,178 +387,167 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="clientside-callbacks">
-<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Clientside Callbacks<a class="headerlink" href="#clientside-callbacks" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> 客户端回调<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <blockquote>
-<div><p>To get the most out of this page, make sure you’ve read about <span class="xref myst">Basic
-Callbacks</span> in the Dash Fundamentals.</p>
+<div><p>为了充分利用本页内容，请确保您已经阅读了Dash Fundamentals中的[Basic callback](/ Basic -callback)</p>
 </div></blockquote>
-<p>Sometimes callbacks can incur a significant overhead, especially when they:</p>
+<p>有时回调会导致很大的开销，特别是当它们</p>
 <ul class="simple">
-<li><p>receive and/or return very large quantities of data (transfer time)</p></li>
-<li><p>are called very often (network latency, queuing, handshake)</p></li>
-<li><p>are part of a callback chain that requires multiple roundtrips between the browser and Dash</p></li>
+<li><p>接收和/或返回大量数据(传输时间)</p></li>
+<li><p>经常被调用(网络延迟、排队、握手)</p></li>
+<li><p>是回调链的一部分，需要在浏览器和Dash之间进行多次往返</p></li>
 </ul>
-<p>When the overhead cost of a callback becomes too great and no other
-optimization is possible, the callback can be modified to be run directly in
-the browser instead of a making a request to Dash.</p>
-<p>The syntax for the callback is almost exactly the same; you use <code class="docutils literal notranslate"><span class="pre">Input</span></code> and
-<code class="docutils literal notranslate"><span class="pre">Output</span></code> as you normally would when declaring a callback, but you also define
-a JavaScript function as the first argument to the <code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code> decorator.</p>
+<p>当回调的开销成本变得太大，并且无法进行其他优化时，可以将回调修改为直接在浏览器中运行，而不是向Dash发出请求</p>
+<p>回调的语法几乎完全相同;你使用’ Input ‘和’ Output ‘，就像你在声明回调时通常使用的那样，但你也定义了一个JavaScript函数作为’ &#64;callback ‘装饰器的第一个参数</p>
 <p>For example, the following callback:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
-    Output(&#39;out-component&#39;, &#39;value&#39;),
-    Input(&#39;in-component1&#39;, &#39;value&#39;),
-    Input(&#39;in-component2&#39;, &#39;value&#39;)
-)
-def large_params_function(largeValue1, largeValue2):
-    largeValueOutput = someTransform(largeValue1, largeValue2)
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;out-component&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;in-component1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;in-component2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">large_params_function</span><span class="p">(</span><span class="n">largeValue1</span><span class="p">,</span> <span class="n">largeValue2</span><span class="p">):</span>
+    <span class="n">largeValueOutput</span> <span class="o">=</span> <span class="n">someTransform</span><span class="p">(</span><span class="n">largeValue1</span><span class="p">,</span> <span class="n">largeValue2</span><span class="p">)</span>
 
-    return largeValueOutput
+    <span class="k">return</span> <span class="n">largeValueOutput</span>
 </pre></div>
 </div>
 <hr class="docutils" />
-<p>Can be rewritten to use JavaScript like so:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from dash import clientside_callback, Input, Output
+<p>可以重写使用JavaScript这样吗:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">from</span> <span class="nx">dash</span> <span class="k">import</span> <span class="nx">clientside_callback</span><span class="p">,</span> <span class="nx">Input</span><span class="p">,</span> <span class="nx">Output</span>
 
-clientside_callback(
-    &quot;&quot;&quot;
-    function(largeValue1, largeValue2) {
-        return someTransform(largeValue1, largeValue2);
-    }
-    &quot;&quot;&quot;,
-    Output(&#39;out-component&#39;, &#39;value&#39;),
-    Input(&#39;in-component1&#39;, &#39;value&#39;),
-    Input(&#39;in-component2&#39;, &#39;value&#39;)
-)
+<span class="nx">clientside_callback</span><span class="p">(</span>
+    <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    function(largeValue1, largeValue2) {</span>
+<span class="s2">        return someTransform(largeValue1, largeValue2);</span>
+<span class="s2">    }</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="nx">Output</span><span class="p">(</span><span class="s1">&#39;out-component&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="nx">Input</span><span class="p">(</span><span class="s1">&#39;in-component1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="nx">Input</span><span class="p">(</span><span class="s1">&#39;in-component2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <hr class="docutils" />
-<p>You also have the option of defining the function in a <code class="docutils literal notranslate"><span class="pre">.js</span></code> file in your
-<code class="docutils literal notranslate"><span class="pre">assets/</span></code> folder. To achieve the same result as the code above, the contents
-of the <code class="docutils literal notranslate"><span class="pre">.js</span></code> file would look like this:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>window.dash_clientside = Object.assign({}, window.dash_clientside, {
-    clientside: {
-        large_params_function: function(largeValue1, largeValue2) {
-            return someTransform(largeValue1, largeValue2);
-        }
-    }
-});
+<p>你也可以选择在<code class="docutils literal notranslate"><span class="pre">assets/</span></code>文件夹中的<code class="docutils literal notranslate"><span class="pre">.js</span></code>文件中定义这个函数。为了获得与上面代码相同的结果，<code class="docutils literal notranslate"><span class="pre">.js</span></code>文件的内容看起来像这样</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">dash_clientside</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nb">window</span><span class="p">.</span><span class="nx">dash_clientside</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">clientside</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">large_params_function</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">largeValue1</span><span class="p">,</span> <span class="nx">largeValue2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">someTransform</span><span class="p">(</span><span class="nx">largeValue1</span><span class="p">,</span> <span class="nx">largeValue2</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
 </pre></div>
 </div>
 <hr class="docutils" />
-<p>In Dash, the callback would now be written as:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from dash import clientside_callback, ClientsideFunction, Input, Output
+<p>在Dash中，回调现在写成</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">clientside_callback</span><span class="p">,</span> <span class="n">ClientsideFunction</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
 
-clientside_callback(
-    ClientsideFunction(
-        namespace=&#39;clientside&#39;,
-        function_name=&#39;large_params_function&#39;
-    ),
-    Output(&#39;out-component&#39;, &#39;value&#39;),
-    Input(&#39;in-component1&#39;, &#39;value&#39;),
-    Input(&#39;in-component2&#39;, &#39;value&#39;)
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="n">ClientsideFunction</span><span class="p">(</span>
+        <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;clientside&#39;</span><span class="p">,</span>
+        <span class="n">function_name</span><span class="o">=</span><span class="s1">&#39;large_params_function&#39;</span>
+    <span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;out-component&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;in-component1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;in-component2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <hr class="docutils" />
-<section id="a-simple-example">
-<h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this heading">#</a></h2>
-<p>Below are two examples of using clientside callbacks to update a graph in
-conjunction with a <code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component. In these examples, we update a
-<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component on the backend; to create and display the graph, we have
-a clientside callback in the frontend that adds some extra information about
-the layout that we specify using the radio buttons under “Graph scale”.</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, clientside_callback
-import pandas as pd
+<section id="id2">
+<h2>简单例子<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>下面是两个使用客户端回调来与dcc一起更新图的示例。存储的组件。在这些示例中，我们更新一个dcc。后端存储组件;
+为了创建和显示图形，我们在前端有一个客户端回调，它添加了一些关于我们使用“图形比例”下的单选按钮指定的布局的额外信息</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">clientside_callback</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-import json
+<span class="kn">import</span> <span class="nn">json</span>
 
-external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
 
-df = pd.read_csv(&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;)
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;</span><span class="p">)</span>
 
-available_countries = df[&#39;country&#39;].unique()
+<span class="n">available_countries</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 
-app.layout = html.Div([
-    dcc.Graph(
-        id=&#39;clientside-graph&#39;
-    ),
-    dcc.Store(
-        id=&#39;clientside-figure-store&#39;,
-        data=[{
-            &#39;x&#39;: df[df[&#39;country&#39;] == &#39;Canada&#39;][&#39;year&#39;],
-            &#39;y&#39;: df[df[&#39;country&#39;] == &#39;Canada&#39;][&#39;pop&#39;]
-        }]
-    ),
-    &#39;Indicator&#39;,
-    dcc.Dropdown(
-        {&#39;pop&#39; : &#39;Population&#39;, &#39;lifeExp&#39;: &#39;Life Expectancy&#39;, &#39;gdpPercap&#39;: &#39;GDP per Capita&#39;},
-        &#39;pop&#39;,
-        id=&#39;clientside-graph-indicator&#39;
-    ),
-    &#39;Country&#39;,
-    dcc.Dropdown(available_countries, &#39;Canada&#39;, id=&#39;clientside-graph-country&#39;),
-    &#39;Graph scale&#39;,
-    dcc.RadioItems(
-        [&#39;linear&#39;, &#39;log&#39;],
-        &#39;linear&#39;,
-        id=&#39;clientside-graph-scale&#39;
-    ),
-    html.Hr(),
-    html.Details([
-        html.Summary(&#39;Contents of figure storage&#39;),
-        dcc.Markdown(
-            id=&#39;clientside-figure-json&#39;
-        )
-    ])
-])
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph&#39;</span>
+    <span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-figure-store&#39;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">[{</span>
+            <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Canada&#39;</span><span class="p">][</span><span class="s1">&#39;year&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Canada&#39;</span><span class="p">][</span><span class="s1">&#39;pop&#39;</span><span class="p">]</span>
+        <span class="p">}]</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;Indicator&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;pop&#39;</span> <span class="p">:</span> <span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">:</span> <span class="s1">&#39;Life Expectancy&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">:</span> <span class="s1">&#39;GDP per Capita&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-indicator&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;Country&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">available_countries</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-country&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Graph scale&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-scale&#39;</span>
+    <span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Details</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Summary</span><span class="p">(</span><span class="s1">&#39;Contents of figure storage&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-figure-json&#39;</span>
+        <span class="p">)</span>
+    <span class="p">])</span>
+<span class="p">])</span>
 
 
-@callback(
-    Output(&#39;clientside-figure-store&#39;, &#39;data&#39;),
-    Input(&#39;clientside-graph-indicator&#39;, &#39;value&#39;),
-    Input(&#39;clientside-graph-country&#39;, &#39;value&#39;)
-)
-def update_store_data(indicator, country):
-    dff = df[df[&#39;country&#39;] == country]
-    return [{
-        &#39;x&#39;: dff[&#39;year&#39;],
-        &#39;y&#39;: dff[indicator],
-        &#39;mode&#39;: &#39;markers&#39;
-    }]
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-indicator&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-country&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_store_data</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">country</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[{</span>
+        <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">dff</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">dff</span><span class="p">[</span><span class="n">indicator</span><span class="p">],</span>
+        <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;markers&#39;</span>
+    <span class="p">}]</span>
 
 
-clientside_callback(
-    &quot;&quot;&quot;
-    function(data, scale) {
-        return {
-            &#39;data&#39;: data,
-            &#39;layout&#39;: {
-                 &#39;yaxis&#39;: {&#39;type&#39;: scale}
-             }
-        }
-    }
-    &quot;&quot;&quot;,
-    Output(&#39;clientside-graph&#39;, &#39;figure&#39;),
-    Input(&#39;clientside-figure-store&#39;, &#39;data&#39;),
-    Input(&#39;clientside-graph-scale&#39;, &#39;value&#39;)
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function(data, scale) {</span>
+<span class="sd">        return {</span>
+<span class="sd">            &#39;data&#39;: data,</span>
+<span class="sd">            &#39;layout&#39;: {</span>
+<span class="sd">                 &#39;yaxis&#39;: {&#39;type&#39;: scale}</span>
+<span class="sd">             }</span>
+<span class="sd">        }</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-graph&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-scale&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 
 
-@callback(
-    Output(&#39;clientside-figure-json&#39;, &#39;children&#39;),
-    Input(&#39;clientside-figure-store&#39;, &#39;data&#39;)
-)
-def generated_figure_json(data):
-    return &#39;```\n&#39;+json.dumps(data, indent=2)+&#39;\n```&#39;
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-figure-json&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">generated_figure_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;```</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">```&#39;</span>
 
 
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>195019601970198019902000201015M20M25M30M</p>
@@ -608,109 +597,100 @@ if __name__ == &#39;__main__&#39;:
 ]
 </pre></div>
 </div>
-<p>Note that, in this example, we are manually creating the <code class="docutils literal notranslate"><span class="pre">figure</span></code> dictionary
-by extracting the relevant data from the dataframe. This is what gets stored
-in our <code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component; expand the “Contents of figure storage” above to
-see exactly what is used to construct the graph.</p>
+<p>请注意，在本例中，我们通过从数据框中提取相关数据来手动创建“figure”字典。这是存储在dcc中的内容。存储的组件;展开上面的“Contents of figure storage”，看看究竟是用什么来构建图形的</p>
 </section>
-<section id="using-plotly-express-to-generate-a-figure">
-<h2>Using Plotly Express to Generate a Figure<a class="headerlink" href="#using-plotly-express-to-generate-a-figure" title="Permalink to this heading">#</a></h2>
-<p>Plotly Express enables you to create one-line declarations of figures. When
-you create a graph with, for example, <code class="docutils literal notranslate"><span class="pre">plotly_express.Scatter</span></code>, you get a
-dictionary as a return value. This dictionary is in the same shape as the
-<code class="docutils literal notranslate"><span class="pre">figure</span></code> argument to a <code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> component. (See
-<a class="reference external" href="https://plotly.com/python/creating-and-updating-figures/">here</a> for more
-information about the shape of <code class="docutils literal notranslate"><span class="pre">figure</span></code>s.)</p>
-<p>We can rework the example above to use Plotly Express.</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, clientside_callback
-import pandas as pd
-import json
+<section id="plotly-express">
+<h2>使用Plotly Express生成图形<a class="headerlink" href="#plotly-express" title="Permalink to this heading">#</a></h2>
+<p>Plotly Express允许您创建一行的图形声明。当你创建一个图形，例如，“plot expression”。你得到一个字典作为返回值。该字典的形状与’ dcc ‘的’ figure ‘参数相同。图的组件。(请参阅<a class="reference external" href="https://plotly.com/python/creating-and-updating-figures/">这里</a>了解更多关于“身材”形状的信息</p>
+<p>我们可以修改上面的示例，使用Plotly Express</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">clientside_callback</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
-import plotly.express as px
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 
-external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
 
-df = pd.read_csv(&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;)
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;</span><span class="p">)</span>
 
-available_countries = df[&#39;country&#39;].unique()
+<span class="n">available_countries</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 
-app.layout = html.Div([
-    dcc.Graph(
-        id=&#39;clientside-graph-px&#39;
-    ),
-    dcc.Store(
-        id=&#39;clientside-figure-store-px&#39;
-    ),
-    &#39;Indicator&#39;,
-    dcc.Dropdown(
-        {&#39;pop&#39; : &#39;Population&#39;, &#39;lifeExp&#39;: &#39;Life Expectancy&#39;, &#39;gdpPercap&#39;: &#39;GDP per Capita&#39;},
-        &#39;pop&#39;,
-        id=&#39;clientside-graph-indicator-px&#39;
-    ),
-    &#39;Country&#39;,
-    dcc.Dropdown(available_countries, &#39;Canada&#39;, id=&#39;clientside-graph-country-px&#39;),
-    &#39;Graph scale&#39;,
-    dcc.RadioItems(
-        [&#39;linear&#39;, &#39;log&#39;],
-        &#39;linear&#39;,
-        id=&#39;clientside-graph-scale-px&#39;
-    ),
-    html.Hr(),
-    html.Details([
-        html.Summary(&#39;Contents of figure storage&#39;),
-        dcc.Markdown(
-            id=&#39;clientside-figure-json-px&#39;
-        )
-    ])
-])
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-px&#39;</span>
+    <span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-figure-store-px&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;Indicator&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;pop&#39;</span> <span class="p">:</span> <span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">:</span> <span class="s1">&#39;Life Expectancy&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">:</span> <span class="s1">&#39;GDP per Capita&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;pop&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-indicator-px&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;Country&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">available_countries</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-country-px&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;Graph scale&#39;</span><span class="p">,</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-graph-scale-px&#39;</span>
+    <span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Details</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Summary</span><span class="p">(</span><span class="s1">&#39;Contents of figure storage&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;clientside-figure-json-px&#39;</span>
+        <span class="p">)</span>
+    <span class="p">])</span>
+<span class="p">])</span>
 
 
-@callback(
-    Output(&#39;clientside-figure-store-px&#39;, &#39;data&#39;),
-    Input(&#39;clientside-graph-indicator-px&#39;, &#39;value&#39;),
-    Input(&#39;clientside-graph-country-px&#39;, &#39;value&#39;)
-)
-def update_store_data(indicator, country):
-    dff = df[df[&#39;country&#39;] == country]
-    return px.scatter(dff, x=&#39;year&#39;, y=str(indicator))
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store-px&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-indicator-px&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-country-px&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_store_data</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">country</span><span class="p">):</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">country</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">indicator</span><span class="p">))</span>
 
 
-clientside_callback(
-    &quot;&quot;&quot;
-    function(figure, scale) {
-        if(figure === undefined) {
-            return {&#39;data&#39;: [], &#39;layout&#39;: {}};
-        }
-        const fig = Object.assign({}, figure, {
-            &#39;layout&#39;: {
-                ...figure.layout,
-                &#39;yaxis&#39;: {
-                    ...figure.layout.yaxis, type: scale
-                }
-             }
-        });
-        return fig;
-    }
-    &quot;&quot;&quot;,
-    Output(&#39;clientside-graph-px&#39;, &#39;figure&#39;),
-    Input(&#39;clientside-figure-store-px&#39;, &#39;data&#39;),
-    Input(&#39;clientside-graph-scale-px&#39;, &#39;value&#39;)
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function(figure, scale) {</span>
+<span class="sd">        if(figure === undefined) {</span>
+<span class="sd">            return {&#39;data&#39;: [], &#39;layout&#39;: {}};</span>
+<span class="sd">        }</span>
+<span class="sd">        const fig = Object.assign({}, figure, {</span>
+<span class="sd">            &#39;layout&#39;: {</span>
+<span class="sd">                ...figure.layout,</span>
+<span class="sd">                &#39;yaxis&#39;: {</span>
+<span class="sd">                    ...figure.layout.yaxis, type: scale</span>
+<span class="sd">                }</span>
+<span class="sd">             }</span>
+<span class="sd">        });</span>
+<span class="sd">        return fig;</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-graph-px&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store-px&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-graph-scale-px&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
 
 
-@callback(
-    Output(&#39;clientside-figure-json-px&#39;, &#39;children&#39;),
-    Input(&#39;clientside-figure-store-px&#39;, &#39;data&#39;)
-)
-def generated_px_figure_json(data):
-    return &#39;```\n&#39;+json.dumps(data, indent=2)+&#39;\n```&#39;
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;clientside-figure-json-px&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;clientside-figure-store-px&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">generated_px_figure_json</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;```</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">```&#39;</span>
 
 
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>195019601970198019902000201015M20M25M30M</p>
@@ -863,60 +843,55 @@ if __name__ == &#39;__main__&#39;:
 }
 </pre></div>
 </div>
-<p>Again, you can expand the “Contents of figure storage” section above to see
-what gets generated. You may notice that this is quite a bit more extensive
-than the previous example; in particular, a <code class="docutils literal notranslate"><span class="pre">layout</span></code> is already defined. So,
-instead of creating a <code class="docutils literal notranslate"><span class="pre">layout</span></code> as we did previously, we have to mutate the
-existing layout in our JavaScript code.</p>
+<p>同样，您可以展开上面的“图形存储的内容”部分来查看生成的内容。您可能会注意到，这比前面的示例要广泛得多;特别是，已经定义了“布局”。所以，我们必须在JavaScript代码中改变现有的布局，而不是像之前那样创建一个“布局”</p>
 </section>
 <section id="clientside-callbacks-with-promises">
 <h2>Clientside Callbacks with Promises<a class="headerlink" href="#clientside-callbacks-with-promises" title="Permalink to this heading">#</a></h2>
 <p>Dash 2.4 and later supports clientside callbacks that return promises.</p>
-<section id="fetching-data-example">
-<h3>Fetching Data Example<a class="headerlink" href="#fetching-data-example" title="Permalink to this heading">#</a></h3>
+<section id="id3">
+<h3>获取数据示例<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>In this example, we fetch data (based on the value of the dropdown) using an
 async clientside callback function that outputs it to a <code class="docutils literal notranslate"><span class="pre">dash_table.DataTable</span></code>
 component.</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, dash_table, clientside_callback
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">clientside_callback</span>
 
-app = Dash(__name__)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-app.layout = html.Div(
-    [
-        dcc.Dropdown(
-            options=[
-                {
-                    &quot;label&quot;: &quot;Car-sharing data&quot;,
-                    &quot;value&quot;: &quot;https://raw.githubusercontent.com/plotly/datasets/master/carshare_data.json&quot;,
-                },
-                {
-                    &quot;label&quot;: &quot;Iris data&quot;,
-                    &quot;value&quot;: &quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;,
-                },
-            ],
-            value=&quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;,
-            id=&quot;data-select&quot;,
-        ),
-        html.Br(),
-        dash_table.DataTable(id=&quot;my-table-promises&quot;, page_size=10),
-    ]
-)
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Car-sharing data&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;https://raw.githubusercontent.com/plotly/datasets/master/carshare_data.json&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Iris data&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="s2">&quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;data-select&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+        <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;my-table-promises&quot;</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
-clientside_callback(
-    &quot;&quot;&quot;
-    async function(value) {
-    const response = await fetch(value);
-    const data = await response.json();
-    return data;
-    }
-    &quot;&quot;&quot;,
-    Output(&quot;my-table-promises&quot;, &quot;data&quot;),
-    Input(&quot;data-select&quot;, &quot;value&quot;),
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    async function(value) {</span>
+<span class="sd">    const response = await fetch(value);</span>
+<span class="sd">    const data = await response.json();</span>
+<span class="sd">    return data;</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;my-table-promises&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;data-select&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),</span>
+<span class="p">)</span>
 
-if __name__ == &quot;__main__&quot;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Iris data</p>
@@ -1025,64 +1000,62 @@ if __name__ == &quot;__main__&quot;:
 <p>/</p>
 <p>15</p>
 </section>
-<section id="notifications-example">
-<h3>Notifications Example<a class="headerlink" href="#notifications-example" title="Permalink to this heading">#</a></h3>
-<p>This example uses promises and sends desktop notifications to the user once
-they grant permission and select the <strong>Notify</strong> button:</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, clientside_callback
+<section id="id4">
+<h3>通知的例子<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>这个例子使用promise，并在用户授予权限并选择<strong>Notify</strong>按钮后向用户发送桌面通知</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">clientside_callback</span>
 
-app = Dash(__name__)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-app.layout = html.Div(
-    [
-        dcc.Store(id=&quot;notification-permission&quot;),
-        html.Button(&quot;Notify&quot;, id=&quot;notify-btn&quot;),
-        html.Div(id=&quot;notification-output&quot;),
-    ]
-)
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;notification-permission&quot;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Notify&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;notify-btn&quot;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;notification-output&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
 
-clientside_callback(
-    &quot;&quot;&quot;
-    function() {
-        return navigator.permissions.query({name:&#39;notifications&#39;})
-    }
-    &quot;&quot;&quot;,
-    Output(&quot;notification-permission&quot;, &quot;data&quot;),
-    Input(&quot;notify-btn&quot;, &quot;n_clicks&quot;),
-    prevent_initial_call=True,
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function() {</span>
+<span class="sd">        return navigator.permissions.query({name:&#39;notifications&#39;})</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;notification-permission&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;notify-btn&quot;</span><span class="p">,</span> <span class="s2">&quot;n_clicks&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
-clientside_callback(
-    &quot;&quot;&quot;
-    function(result) {
-        if (result.state == &#39;granted&#39;) {
-            new Notification(&quot;Dash notification&quot;, { body: &quot;Notification already granted!&quot;});
-            return null;
-        } else if (result.state == &#39;prompt&#39;) {
-            return new Promise((resolve, reject) =&gt; {
-                Notification.requestPermission().then(res =&gt; {
-                    if (res == &#39;granted&#39;) {
-                        new Notification(&quot;Dash notification&quot;, { body: &quot;Notification granted!&quot;});
-                        resolve();
-                    } else {
-                        reject(`Permission not granted: ${res}`)
-                    }
-                })
-            });
-        } else {
-            return result.state;
-        }
-    }
-    &quot;&quot;&quot;,
-    Output(&quot;notification-output&quot;, &quot;children&quot;),
-    Input(&quot;notification-permission&quot;, &quot;data&quot;),
-    prevent_initial_call=True,
-)
+<span class="n">clientside_callback</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function(result) {</span>
+<span class="sd">        if (result.state == &#39;granted&#39;) {</span>
+<span class="sd">            new Notification(&quot;Dash notification&quot;, { body: &quot;Notification already granted!&quot;});</span>
+<span class="sd">            return null;</span>
+<span class="sd">        } else if (result.state == &#39;prompt&#39;) {</span>
+<span class="sd">            return new Promise((resolve, reject) =&gt; {</span>
+<span class="sd">                Notification.requestPermission().then(res =&gt; {</span>
+<span class="sd">                    if (res == &#39;granted&#39;) {</span>
+<span class="sd">                        new Notification(&quot;Dash notification&quot;, { body: &quot;Notification granted!&quot;});</span>
+<span class="sd">                        resolve();</span>
+<span class="sd">                    } else {</span>
+<span class="sd">                        reject(`Permission not granted: ${res}`)</span>
+<span class="sd">                    }</span>
+<span class="sd">                })</span>
+<span class="sd">            });</span>
+<span class="sd">        } else {</span>
+<span class="sd">            return result.state;</span>
+<span class="sd">        }</span>
+<span class="sd">    }</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;notification-output&quot;</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;notification-permission&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">),</span>
+    <span class="n">prevent_initial_call</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 
-if __name__ == &quot;__main__&quot;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>![Notification with promises](/assets/images/clientside-
@@ -1092,11 +1065,11 @@ callbacks/notification.gif)</p>
 <hr class="docutils" />
 <section id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
-<p>There are a few limitations to keep in mind:</p>
+<p>有一些限制需要记住</p>
 <ol class="arabic simple">
-<li><p>Clientside callbacks execute on the browser’s main thread and will block rendering and events processing while being executed.</p></li>
-<li><p>Clientside callbacks are not possible if you need to refer to global variables on the server or a DB call is required.</p></li>
-<li><p>Dash versions prior to 2.4.0 do not support asynchronous clientside callbacks and will fail if a <code class="docutils literal notranslate"><span class="pre">Promise</span></code> is returned.</p></li>
+<li><p>客户端回调在浏览器的主线程上执行，并在执行时阻塞渲染和事件处理</p></li>
+<li><p>如果需要引用服务器上的全局变量或需要进行DB调用，则不可能进行客户端回调</p></li>
+<li><p>2.4.0之前的Dash版本不支持异步客户端回调，如果返回“Promise”将失败</p></li>
 </ol>
 </section>
 </section>
@@ -1168,11 +1141,11 @@ callbacks/notification.gif)</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example">A Simple Example</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-plotly-express-to-generate-a-figure">Using Plotly Express to Generate a Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">简单例子</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotly-express">使用Plotly Express生成图形</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clientside-callbacks-with-promises">Clientside Callbacks with Promises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-data-example">Fetching Data Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notifications-example">Notifications Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">获取数据示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">通知的例子</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
