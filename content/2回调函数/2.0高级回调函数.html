@@ -368,9 +368,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preventupdate">使用<code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code>捕获错误</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-no-update">使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>显示错误</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-callback-contextinput">使用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>确定哪个<code class="docutils literal notranslate"><span class="pre">Input</span></code>被触发</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context"><code class="docutils literal notranslate"><span class="pre">callback_context</span></code>属性</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">遗留行为:使用时间戳</a></li>
 </ul>
@@ -385,9 +385,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">防止在初始组件渲染时执行回调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">循环回调</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-a-slider-with-a-text-input-example">Synchronizing a Slider with a Text Input Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">显示两个不同单位的输入示例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">同步两个检查表</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">同步滑块与文本输入示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">显示两个不同单位的输入示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">同步两个检查表</a></li>
 </ul>
 </li>
 </ul>
@@ -406,8 +406,8 @@ document.write(`
 <blockquote>
 <div><p>为了充分利用本页内容，请确保您已经阅读了Dash Fundamentals中的[Basic callback](/ Basic -callback)</p>
 </div></blockquote>
-<section id="catching-errors-with-preventupdate">
-<h2>Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code><a class="headerlink" href="#catching-errors-with-preventupdate" title="Permalink to this heading">#</a></h2>
+<section id="preventupdate">
+<h2>使用<code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code>捕获错误<a class="headerlink" href="#preventupdate" title="Permalink to this heading">#</a></h2>
 <p>在某些情况下，您不希望更新回调输出。你可以通过在回调函数中引发’ PreventUpdate ‘异常来实现这一点</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
 <span class="kn">from</span> <span class="nn">dash.exceptions</span> <span class="kn">import</span> <span class="n">PreventUpdate</span>
@@ -489,8 +489,8 @@ document.write(`
 </div>
 <p>Enter a composite number to see its prime factors</p>
 </section>
-<section id="determining-which-input-has-fired-with-dash-callback-context">
-<h2>Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code><a class="headerlink" href="#determining-which-input-has-fired-with-dash-callback-context" title="Permalink to this heading">#</a></h2>
+<section id="dash-callback-contextinput">
+<h2>使用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>确定哪个<code class="docutils literal notranslate"><span class="pre">Input</span></code>被触发<a class="headerlink" href="#dash-callback-contextinput" title="Permalink to this heading">#</a></h2>
 <p>除了像<code class="docutils literal notranslate"><span class="pre">n_clicks</span></code>这样的事件属性会在事件发生时改变(在这里是点击)，还有一个全局变量<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>，只在回调中可用。使用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>，您可以确定哪个组件/属性对触发了回调</p>
 <p>下面是<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>的属性总结。概述了何时使用它们的基本知识。有关更多细节和示例，请参阅<span class="xref myst">Which Callback Input Changed</span></p>
 <p>更多关于是用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>的案例，请查阅<a class="reference external" href="https://dash-example-index.herokuapp.com/?code=ctx">Example Index</a>.</p>
@@ -846,8 +846,8 @@ layout.</p>
 <section id="id9">
 <h2>循环回调<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <p>从’ dash v1.19.0 ‘开始，您可以在同一个回调中创建循环更新。不支持涉及多个回调的循环回调链。循环回调可用于保持多个输入彼此同步</p>
-<section id="synchronizing-a-slider-with-a-text-input-example">
-<h3>Synchronizing a Slider with a Text Input Example<a class="headerlink" href="#synchronizing-a-slider-with-a-text-input-example" title="Permalink to this heading">#</a></h3>
+<section id="id10">
+<h3>同步滑块与文本输入示例<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">ctx</span>
 
 <span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;</span><span class="p">]</span>
@@ -883,8 +883,8 @@ layout.</p>
 </div>
 <p>01234567891011121314151617181920</p>
 </section>
-<section id="id10">
-<h3>显示两个不同单位的输入示例<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<section id="id11">
+<h3>显示两个不同单位的输入示例<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">ctx</span>
 
 <span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;</span><span class="p">]</span>
@@ -928,8 +928,8 @@ layout.</p>
 <p>Convert Temperature</p>
 <p>Celsius = Fahrenheit</p>
 </section>
-<section id="id11">
-<h3>同步两个检查表<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<section id="id12">
+<h3>同步两个检查表<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">callback_context</span>
 
 <span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;</span><span class="p">]</span>
@@ -1036,9 +1036,9 @@ layout.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preventupdate">使用<code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code>捕获错误</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-no-update">使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>显示错误</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-callback-contextinput">使用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>确定哪个<code class="docutils literal notranslate"><span class="pre">Input</span></code>被触发</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context"><code class="docutils literal notranslate"><span class="pre">callback_context</span></code>属性</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">遗留行为:使用时间戳</a></li>
 </ul>
@@ -1053,9 +1053,9 @@ layout.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">防止在初始组件渲染时执行回调</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">循环回调</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-a-slider-with-a-text-input-example">Synchronizing a Slider with a Text Input Example</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">显示两个不同单位的输入示例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">同步两个检查表</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">同步滑块与文本输入示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">显示两个不同单位的输入示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">同步两个检查表</a></li>
 </ul>
 </li>
 </ul>
