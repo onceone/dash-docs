@@ -1,0 +1,1145 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Long Callbacks &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/15long-callbacks';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/15long-callbacks.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/15long-callbacks.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Long Callbacks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-steps">Basic Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-simple-example">Example 1: Simple Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-disable-button-while-callback-is-running">Example 2: Disable Button While Callback Is Running</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-cancelable-callback">Example 3: Cancelable Callback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-progress-bar">Example 4: Progress Bar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-progress-bar-chart-graph">Example 5: Progress Bar Chart Graph</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-celery-redis">Example with Celery/Redis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-results">Caching Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-flexibility-requirements">Caching Flexibility Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-caching">Enabling Caching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omitting-properties-from-cache-key-calculation">Omitting Properties from Cache Key Calculation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-by-function-workflows">Cache_by Function Workflows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-an-expiration-time-for-cache-entries">Setting an Expiration Time for Cache Entries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-job-queues">Why Job Queues?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="long-callbacks">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Long Callbacks<a class="headerlink" href="#long-callbacks" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>We recommend using <span class="xref myst">background callbacks with &#64;dash.callback(…,
+background=True)</span> instead of <code class="docutils literal notranslate"><span class="pre">long_callback</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">background=True</span></code> argument was introduced in Dash 2.6.0 and addresses
+several limitations with <code class="docutils literal notranslate"><span class="pre">long_callback</span></code>, including its incompatibility with
+dynamically added components and with [Pattern Matching Callbacks](/pattern-
+matching-callbacks). <code class="docutils literal notranslate"><span class="pre">long_callback</span></code> is still safe to use but no longer
+recommended for versions of Dash later than 2.6.0.</p>
+</div></blockquote>
+<p>Most web servers have a 30 second timeout by default, which is an issue for
+callbacks that take longer to complete. While you can increase the timeout on
+the web server, you risk allowing long-running callbacks to use all of your
+app’s workers, preventing other requests from going through. Long callbacks
+offer a scalable solution for using long-running callbacks.</p>
+<p>Long callbacks can be added to your apps with the decorator
+<code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>. Callbacks with this decorator use a backend configured
+by you to run the callback logic. There are currently two options:</p>
+<ul class="simple">
+<li><p>A <a class="reference external" href="http://www.grantjenks.com/docs/diskcache/index.html">DiskCache</a> backend that runs callback logic in a separate process and stores the results to disk using the <code class="docutils literal notranslate"><span class="pre">diskcache</span></code> library. This is the easiest backend to use for local development, but is <strong>not recommended for production</strong>.</p></li>
+<li><p>A <a class="reference external" href="https://docs.celeryproject.org/en/stable/getting-started/introduction.html">Celery</a> backend that runs callback logic in a Celery worker and returns results to the Dash app through a Celery broker like <a class="reference external" href="https://www.rabbitmq.com/">RabbitMQ</a> or <a class="reference external" href="https://redis.io/">Redis</a>. This is recommended for production as, unlike Disk Cache, it uses a job queue and won’t accidentally consume all your server’s resources. For further information on the benefits of job queues, see the <strong>Why Job Queues?</strong> section below.</p></li>
+</ul>
+<blockquote>
+<div><p><a class="reference external" href="http://plotly.com/dash">Dash Enterprise</a> makes it easy to deploy Celery and
+Redis for using long callbacks in production. [Get
+Pricing](<a class="reference external" href="https://plotly.com/get-">https://plotly.com/get-</a>
+pricing/?utm_medium=dash_docs&amp;utm_content=long-callbacks) or see Dash in
+action at our next [demo session](<a class="reference external" href="https://plotly.com/get-">https://plotly.com/get-</a>
+demo/?utm_medium=dash_docs&amp;utm_content=long-callbacks).</p>
+</div></blockquote>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">#</a></h2>
+<p>The examples below use the <code class="docutils literal notranslate"><span class="pre">diskcache</span></code> manager, which requires <code class="docutils literal notranslate"><span class="pre">diskcache</span></code>,
+<code class="docutils literal notranslate"><span class="pre">multiprocess</span></code>, and <code class="docutils literal notranslate"><span class="pre">psutil</span></code> libraries:</p>
+<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">diskcache</span> <span class="pre">multiprocess</span> <span class="pre">psutil</span></code></p>
+</section>
+<section id="basic-steps">
+<h2>Basic Steps<a class="headerlink" href="#basic-steps" title="Permalink to this heading">#</a></h2>
+<p>The first step to use long callbacks is to configure a long callback manager
+instance using your chosen backend.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator requires this long callback manager
+instance. You can provide the manager instance to the dash.Dash app
+constructor as the <code class="docutils literal notranslate"><span class="pre">long_callback_manager</span></code> keyword argument, or as the
+<code class="docutils literal notranslate"><span class="pre">manager</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator itself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator supports the same arguments as the normal
+<code class="docutils literal notranslate"><span class="pre">&#64;app.callback</span></code> decorator, but also includes support for several additional
+optional arguments explained further below: <code class="docutils literal notranslate"><span class="pre">manager</span></code>, <code class="docutils literal notranslate"><span class="pre">running</span></code>, <code class="docutils literal notranslate"><span class="pre">cancel</span></code>,
+<code class="docutils literal notranslate"><span class="pre">progress</span></code>, and <code class="docutils literal notranslate"><span class="pre">progress_default</span></code>.</p>
+<p>In the next five examples, we’ll discuss in more detail how to implement long
+callbacks.</p>
+</section>
+<section id="example-1-simple-example">
+<h2>Example 1: Simple Example<a class="headerlink" href="#example-1-simple-example" title="Permalink to this heading">#</a></h2>
+<p>Here is a simple example of using the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator to
+register a callback function that updates an <code class="docutils literal notranslate"><span class="pre">html.P</span></code> element with the number
+of times that a button has been clicked. The callback uses <code class="docutils literal notranslate"><span class="pre">time.sleep</span></code> to
+simulate a long-running operation.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+## Diskcache
+import diskcache
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
+app = dash.Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Div([html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;])]),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    manager=long_callback_manager,
+)
+def callback(n_clicks):
+    time.sleep(2.0)
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p><img alt="Simple example" src="content/2回调函数/assets/images/long-callbacks/long-callbacks-example-1.gif" /></p>
+</section>
+<section id="example-2-disable-button-while-callback-is-running">
+<h2>Example 2: Disable Button While Callback Is Running<a class="headerlink" href="#example-2-disable-button-while-callback-is-running" title="Permalink to this heading">#</a></h2>
+<p>Notice how in the previous example, there is no visual indication that the
+long callback is running. A user might click the “Run Job!” button multiple
+times before the original job can complete. We can address these shortcomings
+by disabling the button while the callback is running, and re-enabling it when
+the callback completes.</p>
+<p>This is accomplished using the <code class="docutils literal notranslate"><span class="pre">running</span></code> argument to <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>.
+This argument accepts a list of 3-element tuples. The first element of each
+tuple must be an <code class="docutils literal notranslate"><span class="pre">Output</span></code> dependency object referencing a property of a
+component in the app layout. The second element is the value that the property
+should be set to while the callback is running, and the third element is the
+value the property should be set to when the callback completes.</p>
+<p>This example uses <code class="docutils literal notranslate"><span class="pre">running</span></code> to set the <code class="docutils literal notranslate"><span class="pre">disabled</span></code> property of the button to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> while the callback is running, and <code class="docutils literal notranslate"><span class="pre">False</span></code> when it completes.</p>
+<p>In this example, the long callback manager is provided to the <code class="docutils literal notranslate"><span class="pre">dash.Dash</span></code> app
+constructor instead of the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+## Diskcache
+import diskcache
+
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+
+app.layout = html.Div(
+    [
+        html.Div([html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;])]),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+    ],
+)
+def callback(n_clicks):
+    time.sleep(2.0)
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>![Disable button while callback is running example](./assets/images/long-
+callbacks/long-callbacks-example-2.gif)</p>
+</section>
+<section id="example-3-cancelable-callback">
+<h2>Example 3: Cancelable Callback<a class="headerlink" href="#example-3-cancelable-callback" title="Permalink to this heading">#</a></h2>
+<p>This example builds on the previous example, adding support for canceling a
+long-running callback using the <code class="docutils literal notranslate"><span class="pre">cancel</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>
+decorator. We set the <code class="docutils literal notranslate"><span class="pre">cancel</span></code> argument to a list of <code class="docutils literal notranslate"><span class="pre">Input</span></code> dependency
+objects that reference a property of a component in the app’s layout. When the
+value of this property changes while a callback is running, the callback is
+canceled. Note that the value of the property is not significant — any change
+in value cancels the running job (if any).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+## Diskcache
+import diskcache
+
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+
+app.layout = html.Div(
+    [
+        html.Div([html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;])]),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+        html.Button(id=&quot;cancel_button_id&quot;, children=&quot;Cancel Running Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+        (Output(&quot;cancel_button_id&quot;, &quot;disabled&quot;), False, True),
+    ],
+    cancel=[Input(&quot;cancel_button_id&quot;, &quot;n_clicks&quot;)],
+)
+def callback(n_clicks):
+    time.sleep(2.0)
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>![Cancelable callback example](./assets/images/long-callbacks/long-callbacks-
+example-3.gif)</p>
+</section>
+<section id="example-4-progress-bar">
+<h2>Example 4: Progress Bar<a class="headerlink" href="#example-4-progress-bar" title="Permalink to this heading">#</a></h2>
+<p>This example uses the <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>
+decorator to update a progress bar while the callback is running. We set the
+<code class="docutils literal notranslate"><span class="pre">progress</span></code> argument to an <code class="docutils literal notranslate"><span class="pre">Output</span></code> dependency grouping that references
+properties of components in the app’s layout.</p>
+<p>When a dependency grouping is assigned to the <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>, the decorated function is called with a new special
+argument as the first argument to the function. This special argument, named
+<code class="docutils literal notranslate"><span class="pre">set_progress</span></code> in the example below, is a function handle that the decorated
+function calls in order to provide updates to the app on its current progress.
+The <code class="docutils literal notranslate"><span class="pre">set_progress</span></code> function accepts a single argument, which corresponds to
+the grouping of properties specified in the <code class="docutils literal notranslate"><span class="pre">Output</span></code> dependency grouping
+passed to the <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument of <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+## Diskcache
+import diskcache
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+
+app.layout = html.Div(
+    [
+        html.Div(
+            [
+                html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;]),
+                html.Progress(id=&quot;progress_bar&quot;),
+            ]
+        ),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+        html.Button(id=&quot;cancel_button_id&quot;, children=&quot;Cancel Running Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+        (Output(&quot;cancel_button_id&quot;, &quot;disabled&quot;), False, True),
+        (
+            Output(&quot;paragraph_id&quot;, &quot;style&quot;),
+            {&quot;visibility&quot;: &quot;hidden&quot;},
+            {&quot;visibility&quot;: &quot;visible&quot;},
+        ),
+        (
+            Output(&quot;progress_bar&quot;, &quot;style&quot;),
+            {&quot;visibility&quot;: &quot;visible&quot;},
+            {&quot;visibility&quot;: &quot;hidden&quot;},
+        ),
+    ],
+    cancel=[Input(&quot;cancel_button_id&quot;, &quot;n_clicks&quot;)],
+    progress=[Output(&quot;progress_bar&quot;, &quot;value&quot;), Output(&quot;progress_bar&quot;, &quot;max&quot;)],
+)
+def callback(set_progress, n_clicks):
+    total = 10
+    for i in range(total):
+        time.sleep(0.5)
+        set_progress((str(i + 1), str(total)))
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True,port=8054)
+</pre></div>
+</div>
+<p>![Progress bar example](./assets/images/long-callbacks/long-callbacks-
+example-4.gif)</p>
+</section>
+<section id="example-5-progress-bar-chart-graph">
+<h2>Example 5: Progress Bar Chart Graph<a class="headerlink" href="#example-5-progress-bar-chart-graph" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator can be used to
+update arbitrary component properties. This example creates and updates a
+Plotly bar graph to display the current calculation status.</p>
+<p>This example also uses the <code class="docutils literal notranslate"><span class="pre">progress_default</span></code> argument to <code class="docutils literal notranslate"><span class="pre">long_callback</span></code> to
+specify a grouping of values that should be assigned to the components
+specified by the <code class="docutils literal notranslate"><span class="pre">progress</span></code> argument when the callback is not in progress. If
+<code class="docutils literal notranslate"><span class="pre">progress_default</span></code> is not provided, all the dependency properties specified in
+<code class="docutils literal notranslate"><span class="pre">progress</span></code> are set to <code class="docutils literal notranslate"><span class="pre">None</span></code> when the callback is not running. In this case,
+<code class="docutils literal notranslate"><span class="pre">progress_default</span></code> is set to a figure with a zero width bar.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html, dcc
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+import plotly.graph_objects as go
+
+## Diskcache
+import diskcache
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(cache)
+
+def make_progress_graph(progress, total):
+    progress_graph = (
+        go.Figure(data=[go.Bar(x=[progress])])
+        .update_xaxes(range=[0, total])
+        .update_yaxes(
+            showticklabels=False,
+        )
+        .update_layout(height=100, margin=dict(t=20, b=40))
+    )
+    return progress_graph
+
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+
+app.layout = html.Div(
+    [
+        html.Div(
+            [
+                html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;]),
+                dcc.Graph(id=&quot;progress_bar_graph&quot;, figure=make_progress_graph(0, 10)),
+            ]
+        ),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+        html.Button(id=&quot;cancel_button_id&quot;, children=&quot;Cancel Running Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+        (Output(&quot;cancel_button_id&quot;, &quot;disabled&quot;), False, True),
+        (
+            Output(&quot;paragraph_id&quot;, &quot;style&quot;),
+            {&quot;visibility&quot;: &quot;hidden&quot;},
+            {&quot;visibility&quot;: &quot;visible&quot;},
+        ),
+        (
+            Output(&quot;progress_bar_graph&quot;, &quot;style&quot;),
+            {&quot;visibility&quot;: &quot;visible&quot;},
+            {&quot;visibility&quot;: &quot;hidden&quot;},
+        ),
+    ],
+    cancel=[Input(&quot;cancel_button_id&quot;, &quot;n_clicks&quot;)],
+    progress=Output(&quot;progress_bar_graph&quot;, &quot;figure&quot;),
+    progress_default=make_progress_graph(0, 10),
+    interval=1000,
+)
+def callback(set_progress, n_clicks):
+    total = 10
+    for i in range(total):
+        time.sleep(0.5)
+        set_progress(make_progress_graph(i, 10))
+
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>![Progress bar chart graph example](./assets/images/long-callbacks/long-
+callbacks-example-5.gif)</p>
+</section>
+<section id="example-with-celery-redis">
+<h2>Example with Celery/Redis<a class="headerlink" href="#example-with-celery-redis" title="Permalink to this heading">#</a></h2>
+<p>We recommend using a Celery/Redis backend for production environments.</p>
+<p>With Celery and Redis, example 3 looks like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import dash
+from dash import html
+from dash.long_callback import CeleryLongCallbackManager
+from dash.dependencies import Input, Output
+from celery import Celery
+
+celery_app = Celery(
+    __name__, broker=&quot;redis://localhost:6379/0&quot;, backend=&quot;redis://localhost:6379/1&quot;
+)
+long_callback_manager = CeleryLongCallbackManager(celery_app)
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+
+app.layout = html.Div(
+    [
+        html.Div([html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;])]),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+        html.Button(id=&quot;cancel_button_id&quot;, children=&quot;Cancel Running Job!&quot;),
+    ]
+)
+
+@app.long_callback(
+    output=Output(&quot;paragraph_id&quot;, &quot;children&quot;),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+        (Output(&quot;cancel_button_id&quot;, &quot;disabled&quot;), False, True),
+    ],
+    cancel=[Input(&quot;cancel_button_id&quot;, &quot;n_clicks&quot;)],
+)
+def callback(n_clicks):
+    time.sleep(2.0)
+    return [f&quot;Clicked {n_clicks} times&quot;]
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>In place of the <code class="docutils literal notranslate"><span class="pre">DiskcacheLongCallbackManager</span></code>, we use
+<code class="docutils literal notranslate"><span class="pre">CeleryLongCallbackManager</span></code> and import Celery using the line: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">celery</span> <span class="pre">import</span> <span class="pre">Celery</span></code></p>
+<p>We configure a Celery app (<code class="docutils literal notranslate"><span class="pre">celery_app</span></code>) and pass it to the
+<code class="docutils literal notranslate"><span class="pre">CeleryLongCallbackManager</span></code>. This is stored in the variable
+<code class="docutils literal notranslate"><span class="pre">long_callback_manager</span></code> and then passed to the app:</p>
+<p><code class="docutils literal notranslate"><span class="pre">app</span> <span class="pre">=</span> <span class="pre">dash.Dash(__name__,</span> <span class="pre">long_callback_manager=long_callback_manager)</span></code></p>
+</section>
+<section id="caching-results">
+<h2>Caching Results<a class="headerlink" href="#caching-results" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator can optionally
+<a class="reference external" href="https://en.wikipedia.org/wiki/Memoization">memoize</a> callback function results
+through caching, and it provides a flexible API for configuring when cached
+results may be reused.</p>
+<blockquote>
+<div><p>Caching with long callbacks can help improve your application’s response
+time, but if you want users to be able to save and access views of the
+application at a particular point in time, and generate PDF reports from
+these views, use [Dash Enterprise Snapshot
+Engine](<a class="reference external" href="https://plotly.com/dash/snapshot-">https://plotly.com/dash/snapshot-</a>
+engine/?utm_medium=dash_docs&amp;utm_content=long-callbacks). As Dash Enterprise
+Snapshot Engine stores a full record of results, you can track how the
+result for a specific set of parameters changes over time. For long-running
+callbacks where you don’t need to have access to past results, use long
+callbacks.</p>
+</div></blockquote>
+<section id="how-it-works">
+<h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">#</a></h3>
+<p>Here is a high-level description of how caching works in <code class="docutils literal notranslate"><span class="pre">long_callback</span></code>.
+Conceptually, you can imagine a dictionary is associated with each decorated
+callback function. Each time the decorated function is called, the input
+arguments to the function (and potentially other information about the
+environment) are hashed to generate a key. The <code class="docutils literal notranslate"><span class="pre">long_callback</span></code> decorator then
+checks the dictionary to see if there is already a value stored using this
+key. If so, the decorated function is not called, and the cached result is
+returned. If not, the function is called and the result is stored in the
+dictionary using the associated key.</p>
+<p>The built-in <code class="docutils literal notranslate"><span class="pre">functools.lru_cache</span></code> decorator uses a Python <code class="docutils literal notranslate"><span class="pre">dict</span></code> just like
+this. The situation is slightly more complicated with Dash for two reasons:</p>
+<ul class="simple">
+<li><p>We might want the cache to persist across server restarts.</p></li>
+<li><p>When an app is served using multiple processes (e.g. multiple <code class="docutils literal notranslate"><span class="pre">gunicorn</span></code> workers on a single server, or multiple servers behind a load balancer), we might want to share cached values across all of these processes.</p></li>
+</ul>
+<p>For these reasons, a simple Python <code class="docutils literal notranslate"><span class="pre">dict</span></code> is not a suitable storage container
+for caching Dash callbacks. Instead, <code class="docutils literal notranslate"><span class="pre">long_callback</span></code> uses the current
+DiskCache or Celery callback manager to store cached results.</p>
+</section>
+<section id="caching-flexibility-requirements">
+<h3>Caching Flexibility Requirements<a class="headerlink" href="#caching-flexibility-requirements" title="Permalink to this heading">#</a></h3>
+<p>To support caching in a variety of development and production use cases,
+<code class="docutils literal notranslate"><span class="pre">long_callback</span></code> may be configured by one or more zero-argument functions,
+where the return values of these functions are combined with the function
+input arguments when generating the cache key. Several common use-cases are
+described below.</p>
+</section>
+<section id="enabling-caching">
+<h3>Enabling Caching<a class="headerlink" href="#enabling-caching" title="Permalink to this heading">#</a></h3>
+<p>Caching is enabled by providing one or more zero-argument functions to the
+<code class="docutils literal notranslate"><span class="pre">cache_by</span></code> argument of <code class="docutils literal notranslate"><span class="pre">long_callback</span></code>. These functions are called each time
+the status of a <code class="docutils literal notranslate"><span class="pre">long_callback</span></code> function is checked, and their return values
+are hashed as part of the cache key.</p>
+<p>Here is an example using the DiskCache callback manager. In this example, the
+<code class="docutils literal notranslate"><span class="pre">cache_by</span></code> argument is set to a <code class="docutils literal notranslate"><span class="pre">lambda</span></code> function that returns a fixed UUID
+that is randomly generated during app initialization. The implication of this
+<code class="docutils literal notranslate"><span class="pre">cache_by</span></code> function is that the cache is shared across all invocations of the
+callback across all user sessions that are handled by a single server
+instance. Each time a server process is restarted, the cache is cleared and a
+new UUID is generated.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+from uuid import uuid4
+import dash
+from dash import html
+from dash.long_callback import DiskcacheLongCallbackManager
+from dash.dependencies import Input, Output
+
+## Diskcache
+import diskcache
+launch_uid = uuid4()
+cache = diskcache.Cache(&quot;./cache&quot;)
+long_callback_manager = DiskcacheLongCallbackManager(
+    cache, cache_by=[lambda: launch_uid], expire=60,
+)
+
+app = dash.Dash(__name__, long_callback_manager=long_callback_manager)
+app.layout = html.Div(
+    [
+        html.Div([html.P(id=&quot;paragraph_id&quot;, children=[&quot;Button not clicked&quot;])]),
+        html.Button(id=&quot;button_id&quot;, children=&quot;Run Job!&quot;),
+        html.Button(id=&quot;cancel_button_id&quot;, children=&quot;Cancel Running Job!&quot;),
+    ]
+)
+
+
+@app.long_callback(
+    output=(Output(&quot;paragraph_id&quot;, &quot;children&quot;), Output(&quot;button_id&quot;, &quot;n_clicks&quot;)),
+    inputs=Input(&quot;button_id&quot;, &quot;n_clicks&quot;),
+    running=[
+        (Output(&quot;button_id&quot;, &quot;disabled&quot;), True, False),
+        (Output(&quot;cancel_button_id&quot;, &quot;disabled&quot;), False, True),
+    ],
+    cancel=[Input(&quot;cancel_button_id&quot;, &quot;n_clicks&quot;)],
+)
+def callback(n_clicks):
+    time.sleep(2.0)
+    return [f&quot;Clicked {n_clicks} times&quot;], (n_clicks or 0) % 4
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>![Caching example](./assets/images/long-callbacks/long-callbacks-
+example-6.gif)</p>
+<p>Here you can see that it takes a few seconds to run the callback function, but
+the cached results are used after <code class="docutils literal notranslate"><span class="pre">n_clicks</span></code> cycles back around to 0. By
+interacting with the app in a separate tab, you can see that the cached
+results are shared across user sessions.</p>
+</section>
+<section id="omitting-properties-from-cache-key-calculation">
+<h3>Omitting Properties from Cache Key Calculation<a class="headerlink" href="#omitting-properties-from-cache-key-calculation" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;app.long_callback</span></code> decorator has an argument <code class="docutils literal notranslate"><span class="pre">cache_args_to_skip</span></code> that
+can be used to omit properties you specify from the cache key calculation. For
+example, you likely won’t want to include a button’s <code class="docutils literal notranslate"><span class="pre">n_clicks</span></code> property in a
+cache key because it will have a new value each time it’s clicked, and in this
+case you could use <code class="docutils literal notranslate"><span class="pre">cache_args_to_skip</span></code>.</p>
+<p>If the callback is configured with keyword arguments (<code class="docutils literal notranslate"><span class="pre">Input/State</span></code> provided
+in a dict), <code class="docutils literal notranslate"><span class="pre">cache_args_to_skip</span></code> should be a list of argument names as
+strings. Otherwise, it should be a list of argument indices as integers. See
+the [Flexible Callback Signatures chapter](/flexible-callback-
+signatures#keyword-arguments) for more information on keyword arguments.</p>
+</section>
+<section id="cache-by-function-workflows">
+<h3>Cache_by Function Workflows<a class="headerlink" href="#cache-by-function-workflows" title="Permalink to this heading">#</a></h3>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">cache_by</span></code> functions to implement a variety of caching policies.
+Here are a few examples:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">cache_by</span></code> function could return the file modification time of a dataset to automatically invalidate the cache when an input dataset changes.</p></li>
+<li><p>In a Heroku or <a class="reference external" href="https://plotly.com/dash/?utm_medium=dash_docs&amp;utm_content=long-callbacks">Dash Enterprise</a> deployment setting, the <code class="docutils literal notranslate"><span class="pre">cache_by</span></code> function could return the git hash of the app, making it possible to persist the cache across redeploys, but invalidate it when the app’s source changes.</p></li>
+<li><p>In a <a class="reference external" href="https://plotly.com/dash/?utm_medium=dash_docs&amp;utm_content=long-callbacks">Dash Enterprise</a> setting, the <code class="docutils literal notranslate"><span class="pre">cache_by</span></code> function could return user meta-data to prevent cached values from being shared across authenticated users.</p></li>
+</ul>
+</section>
+<section id="setting-an-expiration-time-for-cache-entries">
+<h3>Setting an Expiration Time for Cache Entries<a class="headerlink" href="#setting-an-expiration-time-for-cache-entries" title="Permalink to this heading">#</a></h3>
+<p>With both <code class="docutils literal notranslate"><span class="pre">CeleryLongCallbackManager</span></code> and <code class="docutils literal notranslate"><span class="pre">DiskcacheLongCallbackManager</span></code>, you
+can use the <code class="docutils literal notranslate"><span class="pre">expire</span></code> argument to limit how long a cache entry is retained for
+in the database. This is the number of seconds to keep a cache entry for after
+its last use. When an entry is accessed, the timer restarts.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>celery_app = Celery(
+    __name__, broker=&quot;redis://localhost:6379/0&quot;, backend=&quot;redis://localhost:6379/1&quot;
+)
+long_callback_manager = CeleryLongCallbackManager(celery_app, expire=100)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Long callbacks support Disk Cache/multiprocessing as a backend, which is ideal for development environments and can be easier to set up if working on Windows. For production environments, however, we recommend Celery/Redis.</p></li>
+<li><p>You can’t access previous results returned by a long callback. This functionality is available in Dash Enterprise’s <a class="reference external" href="https://plotly.com/dash/snapshot-engine/?utm_medium=dash_docs&amp;utm_content=long-callbacks">Snapshot Engine</a>.</p></li>
+<li><p><span class="xref myst">Pattern-matching dependencies</span> are not supported with long callbacks. An error is raised if a callback ID contains <code class="docutils literal notranslate"><span class="pre">ALL</span></code>, <code class="docutils literal notranslate"><span class="pre">MATCH</span></code>, or <code class="docutils literal notranslate"><span class="pre">ALL_SMALLER</span></code>.</p></li>
+<li><p><a class="reference external" href="https://dash.plotly.com/advanced-callbacks"><code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a> is not supported.</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">Input/State/Output</span></code> dependencies do not exist when the app starts (if they reference components that are generated by another callback), <code class="docutils literal notranslate"><span class="pre">suppress_callback_exceptions=True</span></code> does not prevent Dash from raising callback validation errors. We recommend the following approach:</p>
+<ol class="arabic simple">
+<li><p>The app must provide a <span class="xref myst">validation_layout</span> that contains all of the components referenced by callbacks in the app.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> argument to <code class="docutils literal notranslate"><span class="pre">app.long_callback</span></code> must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="why-job-queues">
+<h2>Why Job Queues?<a class="headerlink" href="#why-job-queues" title="Permalink to this heading">#</a></h2>
+<p>When your app is deployed in production, a finite number of CPUs serve
+requests for that app. Callbacks that take longer than 30 seconds often
+experience timeouts when deployed in production. And even callbacks that take
+less than 30 seconds can tie up all available server resources when multiple
+users access your app at the same time. When all CPUs are processing
+callbacks, new visitors to your app see a blank screen and eventually a
+“Server Timed Out” message.</p>
+<p>![Example with no job queue](./assets/images/long-
+callbacks/long_callbacks_scenario_1.png)</p>
+<p>Job queues are a solution to these timeout issues. Like the web processes
+serving your Dash app, job queues run with a dedicated number of CPU workers.
+These workers go through the jobs one at a time and aren’t subject to
+timeouts. While the job queue workers are processing the data, the web
+processes serving the Dash app and the regular callbacks display informative
+loading screens, progress bars, and the results of the job queues. End users
+never see a timeout and always see a responsive app.</p>
+<p>![Example with no job queue](./assets/images/long-
+callbacks/long_callbacks_scenario_2.png)</p>
+</section>
+<section id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.celeryproject.org/en/stable/getting-started/introduction.html">Introduction to Celery</a></p></li>
+<li><p><a class="reference external" href="https://redis.io/documentation">Redis documentation</a></p></li>
+<li><p><a class="reference external" href="http://www.grantjenks.com/docs/diskcache/tutorial.html">DiskCache tutorial</a></p></li>
+</ul>
+<p>Long callbacks were developed through Dash Labs. We received lots of feedback
+from users throughout the development. You can see the original community
+discussions around the feature here:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://community.plotly.com/t/dash-labs-0-3-0-app-long-callback-support/53719">dash-labs-0-3-0-app-long-callback-support</a></p></li>
+<li><p><a class="reference external" href="https://community.plotly.com/t/dash-labs-0-4-0-long-callback-caching-and-windows-support/54542">dash-labs-0-4-0-long-callback-caching-and-windows-support</a></p></li>
+</ul>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h2>
+<p><span class="xref myst">API Reference for long callbacks</span></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-steps">Basic Steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-simple-example">Example 1: Simple Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-disable-button-while-callback-is-running">Example 2: Disable Button While Callback Is Running</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-cancelable-callback">Example 3: Cancelable Callback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-progress-bar">Example 4: Progress Bar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-progress-bar-chart-graph">Example 5: Progress Bar Chart Graph</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-celery-redis">Example with Celery/Redis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-results">Caching Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">How It Works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-flexibility-requirements">Caching Flexibility Requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-caching">Enabling Caching</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#omitting-properties-from-cache-key-calculation">Omitting Properties from Cache Key Calculation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cache-by-function-workflows">Cache_by Function Workflows</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-an-expiration-time-for-cache-entries">Setting an Expiration Time for Cache Entries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-job-queues">Why Job Queues?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

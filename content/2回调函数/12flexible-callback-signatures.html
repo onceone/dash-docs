@@ -1,0 +1,764 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Flexible Callback &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/12flexible-callback-signatures';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/12flexible-callback-signatures.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/12flexible-callback-signatures.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Flexible Callback</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-arguments">Positional Arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword-arguments">Keyword Arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interchangeable-input-and-state">Interchangeable Input and State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-and-dictionary-argument-grouping">Tuple and Dictionary Argument Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-grouping">Tuple Grouping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionary-grouping">Dictionary Grouping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-grouping">Output Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-tuple-grouping">Output Tuple Grouping</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-dict-grouping">Output Dict Grouping</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context-with-flexible-callback-signatures">Callback Context with Flexible Callback Signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="flexible-callback">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Flexible Callback<a class="headerlink" href="#flexible-callback" title="Permalink to this heading">#</a></h1>
+<p>Signatures</p>
+<blockquote>
+<div><p>Flexible callback signatures are new in Dash 2.0! To get the most out of
+this page, make sure you’ve read about <span class="xref myst">Basic Callbacks</span>
+in the Dash Fundamentals.</p>
+</div></blockquote>
+<p>Using flexible callback signatures, introduced in Dash 2.0, you can write app
+code that is easier to manage by using keyword arguments, argument grouping
+using dicts or tuples, and by mixing <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">State</span></code> dependencies objects.</p>
+<p>In Dash 1, the <code class="docutils literal notranslate"><span class="pre">Input</span></code>, <code class="docutils literal notranslate"><span class="pre">State</span></code>, and <code class="docutils literal notranslate"><span class="pre">Output</span></code> dependency objects are always
+provided to <code class="docutils literal notranslate"><span class="pre">&#64;app.callback</span></code> as positional arguments (either positional
+arguments directly to <code class="docutils literal notranslate"><span class="pre">&#64;app.callback</span></code>, or as lists to the <code class="docutils literal notranslate"><span class="pre">inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span></code>
+and <code class="docutils literal notranslate"><span class="pre">output</span></code> keyword arguments). The order in which the dependency objects are
+provided dictates the order of the positional arguments that are passed to the
+decorated callback function. This means that the names of the callback
+function arguments don’t matter, only the order they are defined in.</p>
+<section id="positional-arguments">
+<h2>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this heading">#</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    Output(...), Output(...),
+    Input(...), Input(...),
+    State(...)
+)
+def callback(a, b, c):
+    return [a + b, b + c]
+
+
+@callback(
+    [Output(...), Output(...)],
+    [Input(...), Input(...)],
+    [State(...)]
+)
+def callback(a, b, c):
+    return [a + b, b + c]
+
+
+@callback(
+    output=[Output(...), Output(...)],
+    inputs=[Input(...), Input(...)],
+    state=[State(...)]
+)
+def callback(a, b, c):
+    return [a + b, b + c]
+</pre></div>
+</div>
+</section>
+<section id="keyword-arguments">
+<h2>Keyword Arguments<a class="headerlink" href="#keyword-arguments" title="Permalink to this heading">#</a></h2>
+<p>Callback functions can register to be called with named keyword arguments. You
+can do this by passing dictionaries to the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code> arguments of
+<code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code>. In this case, the order of the callback’s function arguments
+doesn’t matter. All that matters is that the keys of the dependency dictionary
+match the function argument names.</p>
+<p>Here is an example of using keyword <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">state</span></code> arguments:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), Output(...)],
+    inputs=dict(a=Input(...), b=Input(...)),
+    state=dict(c=State(...))
+)
+def callback(b, c, a):
+    return [a + b, b + c]
+</pre></div>
+</div>
+<p>You can also specify the output of a callback function using named arguments.
+In this case the function is expected to return a dictionary with keys
+matching the keys in the dictionary passed to the <code class="docutils literal notranslate"><span class="pre">output</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code>. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=dict(x=Output(...), y=Output(...)),
+    inputs=dict(a=Input(...), b=Input(...)),
+    state=dict(c=State(...))
+)
+def callback(b, c, a):
+    return dict(x=a + b, y=b + c)
+</pre></div>
+</div>
+</section>
+<section id="interchangeable-input-and-state">
+<h2>Interchangeable Input and State<a class="headerlink" href="#interchangeable-input-and-state" title="Permalink to this heading">#</a></h2>
+<p>Flexible Callback Signatures mean you can freely mix <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">State</span></code>
+dependencies objects. This means that <code class="docutils literal notranslate"><span class="pre">State</span></code> dependencies can be included in
+the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> argument, and <code class="docutils literal notranslate"><span class="pre">Input</span></code> dependencies can be included in the <code class="docutils literal notranslate"><span class="pre">state</span></code>
+argument. We recommended you put both <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">State</span></code> dependencies in
+<code class="docutils literal notranslate"><span class="pre">inputs</span></code> rather than using the <code class="docutils literal notranslate"><span class="pre">state</span></code> keyword argument. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=dict(x=Output(...), y=Output(...)),
+    inputs=dict(a=Input(...), b=Input(...), c=State(...)),
+)
+def callback(b, c, a):
+    return dict(x=a + b, y=b + c)
+</pre></div>
+</div>
+</section>
+<section id="tuple-and-dictionary-argument-grouping">
+<h2>Tuple and Dictionary Argument Grouping<a class="headerlink" href="#tuple-and-dictionary-argument-grouping" title="Permalink to this heading">#</a></h2>
+<p>You can also combine multiple <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">State</span></code> dependency values into a
+single function argument.</p>
+<section id="tuple-grouping">
+<h3>Tuple Grouping<a class="headerlink" href="#tuple-grouping" title="Permalink to this heading">#</a></h3>
+<p>You can group dependency values in a tuple. Here the <code class="docutils literal notranslate"><span class="pre">ab</span></code> keyword function
+argument is a tuple consisting of the values of two <code class="docutils literal notranslate"><span class="pre">Input</span></code> dependency values.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), Output(...)],
+    inputs=dict(
+        ab=(Input(...), Input(...)),
+        c=Input(...)
+    )
+)
+def callback(ab, c):
+    a, b = ab
+    return [a + b, b + c]
+</pre></div>
+</div>
+<p>Or with positional indexing</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), Output(...)],
+    inputs=[(Input(...), Input(...)), Input(...)]
+)
+def callback(ab, c):
+    a, b = ab
+    return [a + b, b + c]
+</pre></div>
+</div>
+</section>
+<section id="dictionary-grouping">
+<h3>Dictionary Grouping<a class="headerlink" href="#dictionary-grouping" title="Permalink to this heading">#</a></h3>
+<p>Similarly, you can group multiple <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">State</span></code> values together into a
+dictionary of values when passed to the function. Here, the <code class="docutils literal notranslate"><span class="pre">ab</span></code> argument is
+passed to the function as a dict containing <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;b&quot;</span></code> keys with values
+corresponding to the <code class="docutils literal notranslate"><span class="pre">Input</span></code> dependency values in the <code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code>
+specification.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), Output(...)],
+    inputs=dict(
+        ab=dict(a=Input(...), b=Input(...)),
+        c=Input(...)
+    )
+)
+def callback(ab, c):
+    a, b = ab[&quot;a&quot;], ab[&quot;b&quot;]
+    return [a + b, b + c]
+</pre></div>
+</div>
+<p>You can also nest these groupings arbitrarily deep.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), Output(...)],
+    args=dict(
+        abc=dict(a=Input(...), b=(Input(...), Input(...)))
+    )
+)
+def param_fn(abc):
+    a, (b, c) = abc[&quot;a&quot;], abc[&quot;b&quot;]
+    return [a + b, b + c]
+</pre></div>
+</div>
+</section>
+<section id="output-grouping">
+<h3>Output Grouping<a class="headerlink" href="#output-grouping" title="Permalink to this heading">#</a></h3>
+<p>You can use the same tuple and dict groupings for the function output values
+as well.</p>
+<section id="output-tuple-grouping">
+<h4>Output Tuple Grouping<a class="headerlink" href="#output-tuple-grouping" title="Permalink to this heading">#</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), (Output(...), Output(...))],
+    inputs=dict(
+        a=Input(...),
+        b=Input(...),
+        c=Input(...),
+    )
+)
+def callback(a, b, c):
+    return [a, (a + b, b + c)]
+</pre></div>
+</div>
+</section>
+<section id="output-dict-grouping">
+<h4>Output Dict Grouping<a class="headerlink" href="#output-dict-grouping" title="Permalink to this heading">#</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    output=[Output(...), dict(x=Output(...), y=Output(...))],
+    inputs=dict(
+        a=Input(...),
+        b=Input(...),
+        c=Input(...),
+    )
+)
+def callback(a, b, c):
+    return [a, dict(x=a+b, y=b+c)]
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="callback-context-with-flexible-callback-signatures">
+<h2>Callback Context with Flexible Callback Signatures<a class="headerlink" href="#callback-context-with-flexible-callback-signatures" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">dash.callback_context.args_grouping</span></code> is new in Dash 2.4</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">dash.callback_context.args_grouping</span></code> (or <code class="docutils literal notranslate"><span class="pre">dash.ctx.args_grouping</span></code>) is a dict
+of the inputs used with flexible callback signatures and helps simplify
+complex callbacks that have many inputs.</p>
+<p>When a callback is triggered, we can use <code class="docutils literal notranslate"><span class="pre">args_grouping</span></code> to get the following
+information about our inputs:</p>
+<ul class="simple">
+<li><p>“id”: the component ID. If it’s a pattern matching ID, it will be a dict.</p></li>
+<li><p>“id_str”: for pattern matching IDs, it’s the stringified dict ID with no white spaces.</p></li>
+<li><p>“property”: the component property used in the callback.</p></li>
+<li><p>“value”: the value of the component property at the time the callback was fired.</p></li>
+<li><p>“triggered”: a boolean indicating whether this input triggered the callback.</p></li>
+</ul>
+<p>In the following example, in the callback, we capture the dictionary of inputs
+with <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">=</span> <span class="pre">ctx.args_grouping.all_inputs</span></code>. We then check if <code class="docutils literal notranslate"><span class="pre">btn1</span></code> triggered the
+callback (by checking if <code class="docutils literal notranslate"><span class="pre">c.btn1.triggered</span></code> is True) and if it did we return
+<code class="docutils literal notranslate"><span class="pre">btn1</span></code>’s value: <code class="docutils literal notranslate"><span class="pre">c.btn1.value</span></code>. We do the same for <code class="docutils literal notranslate"><span class="pre">btn2</span></code> and <code class="docutils literal notranslate"><span class="pre">btn3</span></code>. Note how
+we only need to pass one argument to the <code class="docutils literal notranslate"><span class="pre">display</span></code> function.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    Output(&quot;container&quot;, &quot;children&quot;),
+    inputs={
+        &quot;all_inputs&quot;: {
+            &quot;btn1&quot;: Input(&quot;btn-1&quot;, &quot;n_clicks&quot;),
+            &quot;btn2&quot;: Input(&quot;btn-2&quot;, &quot;n_clicks&quot;),
+            &quot;btn3&quot;: Input(&quot;btn-3&quot;, &quot;n_clicks&quot;)
+        }
+    },
+)
+def display(all_inputs):
+    c = ctx.args_grouping.all_inputs
+    if c.btn1.triggered:
+        return f&quot;Button 1 clicked {c.btn1.value} times&quot;
+    elif c.btn2.triggered:
+        return f&quot;Button 2 clicked {c.btn2.value} times&quot;
+    elif c.btn3.triggered:
+        return f&quot;Button 3 clicked {c.btn3.value} times&quot;
+</pre></div>
+</div>
+</section>
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Providing the <code class="docutils literal notranslate"><span class="pre">state</span></code> keyword argument to <code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code> is no longer supported unless the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> keyword argument is also provided.</p></li>
+<li><p>Clientside callbacks are not supported.</p></li>
+</ul>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h2>
+<p><span class="xref myst">app.callback API reference</span></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-arguments">Positional Arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keyword-arguments">Keyword Arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interchangeable-input-and-state">Interchangeable Input and State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-and-dictionary-argument-grouping">Tuple and Dictionary Argument Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tuple-grouping">Tuple Grouping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionary-grouping">Dictionary Grouping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-grouping">Output Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-tuple-grouping">Output Tuple Grouping</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#output-dict-grouping">Output Dict Grouping</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context-with-flexible-callback-signatures">Callback Context with Flexible Callback Signatures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

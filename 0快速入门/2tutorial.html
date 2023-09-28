@@ -1,0 +1,1093 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Dash in 20 Minutes &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0快速入门/2tutorial';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="A Minimal Dash App" href="1minimal-app.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Name of Part 1</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0.%E5%AE%89%E8%A3%85.html"> Dash Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1minimal-app.html"> A Minimal Dash App</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Dash in 20 Minutes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F0快速入门/2tutorial.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/0快速入门/2tutorial.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Dash in 20 Minutes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">Hello World</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Hello World: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">连接数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">连接数据: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">可视化数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">可视化数据: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">控件和回调</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">控制:代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">设计你的应用</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#html-and-css">HTML and CSS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-design-kit-ddk">Dash Design Kit (DDK)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-bootstrap-components">Dash Bootstrap Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-mantine-components">Dash Mantine Components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">下一步</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dash-in-20-minutes">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Dash in 20 Minutes<a class="headerlink" href="#dash-in-20-minutes" title="Permalink to this heading">#</a></h1>
+<p>在本教程结束时，您将了解Dash的基本构建块，您将知道如何构建此应用程序</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-final-radio-item-example&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-final-graph-example&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-final-graph-example&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-final-radio-item-example&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>My First App with Data, Graph, and Controls
+我的第一个应用程序与数据，图形和控件</p>
+<hr class="docutils" />
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<section id="hello-world">
+<h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this heading">#</a></h2>
+<p>使用Dash构建和启动应用程序只需7行代码即可完成</p>
+<p>在计算机上打开Python IDE，用下面的代码创建一个“<a class="reference external" href="http://app.py">app.py</a>”文件，如果还没有安装Dash的话，安装Dash。要启动应用程序，在终端输入命令’ python <a class="reference external" href="http://app.py">app.py</a> ‘。然后，进入http链接</p>
+<p>或者，在Dash 2.11或更高版本中，您可以运行此应用程序和本文档中的其他示例</p>
+<p>下面的代码创建了一个非常小的“Hello World”Dash应用</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hello World</p>
+<p>Follow this example gif (using VS Code) if you are not sure how to set up the
+app:</p>
+<p><img alt="launch app" src="https://typora-blog-image-1311260816.cos.ap-nanjing.myqcloud.com/typora/dash-in-20-tutorial.gif" /></p>
+<p><img alt="img" src="https://dash.plotly.com/assets/images/dash_in_20/dash-in-20-tutorial.gif" /></p>
+<p><img alt="image-20230912104816543" src="https://typora-blog-image-1311260816.cos.ap-nanjing.myqcloud.com/typora/image-20230912104816543.png" /></p>
+<p><a class="reference external" href="https://dash.plotly.com/assets/images/dash_in_20/dash-in-20-tutorial.gif">https://dash.plotly.com/assets/images/dash_in_20/dash-in-20-tutorial.gif</a></p>
+<section id="id1">
+<h3>Hello World: 代码分解<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>在创建Dash应用程序时，您几乎总是会使用上面的import语句。当您创建更高级的Dash应用程序时，您将导入更多的包</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这一行被称为Dash构造函数，负责初始化您的应用程序。对于您创建的任何Dash应用程序，它几乎总是相同的</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>应用程序布局表示将在web浏览器中显示的应用程序组件，通常包含在’ html.Div ‘中。在这个例子中，只添加了一个组件:另一个’ html.Div ‘。Div有一些属性，比如’ children ‘，我们用它来向页面添加文本内容:”Hello World “</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这些行是用于运行应用程序的，对于你创建的任何Dash应用程序，它们几乎总是相同的</p>
+</section>
+</section>
+<section id="id2">
+<h2>连接数据<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>有很多方法可以将数据添加到应用程序中:api、外部数据库、本地“。txt”文件、JSON文件等等。在本例中，我们将重点介绍从CSV工作表中合并数据的最常用方法之一</p>
+<p>用下面的代码替换上一节中的“<a class="reference external" href="http://app.py">app.py</a>”代码。然后，安装pandas (’ pip install pandas ‘)并启动应用程序</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>My First App with Data</p>
+<section id="id3">
+<h3>连接数据: 代码分解<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>我们导入’ dash_table ‘模块来在dash DataTable中显示数据。我们还导入pandas库以读取CSV工作表数据</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>这里我们将CSV表读入pandas dataframe。这将使切片、过滤和检查数据变得更容易</p></li>
+<li><p>如果您更喜欢使用计算机上(而不是在线)的CSV表，请确保将其保存在包含“<a class="reference external" href="http://app.py">app.py</a>”文件的同一文件夹中。然后，将这行代码更新为:’ df = pd.read_csv(“NameOfYourFile.csv”)</p></li>
+<li><p>如果你使用的是Excel表格，请确保“pip install openpyxl”。然后，将这行代码更新为:’ df = pd.read_excel(‘NameOfYourFile.xlsx’，工作表名称=’Sheet1’)</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Tip</strong> : You can read the [pandas docs](<a class="reference external" href="https://pandas.pydata.org/pandas-">https://pandas.pydata.org/pandas-</a>
+docs/stable/reference/io.html) on reading data if your data is in a
+different format, or consider using another Python library if you are
+connecting to a specific database type or file format. For example, if
+you’re considering using Databricks as a backend for your Dash app, you may
+review their Python documentation for recommendations on how to connect.</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>除了应用标题之外，我们还添加了DataTable组件，并将pandas数据框读入表中</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>可视化数据<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Plotly绘图库有超过50种图表类型可供选择(<a class="reference external" href="https://plotly.com/python/">https://plotly.com/python/</a>)。在这个例子中，我们将使用直方图</p>
+<p>用下面的代码替换上一节中的“<a class="reference external" href="http://app.py">app.py</a>”代码</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data and a Graph&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>My First App with Data and a Graph</p>
+<p>AsiaEuropeAfricaAmericasOceania01020304050607080</p>
+<p>continentavg of lifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<section id="id5">
+<h3>可视化数据: 代码分解<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>我们导入“dcc”模块(dcc代表Dash Core Components)。该模块包括一个名为“dcc”的图形组件。，用于呈现交互式图形</p></li>
+<li><p>我们还导入了“plot”。Express的库来构建交互图形</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># App layout</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data and a Graph&#39;</span><span class="p">),</span>
+        <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">))</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>使用“plot”。express库中，我们构建了直方图，并将其赋值给dcc.Graph的“figure”属性。这将在我们的应用程序中显示直方图</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h2>控件和回调<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>到目前为止，您已经构建了一个显示表格数据和图形的静态应用程序。然而，当你开发更复杂的Dash应用程序时，你可能会希望给应用程序用户更多的自由来与应用程序<strong>交互</strong>，并更深入地探索数据。要实现这一点，你需要<strong>使用回调函数向应用程序添加控件</strong></p>
+<p>在这个例子中，我们将添加<strong>单选按钮</strong>到应用程序布局。然后，我们将构建回调来创建单选按钮和直方图之间的交互</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;controls-and-radio-item&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;controls-and-graph&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;controls-and-graph&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;controls-and-radio-item&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>My First App with Data, Graph, and Controls</p>
+<hr class="docutils" />
+<p>AsiaEuropeAfricaAmericasOceania01020304050607080</p>
+<p>continentavg of lifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<section id="id7">
+<h3>控制:代码分解<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>我们像在前一节中那样导入’ dcc ‘，以使用’ dcc. graph ‘。在这个例子中，我们需要’ dcc ‘代替’ dcc ‘。图形’以及单选按钮组件’ dcc。RadioItems</p></li>
+<li><p>为了在Dash应用中使用回调，我们导入了’ callback ‘模块和回调中常用的两个参数:’ Output ‘和’ Input ‘</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Hr</span><span class="p">(),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;controls-and-radio-item&#39;</span><span class="p">),</span>
+    <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;controls-and-graph&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>注意，我们将’ RadioItems ‘组件添加到布局中，就在DataTable的正上方。有三个选项，每个单选按钮一个。’ lifeExp ‘选项被分配给’ value ‘属性，使其成为当前选择的值</p></li>
+<li><p>“RadioItems”和“Graph”组件都被赋予了“id”名称:这些名称将被回调函数用来标识组件</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;controls-and-graph&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;controls-and-radio-item&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>我们应用程序的输入和输出是特定组件的属性。在这个例子中，我们的输入是ID为“controls-and-radio-item”的组件的“value”属性。如果你回头看看布局，你会发现这是当前的“lifeExp”。我们的输出是ID为“controls-and-graph”的组件的“figure”属性，它目前是一个空字典(空图)</p></li>
+<li><p>回调函数的参数’ colchosen ‘引用了输入’ lifeExp ‘的组件属性。我们在回调函数中构建直方图，将选择的单选项分配给直方图的y轴属性。这意味着每次用户选择一个新的单选项时，都会重建图形并更新图形的y轴</p></li>
+<li><p>最后，我们在函数的末尾返回直方图。这将直方图分配给“dcc”的“figure”属性。，从而在应用程序中显示该图形</p></li>
+</ul>
+</section>
+</section>
+<section id="id8">
+<h2>设计你的应用<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<p>上一节中的示例使用Dash HTML组件构建了一个简单的应用程序布局，但是你可以将应用程序设计得更专业。本节将简要介绍可以用来增强Dash应用程序布局风格的多种工具</p>
+<ul class="simple">
+<li><p>HTML and CSS</p></li>
+<li><p>Dash Design Kit (DDK)</p></li>
+<li><p>Dash Bootstrap Components</p></li>
+<li><p>Dash Mantine Components</p></li>
+</ul>
+<section id="html-and-css">
+<h3>HTML and CSS<a class="headerlink" href="#html-and-css" title="Permalink to this heading">#</a></h3>
+<p>HTML和CSS是在web上呈现内容的最低级别的接口。HTML是一组组件，CSS是应用于这些组件的一组样式。CSS样式可以通过’ style ‘属性在组件中应用，也可以通过’ className ‘属性将其定义为单独的CSS文件，如下面的例子所示</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app - incorporate css</span>
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">,</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;textAlign&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;fontSize&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">],</span>
+                        <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span>
+                        <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-radio-buttons-final&#39;</span><span class="p">)</span>
+    <span class="p">]),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;six columns&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;overflowX&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span>
+        <span class="p">]),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;six columns&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;histo-chart-final&#39;</span><span class="p">)</span>
+        <span class="p">])</span>
+    <span class="p">])</span>
+<span class="p">])</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;histo-chart-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-radio-buttons-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>My First App with Data, Graph, and Controls</p>
+<p>AsiaEuropeAfricaAmericasOceania01020304050607080</p>
+<p>continentavg of lifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="dash-design-kit-ddk">
+<h3>Dash Design Kit (DDK)<a class="headerlink" href="#dash-design-kit-ddk" title="Permalink to this heading">#</a></h3>
+<p>Dash设计工具包是我们的高级UI框架，是专门为Dash构建的。使用Dash Design Kit，您不需要使用HTML或CSS。默认情况下，应用程序是移动响应的，所有内容都是主题化的。Dash Design Kit被授权为Dash Enterprise的一部分，并得到Plotly的官方支持</p>
+<p>下面是一个使用Dash Design Kit的示例(请注意，如果没有Dash Enterprise许可证，您将无法运行此示例)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">dash_design_kit</span> <span class="k">as</span> <span class="nn">ddk</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">ddk</span><span class="o">.</span><span class="n">App</span><span class="p">([</span>
+    <span class="n">ddk</span><span class="o">.</span><span class="n">Header</span><span class="p">(</span><span class="n">ddk</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">)),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">],</span>
+                    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span>
+                    <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-ddk-radio-items-final&#39;</span><span class="p">),</span>
+    <span class="n">ddk</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+        <span class="n">ddk</span><span class="o">.</span><span class="n">Card</span><span class="p">([</span>
+            <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;overflowX&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span>
+        <span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+        <span class="n">ddk</span><span class="o">.</span><span class="n">Card</span><span class="p">([</span>
+            <span class="n">ddk</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-placeholder-ddk-final&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+    <span class="p">]),</span>
+
+<span class="p">])</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;graph-placeholder-ddk-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-ddk-radio-items-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>My First App with Data, Graph, and Controls</p>
+<p>p</p>
+<p>AsiaEuropeAfricaAmericasOceania01020304050607080</p>
+<p>continentavg of lifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="dash-bootstrap-components">
+<h3>Dash Bootstrap Components<a class="headerlink" href="#dash-bootstrap-components" title="Permalink to this heading">#</a></h3>
+<p>Dash Bootstrap是一个社区维护的库，建立在Bootstrap组件系统之上。虽然它不是由Plotly官方维护或支持，但Dash Bootstrap是构建优雅应用程序布局的强大方式。注意，我们首先定义一行，然后使用’ dbc定义行内列的宽度。行’和’ dbc。上校的组件</p>
+<p>要使下面的应用程序成功运行，请确保安装Dash Bootstrap Components库</p>
+<blockquote>
+<div><p>Read more about the Dash Bootstrap Components in the [third-party
+documentation](https://dash-bootstrap-
+<a class="reference external" href="http://components.opensource.faculty.ai/docs/components/">components.opensource.faculty.ai/docs/components/</a>).</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">dash_bootstrap_components</span> <span class="k">as</span> <span class="nn">dbc</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app - incorporate a Dash Bootstrap theme</span>
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">CERULEAN</span><span class="p">]</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
+    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">,</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;text-primary text-center fs-3&quot;</span><span class="p">)</span>
+    <span class="p">]),</span>
+
+    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">]],</span>
+                        <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span>
+                        <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;radio-buttons-final&#39;</span><span class="p">)</span>
+    <span class="p">]),</span>
+
+    <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
+            <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;overflowX&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span>
+        <span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-first-graph-final&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="p">]),</span>
+
+<span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-first-graph-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;radio-buttons-final&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the app</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>My First App with Data, Graph, and Controls</p>
+<p>p</p>
+<p>AsiaEuropeAfricaAmericasOceania01020304050607080</p>
+<p>continentavg of lifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="dash-mantine-components">
+<h3>Dash Mantine Components<a class="headerlink" href="#dash-mantine-components" title="Permalink to this heading">#</a></h3>
+<p>Dash Mantine是一个社区维护的库，建立在Mantine组件系统之上。虽然它不是由Plotly团队正式维护或支持，但Dash Mantine是另一种自定义应用程序布局的强大方式。Dash Mantine Components使用Grid模块来构建布局。我们不定义行，而是定义dmc。Grid ‘，我们在其中插入’ dmc。并通过给’ span ‘属性赋值一个数字来定义它们的宽度</p>
+<p>要使下面的应用程序成功运行，请确保安装Dash Mantine Components库
+Components library: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">dash-mantine-components</span></code></p>
+<blockquote>
+<div><p>Read more about the Dash Mantine Components in the <a class="reference external" href="https://www.dash-mantine-components.com/">third-party
+documentation</a>.</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import packages</span>
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">dash_mantine_components</span> <span class="k">as</span> <span class="nn">dmc</span>
+
+<span class="c1"># Incorporate data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the app - incorporate a Dash Mantine theme</span>
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="n">dmc</span><span class="o">.</span><span class="n">theme</span><span class="o">.</span><span class="n">DEFAULT_COLORS</span><span class="p">]</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="c1"># App layout</span>
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">dmc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
+    <span class="n">dmc</span><span class="o">.</span><span class="n">Title</span><span class="p">(</span><span class="s1">&#39;My First App with Data, Graph, and Controls&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;h3&quot;</span><span class="p">),</span>
+    <span class="n">dmc</span><span class="o">.</span><span class="n">RadioGroup</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">dmc</span><span class="o">.</span><span class="n">Radio</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>  <span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span> <span class="s1">&#39;gdpPercap&#39;</span><span class="p">]],</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;my-dmc-radio-item&#39;</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="s1">&#39;lifeExp&#39;</span><span class="p">,</span>
+            <span class="n">size</span><span class="o">=</span><span class="s2">&quot;sm&quot;</span>
+        <span class="p">),</span>
+    <span class="n">dmc</span><span class="o">.</span><span class="n">Grid</span><span class="p">([</span>
+        <span class="n">dmc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
+            <span class="n">dash_table</span><span class="o">.</span><span class="n">DataTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">),</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">style_table</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;overflowX&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">})</span>
+        <span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+        <span class="n">dmc</span><span class="o">.</span><span class="n">Col</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="p">{},</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-placeholder&#39;</span><span class="p">)</span>
+        <span class="p">],</span> <span class="n">span</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span>
+    <span class="p">]),</span>
+
+<span class="p">],</span> <span class="n">fluid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add controls to build the interaction</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;graph-placeholder&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="n">component_id</span><span class="o">=</span><span class="s1">&#39;my-dmc-radio-item&#39;</span><span class="p">,</span> <span class="n">component_property</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">col_chosen</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col_chosen</span><span class="p">,</span> <span class="n">histfunc</span><span class="o">=</span><span class="s1">&#39;avg&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+<span class="c1"># Run the App</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Dash Mantine app" src="0快速入门/assets/images/dash_in_20/dash_mantine_images.png" /></p>
+</section>
+</section>
+<section id="id9">
+<h2>下一步<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<p>恭喜你!您已经学会了构建和设计您的第一个Dash应用程序。这是令人兴奋的Dash学习路径的第一步，它将为您提供构建复杂的Python分析应用程序的技能和工具</p>
+<p>为了继续您的学习之旅，我们建议您查看以下资源</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dash-example-index.herokuapp.com">100 simple examples</a> of Dash components interacting with Plotly graphs</p></li>
+<li><p><span class="xref myst">Dash Core Components</span></p></li>
+</ul>
+<blockquote>
+<div><p>These docs are a Dash app running on Dash Enterprise on Azure Kubernetes
+Service.</p>
+<p>Write, deploy, and scale Dash apps on a Dash Enterprise Kubernetes cluster.</p>
+<p><a class="reference external" href="https://plotly.com/dash/?utm_medium=dash_docs&amp;utm_content=tutorial">Learn
+More</a> |
+[Pricing](<a class="reference external" href="https://plotly.com/get-">https://plotly.com/get-</a>
+pricing/?utm_medium=dash_docs&amp;utm_content=tutorial) | [Dash Enterprise
+Demo](<a class="reference external" href="https://plotly.com/get-">https://plotly.com/get-</a>
+demo/?utm_medium=dash_docs&amp;utm_content=tutorial) | <a class="reference external" href="https://plotly.com/dash/?utm_medium=dash_docs&amp;utm_content=tutorial">Dash Enterprise
+Overview</a></p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./0快速入门"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1minimal-app.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"> A Minimal Dash App</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">Hello World</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Hello World: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">连接数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">连接数据: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">可视化数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">可视化数据: 代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">控件和回调</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">控制:代码分解</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">设计你的应用</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#html-and-css">HTML and CSS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-design-kit-ddk">Dash Design Kit (DDK)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-bootstrap-components">Dash Bootstrap Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-mantine-components">Dash Mantine Components</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">下一步</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

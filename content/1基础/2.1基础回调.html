@@ -1,0 +1,1112 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>基础回调 &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/1基础/2.1基础回调';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="交互可视化" href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html" />
+    <link rel="prev" title="布局" href="1.0%E5%B8%83%E5%B1%80.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/1基础/2.1基础回调.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/1基础/2.1基础回调.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>基础回调</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash">简单的交互式Dash应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-app-layout-with-figure-and-slider">Dash App Layout With Figure and Slider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多输出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">链式回调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-app-with-state">Dash App With State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id">将组件传递给回调函数而不是id</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>基础回调<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>This is the 2nd chapter of the <span class="xref myst">Dash Fundamentals</span>. The <span class="xref myst">previous
+chapter</span> covered the Dash app <code class="docutils literal notranslate"><span class="pre">layout</span></code> and the <span class="xref myst">next
+chapter</span> covers interactive graphing. Just getting
+started? Make sure to <span class="xref myst">install the necessary dependencies</span>.</p>
+</div></blockquote>
+<p>在<span class="xref myst">上一章</span>中，我们学习了’app’。“布局”描述了应用的外观，是一个组件的层次树。Dash HTML组件(‘Dash.HTML’)模块为所有HTML标签提供了类，关键字参数描述了HTML属性，如’style’， ‘className’和’id’。Dash核心组件(‘Dash.dcc’)模块生成高级组件，如控件和图形</p>
+<p>本章描述了如何使用回调函数来创建Dash应用程序:当输入组件的属性发生变化时，Dash会自动调用这些函数，以便更新另一个组件(输出)中的某些属性</p>
+<p>为了获得最佳的用户交互和图表加载性能，生产Dash应用程序应该考虑使用<a class="reference external" href="https://plotly.com/dash/job-queue/?utm_medium=dash_docs&amp;utm_content=basic-callbacks">Job Queue</a>,
+[HPC](<a class="reference external" href="https://plotly.com/dash/big-data-for-">https://plotly.com/dash/big-data-for-</a> python)[Datashader](<a class="reference external" href="https://plotly.com/dash/big-data-for-">https://plotly.com/dash/big-data-for-</a> python/?utm medium=dash docs&amp;utm content=basic-callbacks)，以及dash Enterprise的水平扩展能力</p>
+<p>让我们从交互式Dash应用程序的一个简单示例开始</p>
+<section id="dash">
+<h2>简单的交互式Dash应用<a class="headerlink" href="#dash" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>If you’re using Dash Enterprise’s <a class="reference external" href="https://plotly.com/dash/workspaces/?utm_medium=dash_docs&amp;utm_content=basic-callbacks">Data Science Workspaces</a>,
+copy &amp; paste the below code into your Workspace (<a class="reference external" href="https://plotly.com/dash/workspaces/?utm_medium=dash_docs&amp;utm_content=basic-callbacks#screencast">see video</a>.
+<a class="reference external" href="https://go.plotly.com/company-lookup?utm_medium=dash_docs&amp;utm_content=basic-callbacks">Find out if your company is using Dash Enterprise</a></p>
+</div></blockquote>
+<div class="highlight-python​ notranslate"><div class="highlight"><pre><span></span>from dash import Dash, dcc, html, Input, Output, callback
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.H6(&quot;Change the value in the text box to see callbacks in action!&quot;),
+    html.Div([
+        &quot;Input: &quot;,
+        dcc.Input(id=&#39;my-input&#39;, value=&#39;initial value&#39;, type=&#39;text&#39;)
+    ]),
+    html.Br(),
+    html.Div(id=&#39;my-output&#39;),
+
+])
+
+
+@callback(
+    Output(component_id=&#39;my-output&#39;, component_property=&#39;children&#39;),
+    Input(component_id=&#39;my-input&#39;, component_property=&#39;value&#39;)
+)
+def update_output_div(input_value):
+    return f&#39;Output: {input_value}&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">###### 更改文本框中的值以查看回调操作</span>
+
+<span class="n">Input</span><span class="p">:</span>
+
+  
+
+<span class="n">Output</span><span class="p">:</span> <span class="n">initial</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>让我们分析一下这个例子:</p>
+<ol class="arabic simple">
+<li><p>我们应用程序的“输入”和“输出”被描述为“&#64;callback”装饰器的参数</p></li>
+</ol>
+<!-- Learn more about using the `@callback` decorator. -->
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a. 通过编写这个装饰器，我们告诉Dash在“输入”组件(文本框)的值发生变化时为我们调用这个函数，以便更新页面上“输出”组件的子组件(HTML div)
+
+b. 你可以使用&#39;@callback&#39;装饰器包装的函数的任何名称。约定是名称描述回调输出
+
+c. 您可以为函数参数使用任何名称，但是您必须在回调函数中使用与定义中相同的名称，就像在常规Python函数中一样。默认情况下，参数是有位置的:首先是&#39; Input &#39;项，然后是&#39; State &#39;项，它们的顺序与装饰器中的顺序相同。您还可以选择使用命名关键字参数，而不是位置参数。参见[灵活回调签名章节](/ Flexible - Callback - Signatures)了解更多信息
+
+d. 你必须使用与应用中Dash组件相同的“id”。当把它作为&#39; @callback &#39;装饰器的输入或输出时
+
+e. &#39;@callback&#39;装饰器需要位于回调函数声明的正上方。如果在装饰器和函数定义之间有空白行，则回调注册将不会成功
+
+f. 如果你对装饰器语法在底层意味着什么感到好奇，你可以阅读[这个StackOverflow答案](https://stackoverflow.com/questions/739654/how-to-make-a-chain-of- function-decorators/1594484#1594484)，并通过阅读[PEP 318—decorators for Functions and Methods](https://www.python.org/dev/peps/pep-0318/#current-syntax)了解更多关于装饰器的信息
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>在Dash中，应用程序的输入和输出只是特定组件的属性。在这个例子中，我们的输入是ID为“my-input”的组件的“value”属性。我们的输出是ID为“my-output”的组件的“children”属性</p></li>
+<li><p>每当输入属性发生变化时，回调装饰器包装的函数将被自动调用。Dash用输入属性的新值作为参数提供这个回调函数，Dash用函数返回的任何值更新输出组件的属性</p></li>
+<li><p>‘component id’和’component property’关键字是可选的(每个对象只有两个参数)。为了清晰起见，在本示例中包含了它们，但为了简洁和可读性，其余文档将省略它们</p></li>
+<li><p>不要混淆’dash.dependencies.Input’对象和’dcc.input’对象。输入的对象。前者仅在这些回调定义中使用，后者是一个实际的组件</p></li>
+<li><p>注意，我们没有为’layout’中’my-output’组件的’children’属性设置值。当Dash应用程序启动时，它会使用输入组件的初始值自动调用所有回调函数，以填充输出组件的初始状态。在本例中，如果您将div组件指定为’html.Div(id=’my-output’， children=’Hello world’)’，它会在应用程序启动时被覆盖</p></li>
+</ol>
+<p>这有点像用Microsoft Excel编程:每当一个单元格(输入)发生变化时，依赖于该单元格(输出)的所有单元格都会自动更新。这被称为“响应式编程”，因为输出会自动对输入中的变化做出反应</p>
+<p>还记得每个组件是如何完全通过一组关键字参数来描述的吗?我们在Python中设置的这些参数成为组件的属性，这些属性现在很重要。通过Dash的交互性，我们可以使用回调动态更新这些属性。我们经常会更新HTML组件的’ children’属性来显示新的文本(记住’children’负责组件的内容)或者’dcc’的’figure’属性。图形组件显示新数据。我们还可以更新组件的“样式”，甚至是可用的<code class="docutils literal notranslate"><span class="pre">dcc.Dropdown</span></code>组件“样式”</p>
+<hr class="docutils" />
+<p>让我们看另一个例子，用<code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code>更新<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>.</p>
+</section>
+<section id="dash-app-layout-with-figure-and-slider">
+<h2>Dash App Layout With Figure and Slider<a class="headerlink" href="#dash-app-layout-with-figure-and-slider" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python​ notranslate"><div class="highlight"><pre><span></span>​     from dash import Dash, dcc, html, Input, Output, callback
+​    import plotly.express as px
+​    
+    import pandas as pd
+    
+    df = pd.read_csv(&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;)
+    
+    app = Dash(__name__)
+    
+    app.layout = html.Div([
+        dcc.Graph(id=&#39;graph-with-slider&#39;),
+        dcc.Slider(
+            df[&#39;year&#39;].min(),
+            df[&#39;year&#39;].max(),
+            step=None,
+            value=df[&#39;year&#39;].min(),
+            marks={str(year): str(year) for year in df[&#39;year&#39;].unique()},
+            id=&#39;year-slider&#39;
+        )
+    ])
+
+
+​    @callback(
+​        Output(&#39;graph-with-slider&#39;, &#39;figure&#39;),
+​        Input(&#39;year-slider&#39;, &#39;value&#39;))
+​    def update_figure(selected_year):
+​        filtered_df = df[df.year == selected_year]
+​    
+        fig = px.scatter(filtered_df, x=&quot;gdpPercap&quot;, y=&quot;lifeExp&quot;,
+                         size=&quot;pop&quot;, color=&quot;continent&quot;, hover_name=&quot;country&quot;,
+                         log_x=True, size_max=55)
+    
+        fig.update_layout(transition_duration=500)
+    
+        return fig
+
+
+​
+​    if __name__ == &#39;__main__&#39;:
+​        app.run(debug=True)
+</pre></div>
+</div>
+<p>2345678910002345678910k23456789100k30354045505560657075</p>
+<p>continentAsiaEuropeAfricaAmericasOceaniagdpPercaplifeExp</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>195219571962196719721977198219871992199720022007</p>
+<p>Theming with <strong>Dash Enterprise Design Kit</strong></p>
+<p>Default Theme <img alt="Default Theme" src="assets/images/ddk/default.png" /></p>
+<p>Mars Theme <img alt="Mars Theme" src="assets/images/ddk/mars.png" /></p>
+<p>Neptune Theme <img alt="Neptune Theme" src="assets/images/ddk/neptune.png" /></p>
+<p>Miller Theme <img alt="Miller Theme" src="assets/images/ddk/miller.png" /></p>
+<p>Extrasolar Theme <img alt="Extrasolar Theme" src="assets/images/ddk/extrasolar.png" /></p>
+<p>Preset Themes <img alt="Preset Themes" src="assets/images/ddk/theme-editor.png" /></p>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">&quot;value&quot;</span></code> property of the <code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code> is the input of
+the app, and the output of the app is the <code class="docutils literal notranslate"><span class="pre">&quot;figure&quot;</span></code> property of the
+<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>. Whenever the <code class="docutils literal notranslate"><span class="pre">value</span></code> of the <code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code> changes, Dash calls the
+callback function <code class="docutils literal notranslate"><span class="pre">update_figure</span></code> with the new value. The function filters the
+dataframe with this new value, constructs a <code class="docutils literal notranslate"><span class="pre">figure</span></code> object, and returns it to
+the Dash application.
+在这个例子中，<code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code>的<code class="docutils literal notranslate"><span class="pre">value</span></code>属性是应用的输入,而应用程序的输出是<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>的<code class="docutils literal notranslate"><span class="pre">figure</span></code>属性。每当<code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code>的<code class="docutils literal notranslate"><span class="pre">value</span></code>改变时，Dash用新值调用回调函数<code class="docutils literal notranslate"><span class="pre">update</span> <span class="pre">figure</span></code>。该函数用这个新值过滤数据框，构造一个“figure”对象，并将其返回给Dash应用程序</p>
+<p>在这个例子中有一些不错的模式:</p>
+<ol class="arabic simple">
+<li><p>我们使用<a class="reference external" href="http://pandas.pydata.org/">Pandas</a>库在应用程序开始时加载我们的数据框架:<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">pd.read_csv('...')</span></code>。这个数据框<code class="docutils literal notranslate"><span class="pre">df</span></code>处于应用程序的全局状态，可以在回调函数中读取</p></li>
+<li><p>将数据加载到内存中可能非常昂贵。通过在应用启动时加载查询数据，而不是在回调函数中，我们确保这个操作只完成一次——当应用服务器启动时。当用户访问应用程序或与应用程序交互时，该数据(<code class="docutils literal notranslate"><span class="pre">df</span></code>)已经在内存中。如果可能的话，昂贵的初始化(如下载或查询数据)应该在应用程序的全局作用域中完成，而不是在回调函数中完成</p></li>
+<li><p>回调不修改原始数据，它只通过使用pandas进行过滤来创建数据框的副本。这一点很重要:你的回调函数不应该修改作用域之外的变量。如果你的回调修改了全局状态，那么一个用户的会话可能会影响下一个用户的会话，当应用部署在多个进程或线程上时，这些修改将不会跨sessions共享。</p></li>
+<li><p>我们用布局打开过渡。“过渡”给出了数据集如何随时间演变的概念:过渡允许图表从一个状态平滑地更新到下一个状态，就好像它是动画一样。</p></li>
+</ol>
+<p><strong>Sign up for Dash Club</strong> → Two free cheat sheets plus updates from Chris
+Parmer and Adam Schroeder delivered to your inbox every two months. Includes
+tips and tricks, community apps, and deep dives into the Dash architecture.
+<em>[Join now](<a class="reference external" href="https://go.plotly.com/dash-">https://go.plotly.com/dash-</a>
+club?utm_medium=dash_docs&amp;utm_content=basic-callbacks)</em>.</p>
+</section>
+<section id="id2">
+<h2>多输入<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>In Dash, any “output” can have multiple “input” components. Here’s a simple
+example that binds five inputs (the <code class="docutils literal notranslate"><span class="pre">value</span></code> property of two <code class="docutils literal notranslate"><span class="pre">dcc.Dropdown</span></code>
+components, two <code class="docutils literal notranslate"><span class="pre">dcc.RadioItems</span></code> components, and one <code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code> component)
+to one output component (the <code class="docutils literal notranslate"><span class="pre">figure</span></code> property of the <code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> component).
+Notice how <code class="docutils literal notranslate"><span class="pre">app.callback</span></code> lists all five <code class="docutils literal notranslate"><span class="pre">Input</span></code> items after the <code class="docutils literal notranslate"><span class="pre">Output</span></code>.
+在Dash中，任何“输出”都可以有多个“输入”组件。这里有一个简单的例子
+绑定五个输入(两个<code class="docutils literal notranslate"><span class="pre">dcc.Dropdown</span></code>的’value’属性,两个’dcc.RadioItems和一个dcc.Slider)
+注意’app.callback’在<code class="docutils literal notranslate"><span class="pre">Output</span></code>之后列出所有五个<code class="docutils literal notranslate"><span class="pre">Input</span></code>项。</p>
+<div class="highlight-python​ notranslate"><div class="highlight"><pre><span></span>​     from dash import Dash, dcc, html, Input, Output, callback
+​    import plotly.express as px
+​    
+    import pandas as pd
+    
+    app = Dash(__name__)
+    
+    df = pd.read_csv(&#39;https://plotly.github.io/datasets/country_indicators.csv&#39;)
+    
+    app.layout = html.Div([
+        html.Div([
+    
+            html.Div([
+                dcc.Dropdown(
+                    df[&#39;Indicator Name&#39;].unique(),
+                    &#39;Fertility rate, total (births per woman)&#39;,
+                    id=&#39;xaxis-column&#39;
+                ),
+                dcc.RadioItems(
+                    [&#39;Linear&#39;, &#39;Log&#39;],
+                    &#39;Linear&#39;,
+                    id=&#39;xaxis-type&#39;,
+                    inline=True
+                )
+            ], style={&#39;width&#39;: &#39;48%&#39;, &#39;display&#39;: &#39;inline-block&#39;}),
+    
+            html.Div([
+                dcc.Dropdown(
+                    df[&#39;Indicator Name&#39;].unique(),
+                    &#39;Life expectancy at birth, total (years)&#39;,
+                    id=&#39;yaxis-column&#39;
+                ),
+                dcc.RadioItems(
+                    [&#39;Linear&#39;, &#39;Log&#39;],
+                    &#39;Linear&#39;,
+                    id=&#39;yaxis-type&#39;,
+                    inline=True
+                )
+            ], style={&#39;width&#39;: &#39;48%&#39;, &#39;float&#39;: &#39;right&#39;, &#39;display&#39;: &#39;inline-block&#39;})
+        ]),
+    
+        dcc.Graph(id=&#39;indicator-graphic&#39;),
+    
+        dcc.Slider(
+            df[&#39;Year&#39;].min(),
+            df[&#39;Year&#39;].max(),
+            step=None,
+            id=&#39;year--slider&#39;,
+            value=df[&#39;Year&#39;].max(),
+            marks={str(year): str(year) for year in df[&#39;Year&#39;].unique()},
+    
+        )
+    ])
+
+
+​    
+​    @callback(
+​        Output(&#39;indicator-graphic&#39;, &#39;figure&#39;),
+​        Input(&#39;xaxis-column&#39;, &#39;value&#39;),
+​        Input(&#39;yaxis-column&#39;, &#39;value&#39;),
+​        Input(&#39;xaxis-type&#39;, &#39;value&#39;),
+​        Input(&#39;yaxis-type&#39;, &#39;value&#39;),
+​        Input(&#39;year--slider&#39;, &#39;value&#39;))
+​    def update_graph(xaxis_column_name, yaxis_column_name,
+​                     xaxis_type, yaxis_type,
+​                     year_value):
+​        dff = df[df[&#39;Year&#39;] == year_value]
+​    
+        fig = px.scatter(x=dff[dff[&#39;Indicator Name&#39;] == xaxis_column_name][&#39;Value&#39;],
+                         y=dff[dff[&#39;Indicator Name&#39;] == yaxis_column_name][&#39;Value&#39;],
+                         hover_name=dff[dff[&#39;Indicator Name&#39;] == yaxis_column_name][&#39;Country Name&#39;])
+    
+        fig.update_layout(margin={&#39;l&#39;: 40, &#39;b&#39;: 40, &#39;t&#39;: 10, &#39;r&#39;: 0}, hovermode=&#39;closest&#39;)
+    
+        fig.update_xaxes(title=xaxis_column_name,
+                         type=&#39;linear&#39; if xaxis_type == &#39;Linear&#39; else &#39;log&#39;)
+    
+        fig.update_yaxes(title=yaxis_column_name,
+                         type=&#39;linear&#39; if yaxis_type == &#39;Linear&#39; else &#39;log&#39;)
+    
+        return fig
+
+
+​    
+​    if __name__ == &#39;__main__&#39;:
+​        app.run(debug=True)
+</pre></div>
+</div>
+<p>Fertility rate, total (births per woman)</p>
+<p>×</p>
+<p>LinearLog</p>
+<p>Life expectancy at birth, total (years)</p>
+<p>×</p>
+<p>LinearLog</p>
+<p>12345678455055606570758085</p>
+<p>Fertility rate, total (births per woman)Life expectancy at birth, total
+(years)</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>1962196719721977198219871992199720022007</p>
+<p>Theming with <strong>Dash Enterprise Design Kit</strong></p>
+<p>Default Theme <img alt="Default Theme" src="assets/images/ddk/multiple-inputs-default.png" /></p>
+<p>Mars Theme <img alt="Mars Theme" src="assets/images/ddk/multiple-inputs-mars.png" /></p>
+<p>Neptune Theme <img alt="Neptune Theme" src="assets/images/ddk/multiple-inputs-neptune.png" /></p>
+<p>Miller Theme <img alt="Miller Theme" src="assets/images/ddk/multiple-inputs-miller.png" /></p>
+<p>Extrasolar Theme ![Extrasolar Theme](/assets/images/ddk/multiple-inputs-
+extrasolar.png)</p>
+<p>Design Kit Theme Editor ![Design Kit Theme Editor](/assets/images/ddk/theme-
+editor.png)</p>
+<p>在这个例子中，当任何 <code class="docutils literal notranslate"><span class="pre">dcc.Dropdown</span></code>、<code class="docutils literal notranslate"><span class="pre">dcc.Slider</span></code> 或 <code class="docutils literal notranslate"><span class="pre">dcc.RadioItems</span></code> 组件的 <code class="docutils literal notranslate"><span class="pre">value</span></code>发生改变时，回调函数会执行。</p>
+<p>回调函数的输入参数是每个“input”属性的当前值，按照它们被指定的顺序。</p>
+<p>即使一次只有一个’ Input ‘改变(即用户在给定时刻只能改变一个Dropdown的值)，Dash收集所有指定’ Input ‘属性的当前状态，并将它们传递给回调函数。这些回调函数总是保证接收到应用程序的更新状态。</p>
+<p>让我们扩展我们的示例以包含多个输出</p>
+</section>
+<section id="id3">
+<h2>多输出<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>到目前为止，我们写的所有回调只更新了一个Output属性。我们也可以一次更新几个输出:列出你所有所有属性在<code class="docutils literal notranslate"><span class="pre">app.callback</span></code>中去更新，并从回调中返回那么多项。如果两个输出依赖于相同的计算密集型中间结果(例如缓慢的数据库查询)，这一点特别有用</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>​    
+​     from dash import Dash, dcc, html, Input, Output, callback
+​    
+    external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+    
+    app = Dash(__name__, external_stylesheets=external_stylesheets)
+    
+    app.layout = html.Div([
+        dcc.Input(
+            id=&#39;num-multi&#39;,
+            type=&#39;number&#39;,
+            value=5
+        ),
+        html.Table([
+            html.Tr([html.Td([&#39;x&#39;, html.Sup(2)]), html.Td(id=&#39;square&#39;)]),
+            html.Tr([html.Td([&#39;x&#39;, html.Sup(3)]), html.Td(id=&#39;cube&#39;)]),
+            html.Tr([html.Td([2, html.Sup(&#39;x&#39;)]), html.Td(id=&#39;twos&#39;)]),
+            html.Tr([html.Td([3, html.Sup(&#39;x&#39;)]), html.Td(id=&#39;threes&#39;)]),
+            html.Tr([html.Td([&#39;x&#39;, html.Sup(&#39;x&#39;)]), html.Td(id=&#39;x^x&#39;)]),
+        ]),
+    ])
+
+
+​    
+​    @callback(
+​        Output(&#39;square&#39;, &#39;children&#39;),
+​        Output(&#39;cube&#39;, &#39;children&#39;),
+​        Output(&#39;twos&#39;, &#39;children&#39;),
+​        Output(&#39;threes&#39;, &#39;children&#39;),
+​        Output(&#39;x^x&#39;, &#39;children&#39;),
+​        Input(&#39;num-multi&#39;, &#39;value&#39;))
+​    def callback_a(x):
+​        return x**2, x**3, 2**x, 3**x, x**x
+
+
+​    
+​    if __name__ == &#39;__main__&#39;:
+​        app.run(debug=True)
+</pre></div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>x2</p></th>
+<th class="head"><p>25</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>x3</p></td>
+<td><p>125</p></td>
+</tr>
+<tr class="row-odd"><td><p>2x</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-even"><td><p>3x</p></td>
+<td><p>243</p></td>
+</tr>
+<tr class="row-odd"><td><p>xx</p></td>
+<td><p>3125</p></td>
+</tr>
+</tbody>
+</table>
+<p>提醒一句,即使可以，组合输出并不总是一个好主意:</p>
+<ul class="simple">
+<li><p>如果输出依赖于一些(但不是全部)相同的输入，那么将它们分开可以避免不必要的更新</p></li>
+<li><p>如果输出具有相同的输入，但它们使用这些输入执行非常不同的计算，则保持回调分离可以允许它们并行运行</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>链式回调<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>您还可以将输出和输入链接在一起:一个回调函数的输出可以是另一个回调函数的输入
+此模式可用于创建动态ui，例如，其中一个输入组件更新另一个输入组件的可用选项。这里有一个简单的例子</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>​    
+from dash import Dash, dcc, html, Input, Output, callback
+​    
+external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+all_options = {
+&#39;America&#39;: [&#39;New York City&#39;, &#39;San Francisco&#39;, &#39;Cincinnati&#39;],
+&#39;Canada&#39;: [&#39;Montréal&#39;, &#39;Toronto&#39;, &#39;Ottawa&#39;]
+}
+app.layout = html.Div([
+dcc.RadioItems(
+    list(all_options.keys()),
+    &#39;America&#39;,
+    id=&#39;countries-radio&#39;,
+),
+
+html.Hr(),
+
+dcc.RadioItems(id=&#39;cities-radio&#39;),
+
+html.Hr(),
+
+html.Div(id=&#39;display-selected-values&#39;)
+])
+
+
+​    
+​    @callback(
+​        Output(&#39;cities-radio&#39;, &#39;options&#39;),
+​        Input(&#39;countries-radio&#39;, &#39;value&#39;))
+​    def set_cities_options(selected_country):
+​        return [{&#39;label&#39;: i, &#39;value&#39;: i} for i in all_options[selected_country]]
+
+
+​    
+​    @callback(
+​        Output(&#39;cities-radio&#39;, &#39;value&#39;),
+​        Input(&#39;cities-radio&#39;, &#39;options&#39;))
+​    def set_cities_value(available_options):
+​        return available_options[0][&#39;value&#39;]
+
+
+​    
+​    @callback(
+​        Output(&#39;display-selected-values&#39;, &#39;children&#39;),
+​        Input(&#39;countries-radio&#39;, &#39;value&#39;),
+​        Input(&#39;cities-radio&#39;, &#39;value&#39;))
+​    def set_display_children(selected_country, selected_city):
+​        return f&#39;{selected_city} is a city in {selected_country}&#39;
+
+
+​    
+if __name__ == &#39;__main__&#39;:
+​   app.run(debug=True)
+</pre></div>
+</div>
+<p>AmericaCanada</p>
+<hr class="docutils" />
+<p>New York CitySan FranciscoCincinnati</p>
+<hr class="docutils" />
+<p>New York City is a city in America</p>
+<p>第一个回调函数基于第一个<code class="docutils literal notranslate"><span class="pre">dcc.RadioItems</span></code>组件的选定值,更新第二个<code class="docutils literal notranslate"><span class="pre">dcc.RadioItems</span></code>组件。
+第二个回调函数在’ options ‘属性改变时设置一个初始值:它将其设置为’ options ‘数组中的第一个值</p>
+<p>最后的回调将显示每个组件所选择的“值”。如果你改变国家dcc的“值”。组件时，Dash将等到城市组件的“值”更新后再调用最后的回调。这可以防止回调被调用时状态不一致，比如“America”和“montracimal”</p>
+</section>
+<section id="dash-app-with-state">
+<h2>Dash App With State<a class="headerlink" href="#dash-app-with-state" title="Permalink to this heading">#</a></h2>
+<p>在某些情况下，您的应用程序中可能有类似“表单”的模式。在这种情况下，您可能希望读取输入组件的值，但只能在用户完成在表单中输入所有信息时读取，而不是在表单更改后立即读取</p>
+<p>将回调函数直接附加到输入值中，如下所示</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>​    
+from dash import Dash, dcc, html, Input, Output, callback
+​    
+external_stylesheets = [&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div([
+    dcc.Input(id=&quot;input-1&quot;, type=&quot;text&quot;, value=&quot;Montréal&quot;),
+    dcc.Input(id=&quot;input-2&quot;, type=&quot;text&quot;, value=&quot;Canada&quot;),
+    html.Div(id=&quot;number-output&quot;),
+])
+
+
+​    
+@callback(
+    Output(&quot;number-output&quot;, &quot;children&quot;),
+    Input(&quot;input-1&quot;, &quot;value&quot;),
+    Input(&quot;input-2&quot;, &quot;value&quot;),
+)
+def update_output(input1, input2):
+    return f&#39;Input 1 is &quot;{input1}&quot; and Input 2 is &quot;{input2}&quot;&#39;
+
+
+​    
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Input 1 is “Montréal” and Input 2 is “Canada”</p>
+<p>在本例中，只要’ Input ‘描述的任何属性发生变化，就会触发回调函数。通过在上面的输入中输入数据，您可以自己尝试一下</p>
+<p>‘ State ‘允许在不触发回调的情况下传递额外的值。下面是与上面相同的示例，但使用了两个dcc。Input ‘组件作为’ State ‘，一个新的按钮组件作为’ Input ‘</p>
+<p>__</p>
+<div class="highlight-python​ notranslate"><div class="highlight"><pre><span></span>​    from dash import Dash, dcc, html, Input, Output, State, callback
+​    
+    external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+    
+    app = Dash(__name__, external_stylesheets=external_stylesheets)
+    
+    app.layout = html.Div([
+        dcc.Input(id=&#39;input-1-state&#39;, type=&#39;text&#39;, value=&#39;Montréal&#39;),
+        dcc.Input(id=&#39;input-2-state&#39;, type=&#39;text&#39;, value=&#39;Canada&#39;),
+        html.Button(id=&#39;submit-button-state&#39;, n_clicks=0, children=&#39;Submit&#39;),
+        html.Div(id=&#39;output-state&#39;)
+    ])
+
+
+​    
+​    @callback(Output(&#39;output-state&#39;, &#39;children&#39;),
+​                  Input(&#39;submit-button-state&#39;, &#39;n_clicks&#39;),
+​                  State(&#39;input-1-state&#39;, &#39;value&#39;),
+​                  State(&#39;input-2-state&#39;, &#39;value&#39;))
+​    def update_output(n_clicks, input1, input2):
+​        return f&#39;&#39;&#39;
+​            The Button has been pressed {n_clicks} times,
+​            Input 1 is &quot;{input1}&quot;,
+​            and Input 2 is &quot;{input2}&quot;
+​        &#39;&#39;&#39;
+
+
+​    
+​    if __name__ == &#39;__main__&#39;:
+​        app.run(debug=True)
+</pre></div>
+</div>
+<p>Submit</p>
+<p>The Button has been pressed 0 times, Input 1 is “Montréal”, and Input 2 is
+“Canada”</p>
+<p>在本例中，更改’ dcc。输入框不会触发回调，但点击按钮会。dcc的当前值。Input的值仍然被传递到回调中，即使它们不触发回调函数本身
+注意，我们是通过监听’ html ‘的’ n clicks ‘属性触发回调的。按钮组件。’ n clicks ‘是一个属性，每当组件被点击时，它就会增加。它可以在Dash HTML组件(’ Dash . HTML ‘)的每个组件中使用，但最常用的是按钮</p>
+</section>
+<section id="id">
+<h2>将组件传递给回调函数而不是id<a class="headerlink" href="#id" title="Permalink to this heading">#</a></h2>
+<p>When creating app layouts in earlier examples, we assigned IDs to components
+within the layout and later referenced these in callback inputs and outputs.</p>
+<p>In the first example, there is a <code class="docutils literal notranslate"><span class="pre">dcc.Input</span></code> component with the <code class="docutils literal notranslate"><span class="pre">id</span></code> ‘my-
+input’ and a <code class="docutils literal notranslate"><span class="pre">html.Div</span></code> with the <code class="docutils literal notranslate"><span class="pre">id</span></code> ‘my-output’:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>​    
+​    app.layout = html.Div([
+​        html.H6(&quot;Change the value in the text box to see callbacks in action!&quot;),
+​        html.Div([
+​            &quot;Input: &quot;,
+​            dcc.Input(id=&#39;my-input&#39;, value=&#39;initial value&#39;, type=&#39;text&#39;)
+​        ]),
+​        html.Br(),
+​        html.Div(id=&#39;my-output&#39;),
+​    
+    @callback(
+        Output(&#39;my-output&#39;, &#39;children&#39;),
+        Input(&#39;my-input&#39;, &#39;value&#39;)
+    )
+    def update_output_div(input_value):
+        return f&#39;Output: {input_value}&#39;
+</pre></div>
+</div>
+<p>你也可以直接提供组件作为输入和输出，而不需要添加或引用’ id ‘。Dash为这些组件自动生成id
+这是第一个例子。在声明应用程序布局之前，我们创建了两个组件，并将每个组件赋值给一个变量。然后我们在布局中引用这些变量，并将它们作为输入和输出直接传递给回调</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>​    
+​     from dash import Dash, dcc, html, Input, Output, callback
+​    
+    app = Dash(__name__)
+    
+    my_input = dcc.Input(value=&#39;initial value&#39;, type=&#39;text&#39;)
+    my_output = html.Div()
+    
+    app.layout = html.Div([
+        html.H6(&quot;Change the value in the text box to see callbacks in action!&quot;),
+        html.Div([
+            &quot;Input: &quot;,
+            my_input
+        ]),
+        html.Br(),
+        my_output
+    ])
+
+
+​    
+​    @callback(
+​        Output(my_output, &#39;children&#39;),
+​        Input(my_input, &#39;value&#39;)
+​    )
+​    def update_output_div(input_value):
+​        return f&#39;Output: {input_value}&#39;
+
+
+​    
+​    if __name__ == &#39;__main__&#39;:
+​        app.run(debug=True)
+</pre></div>
+</div>
+<p>在Python 3.8及更高版本中，你可以使用walrus操作符在应用布局中声明组件变量</p>
+<div class="highlight-python​ notranslate"><div class="highlight"><pre><span></span>​    app.layout = html.Div([
+​        html.H6(&quot;Change the value in the text box to see callbacks in action!&quot;),
+​        html.Div([
+​            &quot;Input: &quot;,
+​            my_input := dcc.Input(value=&#39;initial value&#39;, type=&#39;text&#39;)
+​        ]),
+​        html.Br(),
+​        my_output := html.Div(),
+​    ])
+​    
+    @callback(
+        Output(my_output, &#39;children&#39;),
+        Input(my_input, &#39;value&#39;)
+    )
+    def update_output_div(input_value):
+        return f&#39;Output: {input_value}&#39;
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note: Auto component IDs won’t work with dynamic callback content unless the
+component variables are defined out of the callback scope. Additionally,
+they are not compatible with [Pattern-Matching Callbacks](/pattern-matching-
+callbacks).</p>
+</div></blockquote>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<p>我们已经介绍了Dash中回调的基本原理。Dash应用程序是基于一组简单但强大的原则构建的:用户界面可以通过响应式回调进行定制。组件的每个属性/属性都可以作为回调的输出进行修改，而属性的子集(例如’ dcc ‘的’ value ‘属性)。下拉列表(组件)是由用户通过与页面交互来编辑的</p>
+<hr class="docutils" />
+<p>Dash基础的下一部分将介绍交互式绘图。[Dash Fundamentals Part 3: Interactive - Graphing](/ Interactive - Graphing)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/1基础"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1.0%E5%B8%83%E5%B1%80.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">布局</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">交互可视化</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash">简单的交互式Dash应用</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-app-layout-with-figure-and-slider">Dash App Layout With Figure and Slider</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">多输入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多输出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">链式回调</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-app-with-state">Dash App With State</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id">将组件传递给回调函数而不是id</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

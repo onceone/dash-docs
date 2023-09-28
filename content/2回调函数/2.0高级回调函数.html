@@ -1,0 +1,1212 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Advanced Callbacks &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/2.0高级回调函数';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Clientside Callbacks" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html" />
+    <link rel="prev" title="回调函数共享数据" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/2.0高级回调函数.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/2.0高级回调函数.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Advanced Callbacks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-errors-with-dash-no-update">Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-for-callback-context">Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legacy-behavior-using-timestamps">Legacy Behavior: Using Timestamps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improving-performance-with-memoization">Improving Performance with Memoization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-are-callbacks-executed">When Are Callbacks Executed?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-a-dash-app-first-loads">When a Dash App First Loads</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#as-a-direct-result-of-user-interaction">As a Direct Result of User Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#as-an-indirect-result-of-user-interaction">As an Indirect Result of User Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-dash-components-are-added-to-the-layout">When Dash Components Are Added to the Layout</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prevent-callback-execution-upon-initial-component-render">Prevent Callback Execution Upon Initial Component Render</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circular-callbacks">Circular Callbacks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-a-slider-with-a-text-input-example">Synchronizing a Slider with a Text Input Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-two-inputs-with-different-units-example">Displaying Two Inputs with Different Units Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-two-checklists">Synchronizing Two Checklists</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="advanced-callbacks">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Advanced Callbacks<a class="headerlink" href="#advanced-callbacks" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>To get the most out of this page, make sure you’ve read about <span class="xref myst">Basic
+Callbacks</span> in the Dash Fundamentals.</p>
+</div></blockquote>
+<section id="catching-errors-with-preventupdate">
+<h2>Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code><a class="headerlink" href="#catching-errors-with-preventupdate" title="Permalink to this heading">#</a></h2>
+<p>In certain situations, you don’t want to update the callback output. You can
+achieve this by raising a <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code> exception in the callback function.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, callback
+from dash.exceptions import PreventUpdate
+
+external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div([
+    html.Button(&#39;Click here to see the content&#39;, id=&#39;show-secret&#39;),
+    html.Div(id=&#39;body-div&#39;)
+])
+
+@callback(
+    Output(&#39;body-div&#39;, &#39;children&#39;),
+    Input(&#39;show-secret&#39;, &#39;n_clicks&#39;)
+)
+def update_output(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    else:
+        return &quot;Elephants are the only animal that can&#39;t jump&quot;
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Click here to see the content</p>
+</section>
+<section id="displaying-errors-with-dash-no-update">
+<h2>Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code><a class="headerlink" href="#displaying-errors-with-dash-no-update" title="Permalink to this heading">#</a></h2>
+<p>This example illustrates how you can show an error while keeping the previous
+input, using <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code> to update only some of the callback outputs.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, no_update
+from dash.exceptions import PreventUpdate
+
+external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div([
+    html.P(&#39;Enter a composite number to see its prime factors&#39;),
+    dcc.Input(id=&#39;num&#39;, type=&#39;number&#39;, debounce=True, min=2, step=1),
+    html.P(id=&#39;err&#39;, style={&#39;color&#39;: &#39;red&#39;}),
+    html.P(id=&#39;out&#39;)
+])
+
+@callback(
+    Output(&#39;out&#39;, &#39;children&#39;),
+    Output(&#39;err&#39;, &#39;children&#39;),
+    Input(&#39;num&#39;, &#39;value&#39;)
+)
+def show_factors(num):
+    if num is None:
+        # PreventUpdate prevents ALL outputs updating
+        raise PreventUpdate
+
+    factors = prime_factors(num)
+    if len(factors) == 1:
+        # dash.no_update prevents any single output updating
+        # (note: it&#39;s OK to use for a single-output callback too)
+        return no_update, &#39;{} is prime!&#39;.format(num)
+
+    return &#39;{} is {}&#39;.format(num, &#39; * &#39;.join(str(n) for n in factors)), &#39;&#39;
+
+def prime_factors(num):
+    n, i, out = num, 2, []
+    while i * i &lt;= n:
+        if n % i == 0:
+            n = int(n / i)
+            out.append(i)
+        else:
+            i += 1 if i == 2 else 2
+    out.append(n)
+    return out
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Enter a composite number to see its prime factors</p>
+</section>
+<section id="determining-which-input-has-fired-with-dash-callback-context">
+<h2>Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code><a class="headerlink" href="#determining-which-input-has-fired-with-dash-callback-context" title="Permalink to this heading">#</a></h2>
+<p>In addition to event properties like <code class="docutils literal notranslate"><span class="pre">n_clicks</span></code> that change whenever an event
+happens (in this case a click), there is a global variable
+<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, available only inside a callback. Using
+<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, you can determine which component/property pairs
+triggered a callback.</p>
+<p>Below is a summary of properties of <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> outlining the
+basics of when to use them. For more detail and examples see <span class="xref myst">Determining
+Which Callback Input Changed</span>.</p>
+<p>For more examples of minimal Dash apps that use <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, go to
+the community-driven [Example Index](https://dash-example-
+<a class="reference external" href="http://index.herokuapp.com/?code=ctx">index.herokuapp.com/?code=ctx</a>).</p>
+<section id="properties-for-callback-context">
+<h3>Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code><a class="headerlink" href="#properties-for-callback-context" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>In Dash 2.4 and later, <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> (or <code class="docutils literal notranslate"><span class="pre">dash.ctx</span></code>) has three
+additional properties to make it easier to work with.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">triggered_id</span></code>: The <code class="docutils literal notranslate"><span class="pre">id</span></code> of the component that triggered the callback.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">triggered_prop_ids</span></code>: A dictionary of the component ids and props that triggered the callback. Useful when multiple inputs can trigger the callback at the same time, or multiple properties of the same component can trigger the callback.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args_grouping</span></code>: A dictionary of the inputs used with flexible callback signatures. The keys are the variable names and the values are dictionaries containing:</p>
+<ul>
+<li><p>“id”: the component ID. If it’s a pattern matching ID, it will be a dict.</p></li>
+<li><p>“id_str”: for pattern matching IDs, it’s the stringified dict ID with no white spaces.</p></li>
+<li><p>“property”: the component property used in the callback.</p></li>
+<li><p>“value”: the value of the component property at the time the callback was fired.</p></li>
+<li><p>“triggered”: a boolean indicating whether this input triggered the callback.</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>Dash 2.4 and earlier versions of Dash have the following properties</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">triggered</span></code>: list of all the <code class="docutils literal notranslate"><span class="pre">Input</span></code> props that changed and caused the callback to execute. It is empty when the callback is called on initial load, unless an <code class="docutils literal notranslate"><span class="pre">Input</span></code> prop got its value from another initial callback. Callbacks triggered by user actions typically have one item in <code class="docutils literal notranslate"><span class="pre">triggered</span></code>, unless the same action changes two props at once or the callback has several <code class="docutils literal notranslate"><span class="pre">Input</span></code> props that are all modified by another callback based on a single user action.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>More about empty<code class="docutils literal notranslate"><span class="pre">triggered</span></code> lists</strong>: For backward compatibility purposes,
+an empty <code class="docutils literal notranslate"><span class="pre">triggered</span></code> is not really empty. It’s falsy so that you can use <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">triggered</span></code> to detect the initial call, but it still has a placeholder
+element so that <code class="docutils literal notranslate"><span class="pre">ctx.triggered[0][&quot;prop_id&quot;].split(&quot;.&quot;)</span></code> yields a blank ID
+and prop <code class="docutils literal notranslate"><span class="pre">[&quot;&quot;,</span> <span class="pre">&quot;&quot;]</span></code> instead of an error.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">states</span></code>: allow you to access the callback params by ID and prop instead of through the function args. These have the form of dictionaries <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">'component_id.prop_name':</span> <span class="pre">value</span> <span class="pre">}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outputs_list</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs_list</span></code>, and <code class="docutils literal notranslate"><span class="pre">states_list</span></code>: lists of inputs, outputs, and state items arranged as you’ll find them in the callback arguments and return value. This is mostly useful for <span class="xref myst">pattern-matching callbacks</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response</span></code>: The HTTP response object being constructed, useful for changing cookies.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">record_timing</span></code>: a method to report granular timing information, to be seen in the <span class="xref myst">Dev Tools</span>.</p></li>
+</ul>
+<p>Here’s an example of how this can be done:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> import json
+from dash import Dash, html, Input, Output, callback, ctx
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.Button(&#39;Button 1&#39;, id=&#39;btn-1&#39;),
+    html.Button(&#39;Button 2&#39;, id=&#39;btn-2&#39;),
+    html.Button(&#39;Button 3&#39;, id=&#39;btn-3&#39;),
+    html.Div(id=&#39;container&#39;)
+])
+
+
+@callback(Output(&#39;container&#39;, &#39;children&#39;),
+              Input(&#39;btn-1&#39;, &#39;n_clicks&#39;),
+              Input(&#39;btn-2&#39;, &#39;n_clicks&#39;),
+              Input(&#39;btn-3&#39;, &#39;n_clicks&#39;))
+def display(btn1, btn2, btn3):
+    button_id = ctx.triggered_id if not None else &#39;No clicks yet&#39;
+
+    ctx_msg = json.dumps({
+        &#39;states&#39;: ctx.states,
+        &#39;triggered&#39;: ctx.triggered,
+        &#39;inputs&#39;: ctx.inputs
+    }, indent=2)
+
+    return html.Div([
+        html.Table([
+            html.Tr([html.Th(&#39;Button 1&#39;),
+                     html.Th(&#39;Button 2&#39;),
+                     html.Th(&#39;Button 3&#39;),
+                     html.Th(&#39;Most Recent Click&#39;)]),
+            html.Tr([html.Td(btn1 or 0),
+                     html.Td(btn2 or 0),
+                     html.Td(btn3 or 0),
+                     html.Td(button_id)])
+        ]),
+        html.Pre(ctx_msg)
+    ])
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Button 1Button 2Button 3</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Button 1</p></th>
+<th class="head"><p>Button 2</p></th>
+<th class="head"><p>Button 3</p></th>
+<th class="head"><p>Most Recent Click</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;states&quot;: {},
+  &quot;triggered&quot;: [],
+  &quot;inputs&quot;: {
+    &quot;btn-1.n_clicks&quot;: null,
+    &quot;btn-2.n_clicks&quot;: null,
+    &quot;btn-3.n_clicks&quot;: null
+  }
+}
+</pre></div>
+</div>
+</section>
+<section id="legacy-behavior-using-timestamps">
+<h3>Legacy Behavior: Using Timestamps<a class="headerlink" href="#legacy-behavior-using-timestamps" title="Permalink to this heading">#</a></h3>
+<p>Prior to <code class="docutils literal notranslate"><span class="pre">dash</span> <span class="pre">v1.0</span></code>, you needed to compare timestamp properties like
+<code class="docutils literal notranslate"><span class="pre">n_clicks_timestamp</span></code> to find the most recent click. While existing uses of
+<code class="docutils literal notranslate"><span class="pre">*_timestamp</span></code> continue to work for now, this approach is deprecated and may be
+removed in a future update. The one exception is <code class="docutils literal notranslate"><span class="pre">modified_timestamp</span></code> from
+<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>, which is safe to use and is <em>not</em> deprecated.</p>
+</section>
+</section>
+<section id="improving-performance-with-memoization">
+<h2>Improving Performance with Memoization<a class="headerlink" href="#improving-performance-with-memoization" title="Permalink to this heading">#</a></h2>
+<p>Memoization allows you to bypass long computations by storing the results of
+function calls.</p>
+<p>To better understand how memoization works, let’s start with a simple example.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import time
+import functools32
+
+@functools32.lru_cache(maxsize=32)
+def slow_function(input):
+    time.sleep(10)
+    return f&#39;Input was {input}&#39;
+</pre></div>
+</div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">slow_function('test')</span></code> the first time will take 10 seconds. Calling
+it a second time with the same argument will take almost no time since the
+previously computed result was saved in memory and reused.</p>
+<p>The <span class="xref myst">Performance</span> section of the Dash docs delves a little
+deeper into leveraging multiple processes and threads in conjunction with
+memoization to further improve performance.</p>
+<p><strong>Sign up for Dash Club</strong> → Two free cheat sheets plus updates from Chris
+Parmer and Adam Schroeder delivered to your inbox every two months. Includes
+tips and tricks, community apps, and deep dives into the Dash architecture.
+<em>[Join now](<a class="reference external" href="https://go.plotly.com/dash-">https://go.plotly.com/dash-</a>
+club?utm_medium=dash_docs&amp;utm_content=advanced-callbacks)</em>.</p>
+</section>
+<section id="when-are-callbacks-executed">
+<h2>When Are Callbacks Executed?<a class="headerlink" href="#when-are-callbacks-executed" title="Permalink to this heading">#</a></h2>
+<p>This section describes the circumstances under which the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code>
+front-end client can make a request to the Dash back-end server (or the
+clientside callback code) to execute a callback function.</p>
+<section id="when-a-dash-app-first-loads">
+<h3>When a Dash App First Loads<a class="headerlink" href="#when-a-dash-app-first-loads" title="Permalink to this heading">#</a></h3>
+<p>All of the callbacks in a Dash app are executed with the initial value of
+their inputs when the app is first loaded. This is known as the “initial call”
+of the callback. To learn how to suppress this behavior, see the documentation
+for the <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> attribute of Dash callbacks.</p>
+<p>It is important to note that when a Dash app is initially loaded in a web
+browser by the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> front-end client, its entire callback chain is
+introspected recursively.</p>
+<p>This allows the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> to predict the order in which callbacks will
+need to be executed, as callbacks are blocked when their inputs are outputs of
+other callbacks which have not yet fired. In order to unblock the execution of
+these callbacks, first callbacks whose inputs are immediately available must
+be executed. This process helps the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> to minimize the time and
+effort it uses, and avoid unnecessarily redrawing the page, by making sure it
+only requests that a callback is executed when all of the callback’s inputs
+have reached their final values.</p>
+<p>Examine the following Dash app:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, callback
+
+app = Dash()
+app.layout = html.Div(
+    [
+        html.Button(&quot;execute callback&quot;, id=&quot;button_1&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;first_output_1&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;second_output_1&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;first_output_1&quot;, &quot;children&quot;),
+    Output(&quot;second_output_1&quot;, &quot;children&quot;),
+    Input(&quot;button_1&quot;, &quot;n_clicks&quot;)
+)
+def change_text(n_clicks):
+    return [&quot;n_clicks is &quot; + str(n_clicks), &quot;n_clicks is &quot; + str(n_clicks)]
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>execute callback</p>
+<p>n_clicks is None</p>
+<p>n_clicks is None</p>
+<p>Notice that when this app is finished being loaded by a web browser and ready
+for user interaction, the <code class="docutils literal notranslate"><span class="pre">html.Div</span></code> components do not say “callback not
+executed” as declared in the app’s layout, but rather “n_clicks is None” as
+the result of the <code class="docutils literal notranslate"><span class="pre">change_text()</span></code> callback being executed. This is because the
+“initial call” of the callback occurred with <code class="docutils literal notranslate"><span class="pre">n_clicks</span></code> having the value of
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</section>
+<section id="as-a-direct-result-of-user-interaction">
+<h3>As a Direct Result of User Interaction<a class="headerlink" href="#as-a-direct-result-of-user-interaction" title="Permalink to this heading">#</a></h3>
+<p>Most frequently, callbacks are executed as a direct result of user
+interaction, such as clicking a button or selecting an item in a dropdown
+menu. When such interactions occur, Dash components communicate their new
+values to the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> front-end client, which then requests that the
+Dash server execute any callback function that has the newly changed value as
+input.</p>
+<p>If a Dash app has multiple callbacks, the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> requests callbacks
+to be executed based on whether or not they can be immediately executed with
+the newly changed inputs. If several inputs change simultaneously, then
+requests are made to execute them all.</p>
+<p>Whether or not these requests are executed in a synchronous or asynchronous
+manner depends on the specific setup of the Dash back-end server. If it is
+running in a multi-threaded environment, then all of the callbacks can be
+executed simultaneously, and they will return values based on their speed of
+execution. In a single-threaded environment however, callbacks will be
+executed one at a time in the order they are received by the server.</p>
+<p>In the example application above, clicking the button results in the callback
+being executed.</p>
+</section>
+<section id="as-an-indirect-result-of-user-interaction">
+<h3>As an Indirect Result of User Interaction<a class="headerlink" href="#as-an-indirect-result-of-user-interaction" title="Permalink to this heading">#</a></h3>
+<p>When a user interacts with a component, the resulting callback might have
+outputs that are themselves the input of other callbacks. The <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code>
+will block the execution of such a callback until the callback whose output is
+its input has been executed.</p>
+<p>Take the following Dash app:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, callback
+
+from datetime import datetime
+import time
+
+app = Dash()
+app.layout = html.Div(
+    [
+        html.Button(&quot;execute fast callback&quot;, id=&quot;button_3&quot;),
+        html.Button(&quot;execute slow callback&quot;, id=&quot;button_4&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;first_output_3&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;second_output_3&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;third_output_3&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;first_output_3&quot;, &quot;children&quot;),
+    Input(&quot;button_3&quot;, &quot;n_clicks&quot;))
+def first_callback(n):
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return &quot;in the fast callback it is &quot; + current_time
+
+
+@callback(
+    Output(&quot;second_output_3&quot;, &quot;children&quot;), Input(&quot;button_4&quot;, &quot;n_clicks&quot;))
+def second_callback(n):
+    time.sleep(5)
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return &quot;in the slow callback it is &quot; + current_time
+
+
+@callback(
+    Output(&quot;third_output_3&quot;, &quot;children&quot;),
+    Input(&quot;first_output_3&quot;, &quot;children&quot;),
+    Input(&quot;second_output_3&quot;, &quot;children&quot;))
+def third_callback(n, m):
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return &quot;in the third callback it is &quot; + current_time
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>execute fast callbackexecute slow callback</p>
+<p>in the fast callback it is 07:13:56</p>
+<p>in the slow callback it is 07:14:01</p>
+<p>in the third callback it is 07:14:01</p>
+<p>The above Dash app demonstrates how callbacks chain together. Notice that if
+you first click “execute slow callback” and then click “execute fast
+callback”, the third callback is not executed until after the slow callback
+finishes executing. This is because the third callback has the second
+callback’s output as its input, which lets the <code class="docutils literal notranslate"><span class="pre">dash-renderer</span></code> know that it
+should delay its execution until after the second callback finishes.</p>
+</section>
+<section id="when-dash-components-are-added-to-the-layout">
+<h3>When Dash Components Are Added to the Layout<a class="headerlink" href="#when-dash-components-are-added-to-the-layout" title="Permalink to this heading">#</a></h3>
+<p>It is possible for a callback to insert new Dash components into a Dash app’s
+layout. If these new components are themselves the inputs to other callback
+functions, then their appearance in the Dash app’s layout will trigger those
+callback functions to be executed.</p>
+<p>In this circumstance, it is possible that multiple requests are made to
+execute the same callback function. This would occur if the callback in
+question has already been requested and its output returned before the new
+components which are also its inputs are added to the layout.</p>
+</section>
+</section>
+<section id="prevent-callback-execution-upon-initial-component-render">
+<h2>Prevent Callback Execution Upon Initial Component Render<a class="headerlink" href="#prevent-callback-execution-upon-initial-component-render" title="Permalink to this heading">#</a></h2>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> attribute to prevent callbacks from
+firing when their inputs initially appear in the layout of your Dash
+application.</p>
+<p>This attribute applies when the layout of your Dash app is initially loaded,
+and also when new components are introduced into the layout when a callback
+has been triggered.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, callback
+
+from datetime import datetime
+import time
+
+app = Dash()
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;execute callbacks&quot;, id=&quot;button_2&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;first_output_2&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;second_output_2&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;third_output_2&quot;),
+        html.Div(children=&quot;callback not executed&quot;, id=&quot;fourth_output_2&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;first_output_2&quot;, &quot;children&quot;),
+    Output(&quot;second_output_2&quot;, &quot;children&quot;),
+    Input(&quot;button_2&quot;, &quot;n_clicks&quot;), prevent_initial_call=True)
+def first_callback(n):
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return [&quot;in the first callback it is &quot; + current_time, &quot;in the first callback it is &quot; + current_time]
+
+
+@callback(
+    Output(&quot;third_output_2&quot;, &quot;children&quot;), Input(&quot;second_output_2&quot;, &quot;children&quot;), prevent_initial_call=True)
+def second_callback(n):
+    time.sleep(2)
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return &quot;in the second callback it is &quot; + current_time
+
+
+@callback(
+    Output(&quot;fourth_output_2&quot;, &quot;children&quot;),
+    Input(&quot;first_output_2&quot;, &quot;children&quot;),
+    Input(&quot;third_output_2&quot;, &quot;children&quot;), prevent_initial_call=True)
+def third_output(n, m):
+    time.sleep(2)
+    now = datetime.now()
+    current_time = now.strftime(&quot;%H:%M:%S&quot;)
+    return &quot;in the third callback it is &quot; + current_time
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>execute callbacks</p>
+<p>callback not executed</p>
+<p>callback not executed</p>
+<p>callback not executed</p>
+<p>callback not executed</p>
+<p>However, the above behavior only applies if both the callback output and input
+are present in the app layout upon initial load of the application.</p>
+<p>It is important to note that <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> will not prevent a
+callback from firing in the case where the callback’s input is inserted into
+the layout as the result of another callback after the app initially loads
+<strong>unless the output is inserted alongside that input</strong>!</p>
+<p>In other words, if the output of the callback is already present in the app
+layout before its input is inserted into the layout, <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code>
+will not prevent its execution when the input is first inserted into the
+layout.</p>
+<p>Consider the following example:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback
+
+app = Dash(__name__, suppress_callback_exceptions=True)
+server = app.server
+app.layout = html.Div([
+    dcc.Location(id=&#39;url&#39;),
+    html.Div(id=&#39;layout-div&#39;),
+    html.Div(id=&#39;content&#39;)
+])
+
+@callback(Output(&#39;content&#39;, &#39;children&#39;), Input(&#39;url&#39;, &#39;pathname&#39;))
+def display_page(pathname):
+    return html.Div([
+        dcc.Input(id=&#39;input&#39;, value=&#39;hello world&#39;),
+        html.Div(id=&#39;output&#39;)
+    ])
+
+@callback(Output(&#39;output&#39;, &#39;children&#39;), Input(&#39;input&#39;, &#39;value&#39;), prevent_initial_call=True)
+def update_output(value):
+    print(&#39;&gt;&gt;&gt; update_output&#39;)
+    return value
+
+@callback(Output(&#39;layout-div&#39;, &#39;children&#39;), Input(&#39;input&#39;, &#39;value&#39;), prevent_initial_call=True)
+def update_layout_div(value):
+    print(&#39;&gt;&gt;&gt; update_layout_div&#39;)
+    return value
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> will prevent the <code class="docutils literal notranslate"><span class="pre">update_output()</span></code>
+callback from firing when its input is first inserted into the app layout as a
+result of the <code class="docutils literal notranslate"><span class="pre">display_page()</span></code> callback. This is because both the input and
+output of the callback are already contained within the app layout when the
+callback executes.</p>
+<p>However, because the app layout contains only the output of the callback, and
+not its input, <code class="docutils literal notranslate"><span class="pre">prevent_initial_call</span></code> will not prevent the
+<code class="docutils literal notranslate"><span class="pre">update_layout_div()</span></code> callback from firing. Since
+<code class="docutils literal notranslate"><span class="pre">suppress_callback_exceptions=True</span></code> is specified here, Dash has to assume that
+the input is present in the app layout when the app is initialized. From the
+perspective of the output element in this example, the new input component is
+handled as if an existing input had been provided a new value, rather than
+treating it as initially rendered.</p>
+</section>
+<section id="circular-callbacks">
+<h2>Circular Callbacks<a class="headerlink" href="#circular-callbacks" title="Permalink to this heading">#</a></h2>
+<p>As of <code class="docutils literal notranslate"><span class="pre">dash</span> <span class="pre">v1.19.0</span></code>, you can create circular updates <em>within the same
+callback</em>.</p>
+<p>Circular callback chains that involve multiple callbacks are not supported.</p>
+<p>Circular callbacks can be used to keep multiple inputs synchronized to each
+other.</p>
+<section id="synchronizing-a-slider-with-a-text-input-example">
+<h3>Synchronizing a Slider with a Text Input Example<a class="headerlink" href="#synchronizing-a-slider-with-a-text-input-example" title="Permalink to this heading">#</a></h3>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, callback, ctx
+
+external_stylesheets = [&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div(
+    [
+        dcc.Slider(
+            id=&quot;slider-circular&quot;, min=0, max=20,
+            marks={i: str(i) for i in range(21)},
+            value=3
+        ),
+        dcc.Input(
+            id=&quot;input-circular&quot;, type=&quot;number&quot;, min=0, max=20, value=3
+        ),
+    ]
+)
+@callback(
+    Output(&quot;input-circular&quot;, &quot;value&quot;),
+    Output(&quot;slider-circular&quot;, &quot;value&quot;),
+    Input(&quot;input-circular&quot;, &quot;value&quot;),
+    Input(&quot;slider-circular&quot;, &quot;value&quot;),
+)
+def callback(input_value, slider_value):
+    trigger_id = ctx.triggered[0][&quot;prop_id&quot;].split(&quot;.&quot;)[0]
+    value = input_value if trigger_id == &quot;input-circular&quot; else slider_value
+    return value, value
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>01234567891011121314151617181920</p>
+</section>
+<section id="displaying-two-inputs-with-different-units-example">
+<h3>Displaying Two Inputs with Different Units Example<a class="headerlink" href="#displaying-two-inputs-with-different-units-example" title="Permalink to this heading">#</a></h3>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, callback, ctx
+
+external_stylesheets = [&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div([
+    html.Div(&#39;Convert Temperature&#39;),
+    &#39;Celsius&#39;,
+    dcc.Input(
+        id=&quot;celsius&quot;,
+        value=0.0,
+        type=&quot;number&quot;
+    ),
+    &#39; = Fahrenheit&#39;,
+    dcc.Input(
+        id=&quot;fahrenheit&quot;,
+        value=32.0,
+        type=&quot;number&quot;,
+    ),
+])
+
+@callback(
+    Output(&quot;celsius&quot;, &quot;value&quot;),
+    Output(&quot;fahrenheit&quot;, &quot;value&quot;),
+    Input(&quot;celsius&quot;, &quot;value&quot;),
+    Input(&quot;fahrenheit&quot;, &quot;value&quot;),
+)
+def sync_input(celsius, fahrenheit):
+    input_id = ctx.triggered[0][&quot;prop_id&quot;].split(&quot;.&quot;)[0]
+    if input_id == &quot;celsius&quot;:
+        fahrenheit= None if celsius is None else (float(celsius) * 9/5) + 32
+    else:
+        celsius = None if fahrenheit is None else (float(fahrenheit) - 32) * 5/9
+    return celsius, fahrenheit
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Convert Temperature</p>
+<p>Celsius = Fahrenheit</p>
+</section>
+<section id="synchronizing-two-checklists">
+<h3>Synchronizing Two Checklists<a class="headerlink" href="#synchronizing-two-checklists" title="Permalink to this heading">#</a></h3>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, callback_context
+
+external_stylesheets = [&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+options = [&quot;New York City&quot;, &quot;Montréal&quot;, &quot;San Francisco&quot;]
+
+app.layout = html.Div(
+    [
+        dcc.Checklist([&quot;All&quot;], [], id=&quot;all-checklist&quot;, inline=True),
+        dcc.Checklist(options, [], id=&quot;city-checklist&quot;, inline=True),
+    ]
+)
+@callback(
+    Output(&quot;city-checklist&quot;, &quot;value&quot;),
+    Output(&quot;all-checklist&quot;, &quot;value&quot;),
+    Input(&quot;city-checklist&quot;, &quot;value&quot;),
+    Input(&quot;all-checklist&quot;, &quot;value&quot;),
+)
+def sync_checklists(cities_selected, all_selected):
+    ctx = callback_context
+    input_id = ctx.triggered[0][&quot;prop_id&quot;].split(&quot;.&quot;)[0]
+    if input_id == &quot;city-checklist&quot;:
+        all_selected = [&quot;All&quot;] if set(cities_selected) == set(options) else []
+    else:
+        cities_selected = options if all_selected else []
+    return cities_selected, all_selected
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>All</p>
+<p>New York CityMontréalSan Francisco</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">回调函数共享数据</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"> Clientside Callbacks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-errors-with-dash-no-update">Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-for-callback-context">Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legacy-behavior-using-timestamps">Legacy Behavior: Using Timestamps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improving-performance-with-memoization">Improving Performance with Memoization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-are-callbacks-executed">When Are Callbacks Executed?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-a-dash-app-first-loads">When a Dash App First Loads</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#as-a-direct-result-of-user-interaction">As a Direct Result of User Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#as-an-indirect-result-of-user-interaction">As an Indirect Result of User Interaction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-dash-components-are-added-to-the-layout">When Dash Components Are Added to the Layout</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prevent-callback-execution-upon-initial-component-render">Prevent Callback Execution Upon Initial Component Render</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circular-callbacks">Circular Callbacks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-a-slider-with-a-text-input-example">Synchronizing a Slider with a Text Input Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-two-inputs-with-different-units-example">Displaying Two Inputs with Different Units Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronizing-two-checklists">Synchronizing Two Checklists</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

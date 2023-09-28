@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Callback Gotchas &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/16callback-gotchas';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/16callback-gotchas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/16callback-gotchas.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Callback Gotchas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks-require-their-inputs-states-and-output-to-be-present-in">Callbacks require their <code class="docutils literal notranslate"><span class="pre">Inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">States</span></code>, and <code class="docutils literal notranslate"><span class="pre">Output</span></code> to be present in</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks-require-all-inputs-and-states-to-be-rendered-on-the-page">Callbacks require <em>all</em> <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">States</span></code> to be rendered on the page</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-callbacks-must-be-defined-before-the-server-starts">All callbacks must be defined before the server starts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-definitions-don-t-need-to-be-in-lists">Callback definitions don’t need to be in lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-dash-core-components-in-a-layout-should-be-registered-with-a-callback">All Dash Core Components in a layout should be registered with a callback</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="callback-gotchas">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Callback Gotchas<a class="headerlink" href="#callback-gotchas" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>To get the most out of this page, make sure you’ve read about <span class="xref myst">Basic
+Callbacks</span> in the Dash Fundamentals.</p>
+</div></blockquote>
+<p>There are some aspects of how Dash works that can be tricky, especially when
+it comes to callbacks. This page outlines some common gotchas that you might
+encounter as you start building more complex Dash apps.</p>
+<section id="callbacks-require-their-inputs-states-and-output-to-be-present-in">
+<h2>Callbacks require their <code class="docutils literal notranslate"><span class="pre">Inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">States</span></code>, and <code class="docutils literal notranslate"><span class="pre">Output</span></code> to be present in<a class="headerlink" href="#callbacks-require-their-inputs-states-and-output-to-be-present-in" title="Permalink to this heading">#</a></h2>
+<p>the layout</p>
+<p>By default, Dash applies validation to your callbacks, which performs checks
+such as validating the types of callback arguments and checking to see whether
+the specified <code class="docutils literal notranslate"><span class="pre">Input</span></code> and <code class="docutils literal notranslate"><span class="pre">Output</span></code> components actually have the specified
+properties. For full validation, all components within your callback must
+exist in the layout when your app starts, and you will see an error if they do
+not.</p>
+<p>However, in the case of more complex Dash apps that involve dynamic
+modification of the layout (such as multi-page apps), not every component
+appearing in your callbacks will be included in the initial layout. You can
+remove this restriction by disabling callback validation like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>app.config.suppress_callback_exceptions = True
+</pre></div>
+</div>
+</section>
+<section id="callbacks-require-all-inputs-and-states-to-be-rendered-on-the-page">
+<h2>Callbacks require <em>all</em> <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">States</span></code> to be rendered on the page<a class="headerlink" href="#callbacks-require-all-inputs-and-states-to-be-rendered-on-the-page" title="Permalink to this heading">#</a></h2>
+<p>If you have disabled callback validation in order to support dynamic layouts,
+then you won’t be automatically alerted to the situation where a component
+within a callback is not found within a layout. In this situation, where a
+component registered with a callback is missing from the layout, the callback
+will fail to fire. For example, if you define a callback with only a subset of
+the specified <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> present in the current page layout, the callback will
+simply not fire at all.</p>
+</section>
+<section id="all-callbacks-must-be-defined-before-the-server-starts">
+<h2>All callbacks must be defined before the server starts<a class="headerlink" href="#all-callbacks-must-be-defined-before-the-server-starts" title="Permalink to this heading">#</a></h2>
+<p>All your callbacks must be defined before your Dash app’s server starts
+running, which is to say, before you call <code class="docutils literal notranslate"><span class="pre">app.run(debug=True)</span></code>. This means
+that while you can assemble changed layout fragments dynamically during the
+handling of a callback, you can’t define dynamic callbacks in response to user
+input during the handling of a callback. If you have a dynamic interface,
+where a callback changes the layout to include a different set of input
+controls, then you must have already defined the callbacks required to service
+these new controls in advance.</p>
+<p>For example, a common scenario is a <code class="docutils literal notranslate"><span class="pre">Dropdown</span></code> component that updates the
+current layout to replace a dashboard with another logically distinct
+dashboard that has a different set of controls (the number and type of which
+might which might depend on other user input) and different logic for
+generating the underlying data. A sensible organization would be for each of
+these dashboards to have separate callbacks. In this scenario, each of these
+callbacks much then be defined before the app starts running.</p>
+<p>Generally speaking, if a feature of your Dash app is that the number of
+<code class="docutils literal notranslate"><span class="pre">Inputs</span></code> or <code class="docutils literal notranslate"><span class="pre">States</span></code> is determined by a user’s input, then you must predefine
+every permutation of callback that a user can potentially trigger. For an
+example of how this can be done programmatically using the <code class="docutils literal notranslate"><span class="pre">callback</span></code>
+decorator, see this [Dash Community forum
+post](<a class="reference external" href="https://community.plotly.com/t/callback-for-dynamically-created-">https://community.plotly.com/t/callback-for-dynamically-created-</a>
+graph/5511).</p>
+</section>
+<section id="callback-definitions-don-t-need-to-be-in-lists">
+<h2>Callback definitions don’t need to be in lists<a class="headerlink" href="#callback-definitions-don-t-need-to-be-in-lists" title="Permalink to this heading">#</a></h2>
+<p>As of Dash 1.15.0, <code class="docutils literal notranslate"><span class="pre">Input</span></code>, <code class="docutils literal notranslate"><span class="pre">Output</span></code>, and <code class="docutils literal notranslate"><span class="pre">State</span></code> in callback definitions
+don’t need to be in lists. You still need to provide <code class="docutils literal notranslate"><span class="pre">Output</span></code> items first, and
+the list form is still supported. In particular, if you want to return a
+single output item wrapped in a length-1 list, you should still wrap the
+<code class="docutils literal notranslate"><span class="pre">Output</span></code> in a list. This can be useful for procedurally-generated callbacks.</p>
+</section>
+<section id="all-dash-core-components-in-a-layout-should-be-registered-with-a-callback">
+<h2>All Dash Core Components in a layout should be registered with a callback<a class="headerlink" href="#all-dash-core-components-in-a-layout-should-be-registered-with-a-callback" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Note: This section is present for legacy purposes. Prior to v0.40.0,
+setProps was only defined if the component was connected to a callback. This
+required complex state management within the component like
+[this](<a class="github reference external" href="https://github.com/plotly/dash-core-">plotly/dash-core-</a>
+components/blob/63be1c258c15b419a82fb66366e1a31e66fbfaef/src/components/Input.react.js#L51-L59).
+Now, setProps is always defined which should simplify your component’s state
+management. Learn more in this [community forum
+topic](<a class="reference external" href="https://community.plotly.com/t/callbacks-clearing-all-unconnected-">https://community.plotly.com/t/callbacks-clearing-all-unconnected-</a>
+core-components-values/7631).</p>
+</div></blockquote>
+<p>If a Dash Core Component is present in the layout but not registered with a
+callback (either as an <code class="docutils literal notranslate"><span class="pre">Input</span></code>, <code class="docutils literal notranslate"><span class="pre">State</span></code>, or <code class="docutils literal notranslate"><span class="pre">Output</span></code>) then any changes to its
+value by the user will be reset to the original value when any callback
+updates the page.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks-require-their-inputs-states-and-output-to-be-present-in">Callbacks require their <code class="docutils literal notranslate"><span class="pre">Inputs</span></code>, <code class="docutils literal notranslate"><span class="pre">States</span></code>, and <code class="docutils literal notranslate"><span class="pre">Output</span></code> to be present in</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callbacks-require-all-inputs-and-states-to-be-rendered-on-the-page">Callbacks require <em>all</em> <code class="docutils literal notranslate"><span class="pre">Inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">States</span></code> to be rendered on the page</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-callbacks-must-be-defined-before-the-server-starts">All callbacks must be defined before the server starts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-definitions-don-t-need-to-be-in-lists">Callback definitions don’t need to be in lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-dash-core-components-in-a-layout-should-be-registered-with-a-callback">All Dash Core Components in a layout should be registered with a callback</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

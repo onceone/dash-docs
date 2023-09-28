@@ -1,0 +1,1232 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Clientside Callbacks &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/2.1客户端回调';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Pattern-Matching" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html" />
+    <link rel="prev" title="Advanced Callbacks" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/2.1客户端回调.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/2.1客户端回调.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Clientside Callbacks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example">A Simple Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-plotly-express-to-generate-a-figure">Using Plotly Express to Generate a Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clientside-callbacks-with-promises">Clientside Callbacks with Promises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-data-example">Fetching Data Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notifications-example">Notifications Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clientside-callbacks">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Clientside Callbacks<a class="headerlink" href="#clientside-callbacks" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>To get the most out of this page, make sure you’ve read about <span class="xref myst">Basic
+Callbacks</span> in the Dash Fundamentals.</p>
+</div></blockquote>
+<p>Sometimes callbacks can incur a significant overhead, especially when they:</p>
+<ul class="simple">
+<li><p>receive and/or return very large quantities of data (transfer time)</p></li>
+<li><p>are called very often (network latency, queuing, handshake)</p></li>
+<li><p>are part of a callback chain that requires multiple roundtrips between the browser and Dash</p></li>
+</ul>
+<p>When the overhead cost of a callback becomes too great and no other
+optimization is possible, the callback can be modified to be run directly in
+the browser instead of a making a request to Dash.</p>
+<p>The syntax for the callback is almost exactly the same; you use <code class="docutils literal notranslate"><span class="pre">Input</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Output</span></code> as you normally would when declaring a callback, but you also define
+a JavaScript function as the first argument to the <code class="docutils literal notranslate"><span class="pre">&#64;callback</span></code> decorator.</p>
+<p>For example, the following callback:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    Output(&#39;out-component&#39;, &#39;value&#39;),
+    Input(&#39;in-component1&#39;, &#39;value&#39;),
+    Input(&#39;in-component2&#39;, &#39;value&#39;)
+)
+def large_params_function(largeValue1, largeValue2):
+    largeValueOutput = someTransform(largeValue1, largeValue2)
+
+    return largeValueOutput
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Can be rewritten to use JavaScript like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from dash import clientside_callback, Input, Output
+
+clientside_callback(
+    &quot;&quot;&quot;
+    function(largeValue1, largeValue2) {
+        return someTransform(largeValue1, largeValue2);
+    }
+    &quot;&quot;&quot;,
+    Output(&#39;out-component&#39;, &#39;value&#39;),
+    Input(&#39;in-component1&#39;, &#39;value&#39;),
+    Input(&#39;in-component2&#39;, &#39;value&#39;)
+)
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>You also have the option of defining the function in a <code class="docutils literal notranslate"><span class="pre">.js</span></code> file in your
+<code class="docutils literal notranslate"><span class="pre">assets/</span></code> folder. To achieve the same result as the code above, the contents
+of the <code class="docutils literal notranslate"><span class="pre">.js</span></code> file would look like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>window.dash_clientside = Object.assign({}, window.dash_clientside, {
+    clientside: {
+        large_params_function: function(largeValue1, largeValue2) {
+            return someTransform(largeValue1, largeValue2);
+        }
+    }
+});
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>In Dash, the callback would now be written as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from dash import clientside_callback, ClientsideFunction, Input, Output
+
+clientside_callback(
+    ClientsideFunction(
+        namespace=&#39;clientside&#39;,
+        function_name=&#39;large_params_function&#39;
+    ),
+    Output(&#39;out-component&#39;, &#39;value&#39;),
+    Input(&#39;in-component1&#39;, &#39;value&#39;),
+    Input(&#39;in-component2&#39;, &#39;value&#39;)
+)
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="a-simple-example">
+<h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this heading">#</a></h2>
+<p>Below are two examples of using clientside callbacks to update a graph in
+conjunction with a <code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component. In these examples, we update a
+<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component on the backend; to create and display the graph, we have
+a clientside callback in the frontend that adds some extra information about
+the layout that we specify using the radio buttons under “Graph scale”.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, clientside_callback
+import pandas as pd
+
+import json
+
+external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+df = pd.read_csv(&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;)
+
+available_countries = df[&#39;country&#39;].unique()
+
+app.layout = html.Div([
+    dcc.Graph(
+        id=&#39;clientside-graph&#39;
+    ),
+    dcc.Store(
+        id=&#39;clientside-figure-store&#39;,
+        data=[{
+            &#39;x&#39;: df[df[&#39;country&#39;] == &#39;Canada&#39;][&#39;year&#39;],
+            &#39;y&#39;: df[df[&#39;country&#39;] == &#39;Canada&#39;][&#39;pop&#39;]
+        }]
+    ),
+    &#39;Indicator&#39;,
+    dcc.Dropdown(
+        {&#39;pop&#39; : &#39;Population&#39;, &#39;lifeExp&#39;: &#39;Life Expectancy&#39;, &#39;gdpPercap&#39;: &#39;GDP per Capita&#39;},
+        &#39;pop&#39;,
+        id=&#39;clientside-graph-indicator&#39;
+    ),
+    &#39;Country&#39;,
+    dcc.Dropdown(available_countries, &#39;Canada&#39;, id=&#39;clientside-graph-country&#39;),
+    &#39;Graph scale&#39;,
+    dcc.RadioItems(
+        [&#39;linear&#39;, &#39;log&#39;],
+        &#39;linear&#39;,
+        id=&#39;clientside-graph-scale&#39;
+    ),
+    html.Hr(),
+    html.Details([
+        html.Summary(&#39;Contents of figure storage&#39;),
+        dcc.Markdown(
+            id=&#39;clientside-figure-json&#39;
+        )
+    ])
+])
+
+
+@callback(
+    Output(&#39;clientside-figure-store&#39;, &#39;data&#39;),
+    Input(&#39;clientside-graph-indicator&#39;, &#39;value&#39;),
+    Input(&#39;clientside-graph-country&#39;, &#39;value&#39;)
+)
+def update_store_data(indicator, country):
+    dff = df[df[&#39;country&#39;] == country]
+    return [{
+        &#39;x&#39;: dff[&#39;year&#39;],
+        &#39;y&#39;: dff[indicator],
+        &#39;mode&#39;: &#39;markers&#39;
+    }]
+
+
+clientside_callback(
+    &quot;&quot;&quot;
+    function(data, scale) {
+        return {
+            &#39;data&#39;: data,
+            &#39;layout&#39;: {
+                 &#39;yaxis&#39;: {&#39;type&#39;: scale}
+             }
+        }
+    }
+    &quot;&quot;&quot;,
+    Output(&#39;clientside-graph&#39;, &#39;figure&#39;),
+    Input(&#39;clientside-figure-store&#39;, &#39;data&#39;),
+    Input(&#39;clientside-graph-scale&#39;, &#39;value&#39;)
+)
+
+
+@callback(
+    Output(&#39;clientside-figure-json&#39;, &#39;children&#39;),
+    Input(&#39;clientside-figure-store&#39;, &#39;data&#39;)
+)
+def generated_figure_json(data):
+    return &#39;```\n&#39;+json.dumps(data, indent=2)+&#39;\n```&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>195019601970198019902000201015M20M25M30M</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Indicator</p>
+<p>Population</p>
+<p>×</p>
+<p>Country</p>
+<p>Canada</p>
+<p>×</p>
+<p>Graph scale</p>
+<p>linearlog</p>
+<hr class="docutils" />
+<p>Contents of figure storage</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[
+  {
+    &quot;x&quot;: [
+      1952,
+      1957,
+      1962,
+      1967,
+      1972,
+      1977,
+      1982,
+      1987,
+      1992,
+      1997,
+      2002,
+      2007
+    ],
+    &quot;y&quot;: [
+      14785584,
+      17010154,
+      18985849,
+      20819767,
+      22284500,
+      23796400,
+      25201900,
+      26549700,
+      28523502,
+      30305843,
+      31902268,
+      33390141
+    ],
+    &quot;mode&quot;: &quot;markers&quot;
+  }
+]
+</pre></div>
+</div>
+<p>Note that, in this example, we are manually creating the <code class="docutils literal notranslate"><span class="pre">figure</span></code> dictionary
+by extracting the relevant data from the dataframe. This is what gets stored
+in our <code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> component; expand the “Contents of figure storage” above to
+see exactly what is used to construct the graph.</p>
+</section>
+<section id="using-plotly-express-to-generate-a-figure">
+<h2>Using Plotly Express to Generate a Figure<a class="headerlink" href="#using-plotly-express-to-generate-a-figure" title="Permalink to this heading">#</a></h2>
+<p>Plotly Express enables you to create one-line declarations of figures. When
+you create a graph with, for example, <code class="docutils literal notranslate"><span class="pre">plotly_express.Scatter</span></code>, you get a
+dictionary as a return value. This dictionary is in the same shape as the
+<code class="docutils literal notranslate"><span class="pre">figure</span></code> argument to a <code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> component. (See
+<a class="reference external" href="https://plotly.com/python/creating-and-updating-figures/">here</a> for more
+information about the shape of <code class="docutils literal notranslate"><span class="pre">figure</span></code>s.)</p>
+<p>We can rework the example above to use Plotly Express.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, clientside_callback
+import pandas as pd
+import json
+
+import plotly.express as px
+
+external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+
+df = pd.read_csv(&#39;https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv&#39;)
+
+available_countries = df[&#39;country&#39;].unique()
+
+app.layout = html.Div([
+    dcc.Graph(
+        id=&#39;clientside-graph-px&#39;
+    ),
+    dcc.Store(
+        id=&#39;clientside-figure-store-px&#39;
+    ),
+    &#39;Indicator&#39;,
+    dcc.Dropdown(
+        {&#39;pop&#39; : &#39;Population&#39;, &#39;lifeExp&#39;: &#39;Life Expectancy&#39;, &#39;gdpPercap&#39;: &#39;GDP per Capita&#39;},
+        &#39;pop&#39;,
+        id=&#39;clientside-graph-indicator-px&#39;
+    ),
+    &#39;Country&#39;,
+    dcc.Dropdown(available_countries, &#39;Canada&#39;, id=&#39;clientside-graph-country-px&#39;),
+    &#39;Graph scale&#39;,
+    dcc.RadioItems(
+        [&#39;linear&#39;, &#39;log&#39;],
+        &#39;linear&#39;,
+        id=&#39;clientside-graph-scale-px&#39;
+    ),
+    html.Hr(),
+    html.Details([
+        html.Summary(&#39;Contents of figure storage&#39;),
+        dcc.Markdown(
+            id=&#39;clientside-figure-json-px&#39;
+        )
+    ])
+])
+
+
+@callback(
+    Output(&#39;clientside-figure-store-px&#39;, &#39;data&#39;),
+    Input(&#39;clientside-graph-indicator-px&#39;, &#39;value&#39;),
+    Input(&#39;clientside-graph-country-px&#39;, &#39;value&#39;)
+)
+def update_store_data(indicator, country):
+    dff = df[df[&#39;country&#39;] == country]
+    return px.scatter(dff, x=&#39;year&#39;, y=str(indicator))
+
+
+clientside_callback(
+    &quot;&quot;&quot;
+    function(figure, scale) {
+        if(figure === undefined) {
+            return {&#39;data&#39;: [], &#39;layout&#39;: {}};
+        }
+        const fig = Object.assign({}, figure, {
+            &#39;layout&#39;: {
+                ...figure.layout,
+                &#39;yaxis&#39;: {
+                    ...figure.layout.yaxis, type: scale
+                }
+             }
+        });
+        return fig;
+    }
+    &quot;&quot;&quot;,
+    Output(&#39;clientside-graph-px&#39;, &#39;figure&#39;),
+    Input(&#39;clientside-figure-store-px&#39;, &#39;data&#39;),
+    Input(&#39;clientside-graph-scale-px&#39;, &#39;value&#39;)
+)
+
+
+@callback(
+    Output(&#39;clientside-figure-json-px&#39;, &#39;children&#39;),
+    Input(&#39;clientside-figure-store-px&#39;, &#39;data&#39;)
+)
+def generated_px_figure_json(data):
+    return &#39;```\n&#39;+json.dumps(data, indent=2)+&#39;\n```&#39;
+
+
+if __name__ == &#39;__main__&#39;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>195019601970198019902000201015M20M25M30M</p>
+<p>yearpop</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Indicator</p>
+<p>Population</p>
+<p>×</p>
+<p>Country</p>
+<p>Canada</p>
+<p>×</p>
+<p>Graph scale</p>
+<p>linearlog</p>
+<hr class="docutils" />
+<p>Contents of figure storage</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;data&quot;: [
+    {
+      &quot;hovertemplate&quot;: &quot;year=%{x}&lt;br&gt;pop=%{y}&lt;extra&gt;&lt;/extra&gt;&quot;,
+      &quot;legendgroup&quot;: &quot;&quot;,
+      &quot;marker&quot;: {
+        &quot;color&quot;: &quot;var(--colorway-0)&quot;,
+        &quot;symbol&quot;: &quot;circle&quot;
+      },
+      &quot;mode&quot;: &quot;markers&quot;,
+      &quot;name&quot;: &quot;&quot;,
+      &quot;orientation&quot;: &quot;v&quot;,
+      &quot;showlegend&quot;: false,
+      &quot;x&quot;: [
+        1952,
+        1957,
+        1962,
+        1967,
+        1972,
+        1977,
+        1982,
+        1987,
+        1992,
+        1997,
+        2002,
+        2007
+      ],
+      &quot;xaxis&quot;: &quot;x&quot;,
+      &quot;y&quot;: [
+        14785584,
+        17010154,
+        18985849,
+        20819767,
+        22284500,
+        23796400,
+        25201900,
+        26549700,
+        28523502,
+        30305843,
+        31902268,
+        33390141
+      ],
+      &quot;yaxis&quot;: &quot;y&quot;,
+      &quot;type&quot;: &quot;scatter&quot;
+    }
+  ],
+  &quot;layout&quot;: {
+    &quot;template&quot;: {
+      &quot;layout&quot;: {
+        &quot;colorscale&quot;: {
+          &quot;sequential&quot;: [
+            [
+              0,
+              &quot;var(--colorscale-0)&quot;
+            ],
+            [
+              0.1111111111111111,
+              &quot;var(--colorscale-1)&quot;
+            ],
+            [
+              0.2222222222222222,
+              &quot;var(--colorscale-2)&quot;
+            ],
+            [
+              0.3333333333333333,
+              &quot;var(--colorscale-3)&quot;
+            ],
+            [
+              0.4444444444444444,
+              &quot;var(--colorscale-4)&quot;
+            ],
+            [
+              0.5555555555555556,
+              &quot;var(--colorscale-5)&quot;
+            ],
+            [
+              0.6666666666666666,
+              &quot;var(--colorscale-6)&quot;
+            ],
+            [
+              0.7777777777777778,
+              &quot;var(--colorscale-7)&quot;
+            ],
+            [
+              0.8888888888888888,
+              &quot;var(--colorscale-8)&quot;
+            ],
+            [
+              1,
+              &quot;var(--colorscale-9)&quot;
+            ]
+          ]
+        },
+        &quot;colorway&quot;: [
+          &quot;var(--colorway-0)&quot;,
+          &quot;var(--colorway-1)&quot;,
+          &quot;var(--colorway-2)&quot;,
+          &quot;var(--colorway-3)&quot;,
+          &quot;var(--colorway-4)&quot;,
+          &quot;var(--colorway-5)&quot;,
+          &quot;var(--colorway-6)&quot;,
+          &quot;var(--colorway-7)&quot;,
+          &quot;var(--colorway-8)&quot;,
+          &quot;var(--colorway-9)&quot;
+        ],
+        &quot;margin&quot;: {
+          &quot;t&quot;: 0
+        }
+      }
+    },
+    &quot;xaxis&quot;: {
+      &quot;anchor&quot;: &quot;y&quot;,
+      &quot;domain&quot;: [
+        0,
+        1
+      ],
+      &quot;title&quot;: {
+        &quot;text&quot;: &quot;year&quot;
+      }
+    },
+    &quot;yaxis&quot;: {
+      &quot;anchor&quot;: &quot;x&quot;,
+      &quot;domain&quot;: [
+        0,
+        1
+      ],
+      &quot;title&quot;: {
+        &quot;text&quot;: &quot;pop&quot;
+      }
+    },
+    &quot;legend&quot;: {
+      &quot;tracegroupgap&quot;: 0
+    }
+  }
+}
+</pre></div>
+</div>
+<p>Again, you can expand the “Contents of figure storage” section above to see
+what gets generated. You may notice that this is quite a bit more extensive
+than the previous example; in particular, a <code class="docutils literal notranslate"><span class="pre">layout</span></code> is already defined. So,
+instead of creating a <code class="docutils literal notranslate"><span class="pre">layout</span></code> as we did previously, we have to mutate the
+existing layout in our JavaScript code.</p>
+</section>
+<section id="clientside-callbacks-with-promises">
+<h2>Clientside Callbacks with Promises<a class="headerlink" href="#clientside-callbacks-with-promises" title="Permalink to this heading">#</a></h2>
+<p>Dash 2.4 and later supports clientside callbacks that return promises.</p>
+<section id="fetching-data-example">
+<h3>Fetching Data Example<a class="headerlink" href="#fetching-data-example" title="Permalink to this heading">#</a></h3>
+<p>In this example, we fetch data (based on the value of the dropdown) using an
+async clientside callback function that outputs it to a <code class="docutils literal notranslate"><span class="pre">dash_table.DataTable</span></code>
+component.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, dash_table, clientside_callback
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        dcc.Dropdown(
+            options=[
+                {
+                    &quot;label&quot;: &quot;Car-sharing data&quot;,
+                    &quot;value&quot;: &quot;https://raw.githubusercontent.com/plotly/datasets/master/carshare_data.json&quot;,
+                },
+                {
+                    &quot;label&quot;: &quot;Iris data&quot;,
+                    &quot;value&quot;: &quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;,
+                },
+            ],
+            value=&quot;https://raw.githubusercontent.com/plotly/datasets/master/iris_data.json&quot;,
+            id=&quot;data-select&quot;,
+        ),
+        html.Br(),
+        dash_table.DataTable(id=&quot;my-table-promises&quot;, page_size=10),
+    ]
+)
+
+clientside_callback(
+    &quot;&quot;&quot;
+    async function(value) {
+    const response = await fetch(value);
+    const data = await response.json();
+    return data;
+    }
+    &quot;&quot;&quot;,
+    Output(&quot;my-table-promises&quot;, &quot;data&quot;),
+    Input(&quot;data-select&quot;, &quot;value&quot;),
+)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Iris data</p>
+<p>×</p>
+<p>sepal length</p>
+<p>|</p>
+<p>sepal width</p>
+<p>|</p>
+<p>petal length</p>
+<p>|</p>
+<p>petal width</p>
+<p>|</p>
+<p>class</p>
+<p>—|—|—|—|—</p>
+<p>5.1</p>
+<p>|</p>
+<p>3.5</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.9</p>
+<p>|</p>
+<p>3</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.7</p>
+<p>|</p>
+<p>3.2</p>
+<p>|</p>
+<p>1.3</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.6</p>
+<p>|</p>
+<p>3.1</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>5</p>
+<p>|</p>
+<p>3.6</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>5.4</p>
+<p>|</p>
+<p>3.9</p>
+<p>|</p>
+<p>1.7</p>
+<p>|</p>
+<p>0.4</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.6</p>
+<p>|</p>
+<p>3.4</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.3</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>5</p>
+<p>|</p>
+<p>3.4</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.4</p>
+<p>|</p>
+<p>2.9</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>4.9</p>
+<p>|</p>
+<p>3.1</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.1</p>
+<p>|</p>
+<p>Iris-setosa</p>
+<p>1</p>
+<p>/</p>
+<p>15</p>
+</section>
+<section id="notifications-example">
+<h3>Notifications Example<a class="headerlink" href="#notifications-example" title="Permalink to this heading">#</a></h3>
+<p>This example uses promises and sends desktop notifications to the user once
+they grant permission and select the <strong>Notify</strong> button:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, clientside_callback
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        dcc.Store(id=&quot;notification-permission&quot;),
+        html.Button(&quot;Notify&quot;, id=&quot;notify-btn&quot;),
+        html.Div(id=&quot;notification-output&quot;),
+    ]
+)
+
+
+clientside_callback(
+    &quot;&quot;&quot;
+    function() {
+        return navigator.permissions.query({name:&#39;notifications&#39;})
+    }
+    &quot;&quot;&quot;,
+    Output(&quot;notification-permission&quot;, &quot;data&quot;),
+    Input(&quot;notify-btn&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+
+clientside_callback(
+    &quot;&quot;&quot;
+    function(result) {
+        if (result.state == &#39;granted&#39;) {
+            new Notification(&quot;Dash notification&quot;, { body: &quot;Notification already granted!&quot;});
+            return null;
+        } else if (result.state == &#39;prompt&#39;) {
+            return new Promise((resolve, reject) =&gt; {
+                Notification.requestPermission().then(res =&gt; {
+                    if (res == &#39;granted&#39;) {
+                        new Notification(&quot;Dash notification&quot;, { body: &quot;Notification granted!&quot;});
+                        resolve();
+                    } else {
+                        reject(`Permission not granted: ${res}`)
+                    }
+                })
+            });
+        } else {
+            return result.state;
+        }
+    }
+    &quot;&quot;&quot;,
+    Output(&quot;notification-output&quot;, &quot;children&quot;),
+    Input(&quot;notification-permission&quot;, &quot;data&quot;),
+    prevent_initial_call=True,
+)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>![Notification with promises](/assets/images/clientside-
+callbacks/notification.gif)</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
+<p>There are a few limitations to keep in mind:</p>
+<ol class="arabic simple">
+<li><p>Clientside callbacks execute on the browser’s main thread and will block rendering and events processing while being executed.</p></li>
+<li><p>Clientside callbacks are not possible if you need to refer to global variables on the server or a DB call is required.</p></li>
+<li><p>Dash versions prior to 2.4.0 do not support asynchronous clientside callbacks and will fail if a <code class="docutils literal notranslate"><span class="pre">Promise</span></code> is returned.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"> Advanced Callbacks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"> Pattern-Matching</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example">A Simple Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-plotly-express-to-generate-a-figure">Using Plotly Express to Generate a Figure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clientside-callbacks-with-promises">Clientside Callbacks with Promises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-data-example">Fetching Data Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notifications-example">Notifications Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

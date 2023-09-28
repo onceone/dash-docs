@@ -1,0 +1,1031 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>回调函数共享数据 &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/1基础/2.3回调之间共享数据';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Advanced Callbacks" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html" />
+    <link rel="prev" title="交互可视化" href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/1基础/2.3回调之间共享数据.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/1基础/2.3回调之间共享数据.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>回调函数共享数据</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">为什么共享状态</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash">Dash无状态</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">存储共享数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-dcc-store">Example 1 使用<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>在浏览器中存储数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2  预先计算聚合</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-caching-and-signaling">Example 3 - Caching and Signaling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4">Example 4 - 服务器上基于用户的会话数据</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>回调函数共享数据<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>Callbacks</p>
+<blockquote>
+<div><p>This is the final chapter of the essential <span class="xref myst">Dash Fundamentals</span>. The
+<span class="xref myst">previous chapter</span> covered how to use callbacks with
+the dcc.Graph component. The <span class="xref myst">rest of the Dash documentation</span> covers
+other topics like multi-page apps and component libraries. Just getting
+started? Make sure to <span class="xref myst">install the necessary dependencies</span>.</p>
+</div></blockquote>
+<p>在<span class="xref myst">回调入门指南</span>中解释的核心Dash原则之一是<strong>Dash回调必须永远不会修改其作用域之外的变量</strong>。
+修改任何全局变量都不安全。本章解释了其中的原因，并提供了一些在回调之间共享状态的替代模式</p>
+<section id="id2">
+<h2>为什么共享状态<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>在一些应用程序中，你可能有多个回调，这些回调依赖于昂贵的数据处理任务，比如进行数据库查询、运行模拟或下载数据</p>
+<p>与其让每个回调运行相同的昂贵任务，不如让一个回调运行任务，然后将结果共享给其他回调</p>
+<p>实现这一目标的一种方法是为一个回调提供<span class="xref myst">多个输出</span>:昂贵的任务可以完成一次，并立即在所有输出中使用。
+例如，如果需要从数据库中查询一些数据，然后在图和表中显示，那么您可以使用一个回调来计算数据并创建图和表输出</p>
+<p>但有时在一个回调中有多个输出并不是一个好的解决方案。例如，假设Dash应用程序允许用户选择日期和温度单位(华氏度或摄氏度)，然后显示当天的温度。
+您可以有一个回调，通过将日期和温度单位作为输入来输出温度，但这意味着如果用户只是将华氏温度更改为摄氏度，则必须重新下载天气数据，这可能会很耗时。
+相反，使用两个回调会更有效:一个回调获取</p>
+</section>
+<section id="dash">
+<h2>Dash无状态<a class="headerlink" href="#dash" title="Permalink to this heading">#</a></h2>
+<p>Dash被设计成一个无状态框架</p>
+<p>无状态框架比有状态框架更具可扩展性和健壮性。您访问的大多数网站都运行在无状态服务器上</p>
+<p>它们具有更高的可伸缩性,因为向应用程序添加更多的计算能力是微不足道的 为了扩展应用程序以服务更多的用户或运行更多的计算,在不同的进程中运行应用程序的更多 副本</p>
+<p>在生产环境中，这可以用gunicorn的worker命令来完成</p>
+<p>​```bash
+gunicorn app:server –workers 8</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+或者在多个Docker容器或服务器中运行应用程序，并在它们之间进行负载平衡
+
+无状态框架更加健壮，因为即使一个流程失败，其他流程也可以继续服务请求。
+在Dash Enterprise Kubernetes中，这些容器可以在单独的服务器甚至单独的区域上运行，从而提供了针对服务器故障的弹性
+
+使用无状态框架，用户会话不会与服务器进程一一对应。每个回调请求都可以在任何可用的进程上执行。
+`gunicorn`将检查哪个进程没有忙于运行回调，并将新的回调请求发送给该进程。这意味着，只要这些请求不是在同一时间发生(通常不是)，几个进程就可以平衡10个或100个并发用户的请求
+
+ **Sign up for Dash Club** → Two free cheat sheets plus updates from Chris
+Parmer and Adam Schroeder delivered to your inbox every two months. Includes
+tips and tricks, community apps, and deep dives into the Dash architecture.
+_[Join now](https://go.plotly.com/dash-
+club?utm_medium=dash_docs&amp;utm_content=sharing-data-between-callbacks)_.
+
+## 为什么全局变量会破坏你的应用
+
+Dash旨在在多用户环境中工作，其中多人同时查看应用程序并具有**个独立会话
+如果你的应用使用并修改了一个全局变量，那么一个用户的会话可能会将该变量设置为影响下一个用户会话的某个值
+Dash还被设计成能够与多个工人一起运行，以便可以并行执行回调
+
+这通常是用&#39; gunicorn &#39;完成的，使用类似的语法:
+```bash
+gunicorn --workers 4 app:server
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">app</span></code> 指的是一个名为<code class="docutils literal notranslate"><span class="pre">app.py</span></code>的文件，<code class="docutils literal notranslate"><span class="pre">server</span></code>指的是该文件中名为<code class="docutils literal notranslate"><span class="pre">server</span></code>的变量:<code class="docutils literal notranslate"><span class="pre">server</span></code>: <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">app.server</span></code></p>
+<p>当Dash应用程序在多个工作人员之间运行时，它们的内存不会被共享。这意味着，如果您在一个回调中修改了全局变量，该修改将不会应用到其他工作者/进程</p>
+<hr class="docutils" />
+<p>这里是一个应用程序的草图，它不能可靠地工作，因为回调修改了一个全局变量，这是在它的作用域之外</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+ <span class="s1">&#39;student_id&#39;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+ <span class="s1">&#39;score&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+   <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">),</span>
+   <span class="s1">&#39;was scored by this many students:&#39;</span><span class="p">,</span>
+   <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_output</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+   <span class="k">global</span> <span class="n">df</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">]</span>
+   <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>回调在第一次调用时返回正确的输出，但是一旦修改了全局’ df ‘变量，使用该数据框的任何后续回调都不再使用原始数据
+要改进这个应用程序，可以将过滤后的数据框重新分配给回调函数中的一个新变量，如下所示，或者遵循本指南下一部分概述的策略之一</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+  <span class="s1">&#39;student_id&#39;</span> <span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+  <span class="s1">&#39;score&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">),</span>
+	<span class="s1">&#39;was scored by this many students:&#39;</span><span class="p">,</span>
+	<span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_output</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+	<span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">]</span>
+	<span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>存储共享数据<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>为了跨多个进程或服务器安全地共享数据，我们需要将数据存储在每个进程都可以访问的地方</p>
+<p>有三个地方可以存储这些数据</p>
+<ul class="simple">
+<li><p>在用户的浏览器会话中, 使用 <span class="xref myst">dcc.Store</span></p></li>
+<li><p>在磁盘上(例如在文件或数据库中)</p></li>
+<li><p>在服务器端内存(RAM)中，跨进程和服务器共享，例如Redis数据库。为此，Dash Enterprise包括[板载，一键式Redis数据库](/ Dash - Enterprise / Redis -database)</p></li>
+</ul>
+<p>下面的示例说明了其中的一些方法</p>
+<section id="example-1-dcc-store">
+<h3>Example 1 使用<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>在浏览器中存储数据<a class="headerlink" href="#example-1-dcc-store" title="Permalink to this heading">#</a></h3>
+<p>将数据保存在用户浏览器的会话中:</p>
+<ul class="simple">
+<li><p>数据必须转换为字符串，如JSON或base64编码的二进制数据进行存储</p></li>
+<li><p>以这种方式缓存的数据只在用户当前会话中可用</p>
+<ul>
+<li><p>如果你打开一个新的浏览器窗口，应用程序的回调将总是重新计算数据。数据仅在同一会话内的回调之间缓存</p></li>
+<li><p>此方法不会增加应用程序的内存占用</p></li>
+<li><p>网络流量可能会有成本。如果在回调之间共享10MB的数据，那么该数据将在每个回调之间通过网络传输</p></li>
+<li><p>如果网络成本太高，那么提前计算聚合并传输它们。你的应用程序可能不会显示10MB的数据，它只会显示它的一个子集或聚合</p></li>
+</ul>
+</li>
+</ul>
+<p>下面的示例展示了利用dcc的一种常用方法。存储:如果处理一个数据集需要很长时间，并且不同的输出使用该数据集，<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>可用于将处理后的数据存储为中间值，然后将其用作多个回调中的输入以生成不同的输出。这样，昂贵的数据处理步骤只在一个回调中执行一次，而不是在每个回调中多次重复相同的昂贵计算</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;table&#39;</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;dropdown&#39;</span><span class="p">),</span>
+
+    <span class="c1"># dcc.Store stores the intermediate value</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+     <span class="c1"># some expensive data processing step</span>
+     <span class="n">cleaned_df</span> <span class="o">=</span> <span class="n">slow_processing_step</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+     <span class="c1"># more generally, this line would be</span>
+     <span class="c1"># json.dumps(cleaned_df)</span>
+     <span class="k">return</span> <span class="n">cleaned_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;iso&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">):</span>
+
+    <span class="c1"># more generally, this line would be</span>
+    <span class="c1"># json.loads(jsonified_cleaned_data)</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">create_figure</span><span class="p">(</span><span class="n">dff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span>
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">):</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">create_table</span><span class="p">(</span><span class="n">dff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+</div>
+<p>注意，在将数据放入存储之前，需要将其序列化为JSON字符串。还要注意处理后的数据如何存储在dcc中。
+通过分配数据作为其输出来<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> ，然后通过使用相同的’ dcc，多个回调使用相同的数据。<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code> 作为输入</p>
+<p>请注意此示例的前一个版本
+这个例子过去是用“隐藏div”来实现的。我们不再推荐使用隐藏div方法，而是推荐使用<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>，
+它将数据存储在用户浏览器的内存中，而不是浏览器的DOM中，从而使意图更加清晰</p>
+</section>
+<hr class="docutils" />
+<section id="example-2">
+<h3>Example 2  预先计算聚合<a class="headerlink" href="#example-2" title="Permalink to this heading">#</a></h3>
+<p>如果数据量很大，通过网络发送计算数据的成本可能会很高。在某些情况下，将这些数据序列化为JSON的成本也很高</p>
+<p>在许多情况下，您的应用程序将只显示处理数据的子集或聚合。在这些情况下，您可以在数据处理回调中预先计算聚合，并将这些聚合传输到剩余的回调中
+下面是一个简单的示例，说明如何将过滤或聚合的数据传输到多个回调，同样使用相同的<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">clean_data</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+     <span class="n">cleaned_df</span> <span class="o">=</span> <span class="n">slow_processing_step</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+     <span class="c1"># a few filter steps that compute the data</span>
+     <span class="c1"># as it&#39;s needed in the future callbacks</span>
+     <span class="n">df_1</span> <span class="o">=</span> <span class="n">cleaned_df</span><span class="p">[</span><span class="n">cleaned_df</span><span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;apples&#39;</span><span class="p">]</span>
+     <span class="n">df_2</span> <span class="o">=</span> <span class="n">cleaned_df</span><span class="p">[</span><span class="n">cleaned_df</span><span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;oranges&#39;</span><span class="p">]</span>
+     <span class="n">df_3</span> <span class="o">=</span> <span class="n">cleaned_df</span><span class="p">[</span><span class="n">cleaned_df</span><span class="p">[</span><span class="s1">&#39;fruit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;figs&#39;</span><span class="p">]</span>
+
+     <span class="n">datasets</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s1">&#39;df_1&#39;</span><span class="p">:</span> <span class="n">df_1</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;iso&#39;</span><span class="p">),</span>
+         <span class="s1">&#39;df_2&#39;</span><span class="p">:</span> <span class="n">df_2</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;iso&#39;</span><span class="p">),</span>
+         <span class="s1">&#39;df_3&#39;</span><span class="p">:</span> <span class="n">df_3</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;iso&#39;</span><span class="p">),</span>
+     <span class="p">}</span>
+
+     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph1&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_1</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">):</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">)</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;df_1&#39;</span><span class="p">],</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">create_figure_1</span><span class="p">(</span><span class="n">dff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span>
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph2&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_2</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">):</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">)</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;df_2&#39;</span><span class="p">],</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">create_figure_2</span><span class="p">(</span><span class="n">dff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span>
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph3&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;intermediate-value&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_3</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">):</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonified_cleaned_data</span><span class="p">)</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">datasets</span><span class="p">[</span><span class="s1">&#39;df_3&#39;</span><span class="p">],</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;split&#39;</span><span class="p">)</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">create_figure_3</span><span class="p">(</span><span class="n">dff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">figure</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="example-3-caching-and-signaling">
+<h3>Example 3 - Caching and Signaling<a class="headerlink" href="#example-3-caching-and-signaling" title="Permalink to this heading">#</a></h3>
+<p>This example:</p>
+<ul class="simple">
+<li><p>使用Redis通过Flask-Cache在数据库的服务器端存储全局变量。此数据通过函数(’ global store() ‘)访问，该函数的输出被缓存并通过其输入参数进行键控</p></li>
+<li><p>使用“dcc”。存储解决方案，以便在昂贵的计算完成时向其他回调发送信号</p></li>
+<li><p>注意，除了Redis，你也可以将其保存到文件系统中。看到&lt; <a class="reference external" href="https://flask-caching.readthedocs">https://flask-caching.readthedocs</a>。详情请参阅Io /en/latest/&gt;</p></li>
+<li><p>这种信号是高性能的，因为它允许昂贵的计算只占用一个进程并执行一次。如果没有这种类型的信号，每个回调最终可能会并行计算昂贵的计算，锁定四个进程而不是一个进程</p></li>
+</ul>
+<p>这种方法的另一个好处是，以后的会话可以使用预先计算的值。这将适用于具有少量输入的应用程序</p>
+<p>Here’s what this example looks like.</p>
+<p><img alt="Example of a Dash App that uses Caching" src="content/1基础/assets/images/gallery/caching.gif" /></p>
+<p>Here’s what this example looks like in code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">flask_caching</span> <span class="kn">import</span> <span class="n">Cache</span>
+
+
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Dash CSS</span>
+    <span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">,</span>
+    <span class="c1"># Loading screen CSS</span>
+    <span class="s1">&#39;https://codepen.io/chriddyp/pen/brPBPO.css&#39;</span><span class="p">]</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">server</span>
+
+<span class="n">CACHE_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># try &#39;FileSystemCache&#39; if you don&#39;t want to setup redis</span>
+    <span class="s1">&#39;CACHE_TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;redis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CACHE_REDIS_URL&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;REDIS_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;redis://localhost:6379&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">()</span>
+<span class="n">cache</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">CACHE_CONFIG</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="p">([</span><span class="s1">&#39;apples&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span> <span class="o">+</span>
+        <span class="p">([</span><span class="s1">&#39;oranges&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span> <span class="o">+</span>
+        <span class="p">([</span><span class="s1">&#39;figs&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span> <span class="o">+</span>
+        <span class="p">([</span><span class="s1">&#39;pineapples&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">})</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]))</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="s1">&#39;apples&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;dropdown&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-1&#39;</span><span class="p">),</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;six columns&quot;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-2&#39;</span><span class="p">),</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;six columns&quot;</span><span class="p">),</span>
+    <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-3&#39;</span><span class="p">),</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;six columns&quot;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;graph-4&#39;</span><span class="p">),</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;six columns&quot;</span><span class="p">),</span>
+    <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">),</span>
+
+    <span class="c1"># signal value to trigger callbacks</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;signal&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+
+<span class="c1"># perform expensive computations in this &quot;global store&quot;</span>
+<span class="c1"># these computations are cached in a globally available</span>
+<span class="c1"># redis memory store which is available across processes</span>
+<span class="c1"># and for all time.</span>
+<span class="nd">@cache</span><span class="o">.</span><span class="n">memoize</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">global_store</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="c1"># simulate expensive query</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Computing value with </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">generate_figure</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">figure</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">figure</span><span class="p">)</span>
+    <span class="n">filtered_dataframe</span> <span class="o">=</span> <span class="n">global_store</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_dataframe</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+    <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_dataframe</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+    <span class="n">fig</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;signal&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;dropdown&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">compute_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="c1"># compute value and send a signal when done</span>
+    <span class="n">global_store</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph-1&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;signal&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_1</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="c1"># generate_figure gets data from `global_store`.</span>
+    <span class="c1"># the data in `global_store` has already been computed</span>
+    <span class="c1"># by the `compute_value` callback and the result is stored</span>
+    <span class="c1"># in the global redis cached</span>
+    <span class="k">return</span> <span class="n">generate_figure</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;markers&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;opacity&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+                <span class="s1">&#39;line&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;border&#39;</span><span class="p">:</span> <span class="s1">&#39;thin darkgrey solid&#39;</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}]</span>
+    <span class="p">})</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph-2&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;signal&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_2</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">generate_figure</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;lines&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;line&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="s1">&#39;spline&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">}]</span>
+    <span class="p">})</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph-3&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;signal&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_3</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">generate_figure</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;histogram2d&#39;</span><span class="p">,</span>
+        <span class="p">}]</span>
+    <span class="p">})</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;graph-4&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span> <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;signal&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph_4</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">generate_figure</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;histogram2dcontour&#39;</span><span class="p">,</span>
+        <span class="p">}]</span>
+    <span class="p">})</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">threaded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>一些需要注意的事情</p>
+<ul class="simple">
+<li><p>我们通过使用3秒的系统睡眠来模拟一个昂贵的过程</p></li>
+<li><p>当应用程序加载时，渲染所有四个图形需要三秒钟</p></li>
+<li><p>初始计算只阻塞一个进程</p></li>
+<li><p>计算完成后，发送信号并并行执行四个回调以呈现图形。这些回调中的每一个都从“全局服务器端存储”中检索数据:Redis或文件系统缓存</p></li>
+<li><p>我们在“app.run”中设置了“processes=6”，以便多个回调可以并行执行。在生产环境中，这是通过类似于“$ gunicorn -workers 6 app:server”的方式完成的。如果您没有使用多个进程运行，那么您将不会看到图形并行更新，因为回调将串行更新</p></li>
+<li><p>由于我们使用多个进程运行服务器，我们将’ thread ‘设置为’ False ‘。一个Flask服务器不能同时是多进程和多线程的</p></li>
+<li><p>在下拉菜单中选择一个值，如果这个值在过去已经被选择过，那么它只需要不到三秒钟的时间。这是因为该值是从缓存中提取的</p></li>
+<li><p>同样，重新加载页面或在新窗口中打开应用程序也很快，因为初始状态和初始昂贵的计算已经计算过了</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="example-4">
+<h3>Example 4 - 服务器上基于用户的会话数据<a class="headerlink" href="#example-4" title="Permalink to this heading">#</a></h3>
+<p>前面的示例以所有用户都可以访问的方式缓存计算</p>
+<p>有时您可能希望将数据与用户会话隔离:一个用户的派生数据不应该更新下一个用户的派生数据。一种方法是将数据保存在dcc中。Store’，如第一个示例所示</p>
+<p>另一种方法是将数据与会话ID一起保存在缓存中，然后使用该会话ID引用数据。由于数据保存在服务器上，而不是通过网络传输，因此这种方法通常比dcc更快。存储的方法</p>
+<p>_这个方法最初是在<a class="reference external" href="https://community.plotly.com/t/capture-window-tab-closing-event/7375/2?u=chriddyp">达世币社区论坛的帖子</a></p>
+<p>This example:</p>
+<ul class="simple">
+<li><p>使用’ flask caching ‘文件系统缓存缓存数据。你也可以保存到内存缓存或数据库，比如Redis</p></li>
+<li><p>将数据序列化为JSON</p>
+<ul>
+<li><p>如果您正在使用Pandas，请考虑使用Apache Arrow进行序列化，以获得更快的序列化速度，或者使用Plasma进行序列化，以获得更小的数据帧大小。社区线程(<a class="reference external" href="https://community.plotly.com/t/fast-way-to-share-data-between-callbacks/8024/2">https://community.plotly.com/t/fast-way-to-share-data-between-callbacks/8024/2</a></p></li>
+</ul>
+</li>
+<li><p>将会话数据保存到预期的并发用户数。这可以防止缓存被数据过度填充</p></li>
+<li><p>为每个会话创建唯一的会话id，并将其存储为’ dcc ‘的数据。存储在每个页面加载。这意味着每个用户会话在dcc中都有唯一的数据。存储在他们的页面上</p></li>
+</ul>
+<blockquote>
+<div><p>注意:与所有向客户端发送数据的示例一样，请注意这些会话不一定是安全的或加密的。这些会话id可能容易受到<a class="reference external" href="https://en.wikipedia.org/wiki/Session%E5%9B%BA%E5%AE%9A">会话固定</a>类型的攻击</p>
+</div></blockquote>
+<p>Here’s what this example looks like in code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">flask_caching</span> <span class="kn">import</span> <span class="n">Cache</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Dash CSS</span>
+    <span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">,</span>
+    <span class="c1"># Loading screen CSS</span>
+    <span class="s1">&#39;https://codepen.io/chriddyp/pen/brPBPO.css&#39;</span><span class="p">]</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;CACHE_TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;redis&#39;</span><span class="p">,</span>
+    <span class="c1"># Note that filesystem cache doesn&#39;t work on systems with ephemeral</span>
+    <span class="c1"># filesystems like Heroku.</span>
+    <span class="s1">&#39;CACHE_TYPE&#39;</span><span class="p">:</span> <span class="s1">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;CACHE_DIR&#39;</span><span class="p">:</span> <span class="s1">&#39;cache-directory&#39;</span><span class="p">,</span>
+
+    <span class="c1"># should be equal to maximum number of users on the app at a single time</span>
+    <span class="c1"># higher numbers will store more data in the filesystem / redis cache</span>
+    <span class="s1">&#39;CACHE_THRESHOLD&#39;</span><span class="p">:</span> <span class="mi">200</span>
+<span class="p">})</span>
+
+
+<span class="k">def</span> <span class="nf">get_dataframe</span><span class="p">(</span><span class="n">session_id</span><span class="p">):</span>
+    <span class="nd">@cache</span><span class="o">.</span><span class="n">memoize</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">query_and_serialize_data</span><span class="p">(</span><span class="n">session_id</span><span class="p">):</span>
+        <span class="c1"># expensive or user/session-unique data processing step goes here</span>
+
+        <span class="c1"># simulate a user/session-unique data processing step by generating</span>
+        <span class="c1"># data that is dependent on time</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="c1"># simulate an expensive data processing task by sleeping</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">15</span><span class="p">)),</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">)),</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">5</span><span class="p">)),</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;values&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">query_and_serialize_data</span><span class="p">(</span><span class="n">session_id</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">serve_layout</span><span class="p">():</span>
+    <span class="n">session_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Store</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;session-id&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Get data&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;get-data-button&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;output-1&#39;</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;output-2&#39;</span><span class="p">)</span>
+    <span class="p">])</span>
+
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">serve_layout</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;output-1&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+              <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;get-data-button&#39;</span><span class="p">,</span> <span class="s1">&#39;n_clicks&#39;</span><span class="p">),</span>
+              <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;session-id&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_value_1</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">session_id</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataframe</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="s1">&#39;Output 1 - Button has been clicked </span><span class="si">{}</span><span class="s1"> times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">())</span>
+    <span class="p">])</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;output-2&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+              <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;get-data-button&#39;</span><span class="p">,</span> <span class="s1">&#39;n_clicks&#39;</span><span class="p">),</span>
+              <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;session-id&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_value_2</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">session_id</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_dataframe</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="s1">&#39;Output 2 - Button has been clicked </span><span class="si">{}</span><span class="s1"> times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">())</span>
+    <span class="p">])</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Example of a Dash App that uses User SessionCaching" src="content/1基础/assets/images/gallery/user-session-caching.gif" /></p>
+<p>在这个例子中有三件事需要注意:</p>
+<ul class="simple">
+<li><p>当我们检索数据时，数据框的时间戳不会更新。该数据作为用户会话的一部分被缓存</p></li>
+<li><p>最初检索数据需要三秒钟，但后续查询是即时的，因为数据已被缓存</p></li>
+<li><p>第二个会话显示与第一个会话不同的数据:回调之间共享的数据被隔离到单个用户会话中</p></li>
+</ul>
+<p>Questions? Discuss these examples on the <a class="reference external" href="https://community.plotly.com/c/dash">Dash Community
+Forum</a>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/1基础"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">交互可视化</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"> Advanced Callbacks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">为什么共享状态</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash">Dash无状态</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">存储共享数据</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-dcc-store">Example 1 使用<code class="docutils literal notranslate"><span class="pre">dcc.Store</span></code>在浏览器中存储数据</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">Example 2  预先计算聚合</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-caching-and-signaling">Example 3 - Caching and Signaling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4">Example 4 - 服务器上基于用户的会话数据</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

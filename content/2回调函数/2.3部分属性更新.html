@@ -1,0 +1,2067 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Partial Property Updates &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/2.3部分属性更新';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Pattern-Matching" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/2.3部分属性更新.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/2.3部分属性更新.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Partial Property Updates</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dash-patch-class">The Dash Patch Class</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-title-color-with-a-partial-update">Updating Title Color with a Partial Update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance">Performance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-update-methods">Partial Update Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">Assign</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-assigning-new-data">Examples of Assigning New Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-point-colors">Updating Point Colors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#append">Append</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-x-and-y-axes-of-a-graph">Example with X and Y Axes of a Graph</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-append-with-pattern-matching-callbacks">Example of Append with Pattern-Matching Callbacks</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepend">Prepend</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extend">Extend</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-a-dataframe">Example with a Dataframe</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insert">Insert</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse">Reverse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clear">Clear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delete">Delete</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove">Remove</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math-operations">Math Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-summary">Method Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-patch-methods">Combining Patch Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-patches-on-multiple-outputs">Using Patches on Multiple Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-duplicate-callback-outputs">Allowing Duplicate Callback Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-structure-of-properties">Exploring the Structure of Properties</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-objects">Graph Objects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="partial-property-updates">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Partial Property Updates<a class="headerlink" href="#partial-property-updates" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>New in Dash 2.9. To get the most out of this page, make sure you’ve read
+about <span class="xref myst">Basic Callbacks</span> in the Dash Fundamentals.</p>
+</div></blockquote>
+<p>Most of the callback examples we’ve seen in earlier chapters updated an entire
+property when the callback ran. In cases where we only want to update a small
+part of a property, for example, a title on a graph, this is inefficient. It
+means all the property’s data (the complete figure in this case) is sent back
+across the network, even though most of the data hasn’t changed. Improve your
+app performance by making partial property updates when a full update is not
+required.</p>
+<section id="the-dash-patch-class">
+<h2>The Dash Patch Class<a class="headerlink" href="#the-dash-patch-class" title="Permalink to this heading">#</a></h2>
+<p>Partial property updates use the <code class="docutils literal notranslate"><span class="pre">Patch</span></code> class, which you can import with
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">dash</span> <span class="pre">import</span> <span class="pre">Patch</span></code>. Instantiate a <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object in a callback to make
+partial updates to a callback output. This <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object defines the changes
+that should be made to the property. Possible changes include assigning a new
+value, merging a dictionary, and appending an item to a list. The operations
+are defined by the <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object within your callback but executed in the
+browser client in Dash’s frontend.</p>
+<section id="updating-title-color-with-a-partial-update">
+<h3>Updating Title Color with a Partial Update<a class="headerlink" href="#updating-title-color-with-a-partial-update" title="Permalink to this heading">#</a></h3>
+<p>Here’s an example of using a <code class="docutils literal notranslate"><span class="pre">Patch</span></code> to update only the graph’s title font
+color:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+import plotly.express as px
+import random
+
+app = Dash(__name__)
+
+df = px.data.iris()
+fig = px.scatter(
+    df, x=&quot;sepal_length&quot;, y=&quot;sepal_width&quot;, color=&quot;species&quot;, title=&quot;Updating Title Color&quot;
+)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update Graph Color&quot;, id=&quot;update-color-button-2&quot;),
+        dcc.Graph(figure=fig, id=&quot;my-fig&quot;),
+    ]
+)
+
+
+@callback(Output(&quot;my-fig&quot;, &quot;figure&quot;), Input(&quot;update-color-button-2&quot;, &quot;n_clicks&quot;))
+def my_callback(n_clicks):
+    # Defining a new random color
+    red = random.randint(0, 255)
+    green = random.randint(0, 255)
+    blue = random.randint(0, 255)
+    new_color = f&quot;rgb({red}, {green}, {blue})&quot;
+
+    # Creating a Patch object
+    patched_figure = Patch()
+    patched_figure[&quot;layout&quot;][&quot;title&quot;][&quot;font&quot;][&quot;color&quot;] = new_color
+    return patched_figure
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update Graph Color</p>
+<p>4.555.566.577.5822.533.544.5</p>
+<p>speciessetosaversicolorvirginicaUpdating Title Colorsepal_lengthsepal_width</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Let’s take a closer look at what’s happening here:</p>
+<ol class="arabic simple">
+<li><p>First, we import the <code class="docutils literal notranslate"><span class="pre">Patch</span></code> class:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from dash import Patch
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>We define our callback inputs and outputs in the same way as with a standard callback:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    Output(&#39;my-fig&#39;, &#39;figure&#39;),
+    Input(&#39;update-color-button-2&#39;, &#39;n_clicks&#39;)
+)
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>In our callback, we create a <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object. Here, we call it <code class="docutils literal notranslate"><span class="pre">patched_figure</span></code>, but the naming is arbitrary. This <code class="docutils literal notranslate"><span class="pre">patched_figure</span></code> will define the changes that Dash should make to the <code class="docutils literal notranslate"><span class="pre">figure</span></code>.</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure = Patch()
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Then, we define an assignment change, telling Dash that we want this part of the figure to be the value in <code class="docutils literal notranslate"><span class="pre">new_color</span></code>.</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure[&#39;layout&#39;][&#39;title&#39;][&#39;font&#39;][&#39;color&#39;] = new_color
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>We return our <code class="docutils literal notranslate"><span class="pre">patched_figure</span></code>:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>return patched_figure
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Once the callback returns the <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object, in the frontend, Dash assigns the value in <code class="docutils literal notranslate"><span class="pre">new_color</span></code> to <code class="docutils literal notranslate"><span class="pre">['layout']['title']['font']['color']</span></code> on the figure.</p></li>
+</ol>
+<blockquote>
+<div><p>In this example, we updated the <a class="reference external" href="https://plotly.com/python/reference/layout/#layout-title-font-color">title’s font
+color</a>
+by instructing Dash to update <code class="docutils literal notranslate"><span class="pre">['layout']['title']['font']['color']</span></code> on the
+figure. For more details on how to explore the property attributes of a
+Graph Objects Figure see the “Exploring the Structure of Properties” section
+below.</p>
+</div></blockquote>
+<p>Here’s how you would update the title font color without partial property
+updates</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, callback
+import plotly.express as px
+import random
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update Graph Color&quot;, id=&quot;update-color-button&quot;),
+        dcc.Graph(id=&quot;update-color-fig&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;update-color-fig&quot;, &quot;figure&quot;),
+    Input(&quot;update-color-button&quot;, &quot;n_clicks&quot;),
+)
+def my_callback(n_clicks):
+    df = px.data.iris()
+    fig = px.scatter(
+    df, title=&quot;Updating Title Color&quot;, x=&quot;sepal_length&quot;, y=&quot;sepal_width&quot;, color=&quot;species&quot;
+    )
+    if n_clicks:
+        red = random.randint(0, 255)
+        green = random.randint(0, 255)
+        blue = random.randint(0, 255)
+        new_color = f&quot;rgb({red}, {green}, {blue})&quot;
+        fig.update_layout(
+            title_font_color=new_color,
+        )
+    # Here we return the entire figure, though we&#39;ve just updated the title font color
+    return fig
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update Graph Color</p>
+<p>4.555.566.577.5822.533.544.5</p>
+<p>Updating Title Colorspeciessetosaversicolorvirginicasepal_lengthsepal_width</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at the difference when doing a partial update instead of a full
+update. The graph in our earlier example uses a small data set of 150 rows.
+Here the size difference is relatively small — 9.5 kB for the full update vs
+380 B for the partial update.</p>
+<p><strong>Full Output Size</strong></p>
+<p><img alt="Size of full output from Network tab ofbrowser" src="assets/images/partial_properties/regular_output_size.png" /></p>
+<p><strong>Patch Output Size</strong></p>
+<p><img alt="Size of partial output from Network tab ofbrowser" src="assets/images/partial_properties/patch_output_size.png" /></p>
+<p>However, in a graph with a much larger data set, the size of a full output
+increases, whereas the size of the response for our partial update to the
+title stays the same. Here’s the response size of the same example, but using
+a data set of 45000 rows in the graph. The full output size is 368 kB, while
+the partial update stays the same at 380 B.</p>
+<p><strong>Full Output Size</strong></p>
+<p><img alt="Size of full output from Network tab of browser using larger dataset" src="assets/images/partial_properties/larger_data_set.png" /></p>
+<p><strong>Patch Output Size</strong></p>
+<p><img alt="Size of partial output from Network tab of browser using larger dataset" src="assets/images/partial_properties/larger_data_set_patch.png" /></p>
+</section>
+</section>
+<section id="partial-update-methods">
+<h2>Partial Update Methods<a class="headerlink" href="#partial-update-methods" title="Permalink to this heading">#</a></h2>
+<p>There are multiple ways you can use <code class="docutils literal notranslate"><span class="pre">Patch</span></code> objects to make partial updates.</p>
+<blockquote>
+<div><p>Although all the methods outlined below are always available when using a
+<code class="docutils literal notranslate"><span class="pre">Patch</span></code> object, they won’t work with every property or attribute type. For,
+example, <code class="docutils literal notranslate"><span class="pre">prepend</span></code>, <code class="docutils literal notranslate"><span class="pre">extend</span></code>, and <code class="docutils literal notranslate"><span class="pre">append</span></code> work with lists while <code class="docutils literal notranslate"><span class="pre">update</span></code>
+works with dictionaries. See the Exploring the Structure of Properties
+section below for more details on understanding the property you are
+updating.</p>
+</div></blockquote>
+<section id="assign">
+<h3>Assign<a class="headerlink" href="#assign" title="Permalink to this heading">#</a></h3>
+<p>In the example above, we use assignment with the <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object. We assign
+<code class="docutils literal notranslate"><span class="pre">new_color</span></code> like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure[&#39;layout&#39;][&#39;title&#39;][&#39;font&#39;][&#39;color&#39;] = new_color
+</pre></div>
+</div>
+<p>You can also use dot notation. So you could assign <code class="docutils literal notranslate"><span class="pre">new_color</span></code> like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure.layout.title.font.color = new_color
+</pre></div>
+</div>
+<blockquote>
+<div><p>To use dot notation to assign to a property attribute, the attribute name
+must be a <a class="reference external" href="https://docs.python.org/3/reference/lexical_analysis.html#identifiers">valid Python
+identifier</a>.</p>
+</div></blockquote>
+<section id="examples-of-assigning-new-data">
+<h4>Examples of Assigning New Data<a class="headerlink" href="#examples-of-assigning-new-data" title="Permalink to this heading">#</a></h4>
+<p>In this example, we update the values on the y-axis based on the dropdown
+selection.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+import plotly.express as px
+
+app = Dash(__name__)
+
+# Get data
+df = px.data.election()[:20]
+# Create figure based on data
+fig = px.bar(df, x=&quot;district&quot;)
+
+app.layout = html.Div(
+    [
+        dcc.Dropdown(
+            [&quot;Coderre&quot;, &quot;Joly&quot;, &quot;Bergeron&quot;], id=&quot;candidate-select&quot;, value=&quot;Joly&quot;
+        ),
+        dcc.Graph(figure=fig, id=&quot;new-data-graph&quot;),
+    ]
+)
+
+
+@callback(Output(&quot;new-data-graph&quot;, &quot;figure&quot;), Input(&quot;candidate-select&quot;, &quot;value&quot;))
+def update_figure(value):
+    patched_fig = Patch()
+    patched_fig[&quot;data&quot;][0][&quot;y&quot;] = df[value].values
+    return patched_fig
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Joly</p>
+<p>×</p>
+<p>101-Bois-de-Liesse102-Cap-Saint-Jacques11-Sault-au-Récollet111-Mile-
+End112-DeLorimier113-Jeanne-Mance12-Saint-Sulpice121-La Pointe-aux-
+Prairies122-Pointe-aux-Trembles123-Rivière-des-Prairies13-Ahuntsic131-Saint-
+Édouard132-Étienne-Desmarteau133-Vieux-Rosemont134-Marie-Victorin14-Bordeaux-
+Cartierville141-Côte-de-Liesse142-Norman-McLaren151-Saint-Léonard-
+Est152-Saint-Léonard-Ouest05001000150020002500300035004000</p>
+<p>districtcount</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Here’s another example. Here we update the marker color based on the selected
+values in a dropdown. In this example, we check which values the user has
+selected and then return a list with the color of those data points as red and
+any other data points as blue.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, Patch, callback
+import plotly.express as px
+
+app = Dash(__name__)
+
+# Getting our data
+df = px.data.gapminder()
+df = df.loc[df.year == 2002].reset_index()
+
+# Creating our figure
+fig = px.scatter(x=df.lifeExp, y=df.gdpPercap, hover_name=df.country)
+fig.update_traces(marker=dict(color=&quot;blue&quot;))
+
+app.layout = html.Div(
+    [
+        html.H4(&quot;Updating Point Colors&quot;),
+        dcc.Dropdown(id=&quot;dropdown&quot;, options=df.country.unique(), multi=True),
+        dcc.Graph(id=&quot;graph-update-example&quot;, figure=fig),
+    ]
+)
+
+
+@callback(
+    Output(&quot;graph-update-example&quot;, &quot;figure&quot;), Input(&quot;dropdown&quot;, &quot;value&quot;), prevent_initial_call=True
+)
+def update_markers(countries):
+    country_count = list(df[df.country.isin(countries)].index)
+    patched_figure = Patch()
+    updated_markers = [
+        &quot;red&quot; if i in country_count else &quot;blue&quot; for i in range(len(df) + 1)
+    ]
+    patched_figure[&#39;data&#39;][0][&#39;marker&#39;][&#39;color&#39;] = updated_markers
+    return patched_figure
+
+
+app.run(debug=True)
+</pre></div>
+</div>
+</section>
+<section id="updating-point-colors">
+<h4>Updating Point Colors<a class="headerlink" href="#updating-point-colors" title="Permalink to this heading">#</a></h4>
+<p>Select…</p>
+<p>404550556065707580010k20k30k40k</p>
+<p>xy</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+</section>
+<section id="append">
+<h3>Append<a class="headerlink" href="#append" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Patch</span></code> has an <code class="docutils literal notranslate"><span class="pre">append</span></code> method you can use to add to property attributes that
+are lists. It works like appending to a list in Python, adding the item to the
+end. It is useful for adding to a component’s children and for adding data to
+axes on a figure.</p>
+<section id="example-with-x-and-y-axes-of-a-graph">
+<h4>Example with X and Y Axes of a Graph<a class="headerlink" href="#example-with-x-and-y-axes-of-a-graph" title="Permalink to this heading">#</a></h4>
+<p>By appending to the X and Y data arrays of a graph, we can add additional data
+points. In this example, we start with a graph with no data and append to both
+the X and Y axes each time the button is selected.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+import plotly.graph_objects as go
+
+import datetime
+import random
+
+app = Dash(__name__)
+
+fig = go.Figure()
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Append&quot;, id=&quot;append-new-val&quot;),
+        dcc.Graph(figure=fig, id=&quot;append-example-graph&quot;),
+    ]
+)
+
+@callback(
+    Output(&quot;append-example-graph&quot;, &quot;figure&quot;),
+    Input(&quot;append-new-val&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    current_time = datetime.datetime.now()
+    random_value = random.randrange(1, 30, 1)
+    patched_figure = Patch()
+    patched_figure[&quot;data&quot;][0][&quot;x&quot;].append(current_time)
+    patched_figure[&quot;data&quot;][0][&quot;y&quot;].append(random_value)
+    return patched_figure
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Append</p>
+<p>−10123456−101234</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="example-of-append-with-pattern-matching-callbacks">
+<h4>Example of Append with Pattern-Matching Callbacks<a class="headerlink" href="#example-of-append-with-pattern-matching-callbacks" title="Permalink to this heading">#</a></h4>
+<p>With <span class="xref myst">Pattern-Matching Callbacks</span>, we can add
+content dynamically to our layout. Often, we’ll want to add to one component’s
+<code class="docutils literal notranslate"><span class="pre">children</span></code>. In this example, the <code class="docutils literal notranslate"><span class="pre">children</span></code> of <code class="docutils literal notranslate"><span class="pre">'dropdown-container-2'</span></code> starts
+out as an empty list. Each time the <code class="docutils literal notranslate"><span class="pre">display_dropdowns</span></code> callback runs, a new
+dropdown is appended to the <code class="docutils literal notranslate"><span class="pre">children</span></code> of <code class="docutils literal notranslate"><span class="pre">'dropdown-container-2'</span></code> using a
+<code class="docutils literal notranslate"><span class="pre">Patch</span></code> object.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, ALL, Patch, callback
+
+app = Dash(__name__, suppress_callback_exceptions=True)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Add Filter&quot;, id=&quot;add-filter-2&quot;, n_clicks=0),
+        html.Div(id=&quot;dropdown-container-2&quot;, children=[]),
+        html.Div(id=&quot;dropdown-container-output-2&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;dropdown-container-2&quot;, &quot;children&quot;),
+    Input(&quot;add-filter-2&quot;, &quot;n_clicks&quot;),
+)
+def display_dropdowns(n_clicks):
+    patched_children = Patch()
+    new_dropdown = dcc.Dropdown(
+        [&quot;NYC&quot;, &quot;MTL&quot;, &quot;LA&quot;, &quot;TOKYO&quot;],
+        id={&quot;type&quot;: &quot;filter-dropdown-2&quot;, &quot;index&quot;: n_clicks},
+    )
+    patched_children.append(new_dropdown)
+    return patched_children
+
+
+@callback(
+    Output(&quot;dropdown-container-output-2&quot;, &quot;children&quot;),
+    Input({&quot;type&quot;: &quot;filter-dropdown-2&quot;, &quot;index&quot;: ALL}, &quot;value&quot;),
+)
+def display_output(values):
+    return html.Div(
+        [
+            html.Div(&quot;Dropdown {} = {}&quot;.format(i + 1, value))
+            for (i, value) in enumerate(values)
+        ]
+    )
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Add Filter</p>
+<p>Select…</p>
+<p>Dropdown 1 = None</p>
+<p>For additional examples, see the [Pattern-Matching Callbacks](/pattern-
+matching-callbacks) page.</p>
+</section>
+</section>
+<section id="prepend">
+<h3>Prepend<a class="headerlink" href="#prepend" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">prepend</span></code> method adds the provided value to the start of the list. Here we
+prepend to both the X and Y axes.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+import plotly.express as px
+
+import random
+
+app = Dash(__name__)
+
+# Creating some starter x and y data
+x_values = [2019, 2020, 2021, 2022, 2023]
+y_values = [random.randrange(1, 30, 1) for i in range(5)]
+
+fig = px.bar(x=x_values, y=y_values)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Prepend&quot;, id=&quot;prepend-new-val&quot;),
+        dcc.Graph(figure=fig, id=&quot;prepend-example-graph&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;prepend-example-graph&quot;, &quot;figure&quot;),
+    Input(&quot;prepend-new-val&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    random_value = random.randrange(1, 30, 1)
+    patched_figure = Patch()
+    patched_figure[&quot;data&quot;][0][&quot;x&quot;].prepend(2019 - n_clicks)
+    patched_figure[&quot;data&quot;][0][&quot;y&quot;].prepend(random_value)
+    return patched_figure
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Prepend</p>
+<p>201920202021202220230510152025</p>
+<p>xy</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="extend">
+<h3>Extend<a class="headerlink" href="#extend" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">extend</span></code> method works like extending a list in Python. Use it by providing
+an iterable whose values will be added to the end of the list.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+x = [&quot;Product A&quot;, &quot;Product B&quot;, &quot;Product C&quot;]
+y = [20, 14, 23]
+
+additional_products_x = [&quot;Product D&quot;, &quot;Product E&quot;, &quot;Product F&quot;]
+additional_products_y = [10, 24, 8]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update products&quot;, id=&quot;additional-products&quot;),
+        dcc.Graph(figure=fig, id=&quot;extend-example&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;extend-example&quot;, &quot;figure&quot;),
+    Input(&quot;additional-products&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    if n_clicks % 2 != 0:
+        patched_figure = Patch()
+        patched_figure[&quot;data&quot;][0][&quot;x&quot;].extend(additional_products_x)
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;].extend(additional_products_y)
+        return patched_figure
+    else:
+        return fig
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update products</p>
+<p>Product AProduct BProduct C05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p><strong>Maximum Number of Values</strong></p>
+<p>Each time you <code class="docutils literal notranslate"><span class="pre">extend</span></code> a list, it adds to the existing data. It’s not
+currently possible to limit the maximum number of values in the list. This is
+something we hope to support in the future. To do this currently, you’ll need
+to use assignment and replace the entire list with a new one with the exact
+number of values you want.</p>
+<section id="example-with-a-dataframe">
+<h4>Example with a Dataframe<a class="headerlink" href="#example-with-a-dataframe" title="Permalink to this heading">#</a></h4>
+<p>Here’s another example of using <code class="docutils literal notranslate"><span class="pre">extend</span></code>. In this example, we add rows from a
+dataframe to a <code class="docutils literal notranslate"><span class="pre">Datatable</span></code>’s data on each click (after 10 clicks we stop
+updating the table).</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, Patch, dash_table, no_update, callback
+import plotly.express as px
+
+app = Dash(__name__)
+
+df = px.data.iris()
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Add Rows&quot;, id=&quot;add-data-rows&quot;),
+        dash_table.DataTable(
+            data=df.to_dict(&quot;records&quot;),
+            columns=[{&quot;name&quot;: i, &quot;id&quot;: i} for i in df.columns],
+            page_size=10,
+            id=&quot;df-table&quot;,
+        ),
+    ]
+)
+
+
+@callback(
+    Output(&quot;df-table&quot;, &quot;data&quot;),
+    Input(&quot;add-data-rows&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    if n_clicks &lt; 10:
+        patched_table = Patch()
+        patched_table.extend(df.to_dict(&quot;records&quot;))
+        return patched_table
+    else:
+        return no_update
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Add Rows</p>
+<p>sepal_length</p>
+<p>|</p>
+<p>sepal_width</p>
+<p>|</p>
+<p>petal_length</p>
+<p>|</p>
+<p>petal_width</p>
+<p>|</p>
+<p>species</p>
+<p>|</p>
+<p>species_id</p>
+<p>—|—|—|—|—|—</p>
+<p>5.1</p>
+<p>|</p>
+<p>3.5</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.9</p>
+<p>|</p>
+<p>3</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.7</p>
+<p>|</p>
+<p>3.2</p>
+<p>|</p>
+<p>1.3</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.6</p>
+<p>|</p>
+<p>3.1</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>5</p>
+<p>|</p>
+<p>3.6</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>5.4</p>
+<p>|</p>
+<p>3.9</p>
+<p>|</p>
+<p>1.7</p>
+<p>|</p>
+<p>0.4</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.6</p>
+<p>|</p>
+<p>3.4</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.3</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>5</p>
+<p>|</p>
+<p>3.4</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.4</p>
+<p>|</p>
+<p>2.9</p>
+<p>|</p>
+<p>1.4</p>
+<p>|</p>
+<p>0.2</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>4.9</p>
+<p>|</p>
+<p>3.1</p>
+<p>|</p>
+<p>1.5</p>
+<p>|</p>
+<p>0.1</p>
+<p>|</p>
+<p>setosa</p>
+<p>|</p>
+<p>1</p>
+<p>1</p>
+<p>/</p>
+<p>15</p>
+</section>
+</section>
+<section id="insert">
+<h3>Insert<a class="headerlink" href="#insert" title="Permalink to this heading">#</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">insert</span></code> to add to a list at a specific index. The <code class="docutils literal notranslate"><span class="pre">insert</span></code> method takes
+two arguments: the index to insert at and the data to add. In this example, we
+add “Product B” after “Product A” by inserting its X and Y data at index 1.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+x = [&quot;Product A&quot;, &quot;Product C&quot;, &quot;Product D&quot;, &quot;Product E&quot;,]
+y = [20, 14, 23, 8]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update products&quot;, id=&quot;additional-product-insert&quot;),
+        dcc.Graph(figure=fig, id=&quot;insert-example&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;insert-example&quot;, &quot;figure&quot;),
+    Input(&quot;additional-product-insert&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    if n_clicks % 2 != 0:
+        patched_figure = Patch()
+        patched_figure[&quot;data&quot;][0][&quot;x&quot;].insert(1, &quot;Product B&quot;)
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;].insert(1, 10)
+        return patched_figure
+    else:
+        return fig
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update products</p>
+<p>Product AProduct CProduct DProduct E05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="reverse">
+<h3>Reverse<a class="headerlink" href="#reverse" title="Permalink to this heading">#</a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">reverse</span></code> you can reverse the order of items in a list. Here, we reverse
+the data on the X and Y axes of the figure.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+x = [&quot;Product A&quot;, &quot;Product C&quot;, &quot;Product D&quot;, &quot;Product E&quot;,]
+y = [20, 14, 23, 8]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Reverse Items&quot;, id=&quot;reverse-button&quot;),
+        dcc.Graph(figure=fig, id=&quot;reverse-example&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;reverse-example&quot;, &quot;figure&quot;),
+    Input(&quot;reverse-button&quot;, &quot;n_clicks&quot;)
+)
+def add_data_to_fig(n_clicks):
+    patched_figure = Patch()
+    patched_figure[&quot;data&quot;][0][&quot;x&quot;].reverse()
+    patched_figure[&quot;data&quot;][0][&quot;y&quot;].reverse()
+    return patched_figure
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Reverse Items</p>
+<p>Product EProduct DProduct CProduct A05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="clear">
+<h3>Clear<a class="headerlink" href="#clear" title="Permalink to this heading">#</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">clear</span></code> to remove all items in a list.
+<a class="reference external" href="https://plotly.com/python/reference/layout/annotations/"><code class="docutils literal notranslate"><span class="pre">annotations</span></code></a> is a
+list of dictionaries on the graph’s <code class="docutils literal notranslate"><span class="pre">layout</span></code>. In this example, we clear the
+list when the button is selected. The next time the button is selected we add
+the <code class="docutils literal notranslate"><span class="pre">annotations</span></code> back.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+import plotly.graph_objects as go
+
+app = Dash(__name__)
+
+fig = go.Figure(
+    [
+        go.Scatter(x=[0, 1, 2, 3, 4, 5, 6, 7, 8], y=[0, 1, 3, 2, 4, 3, 4, 6, 5]),
+        go.Scatter(x=[0, 1, 2, 3, 4, 5, 6, 7, 8], y=[0, 4, 5, 1, 2, 2, 3, 4, 2]),
+    ],
+    go.Layout(
+        dict(
+            annotations=[
+                dict(
+                    x=2,
+                    y=5,
+                    text=&quot;Text annotation with arrow&quot;,
+                    showarrow=True,
+                    arrowhead=1,
+                ),
+                dict(
+                    x=4,
+                    y=4,
+                    text=&quot;Text annotation without arrow&quot;,
+                    showarrow=False,
+                    yshift=10,
+                ),
+            ]
+        ),
+        showlegend=False,
+    ),
+)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Show/Clear Annotations&quot;, id=&quot;clear-button&quot;),
+        dcc.Graph(id=&quot;clear-example&quot;, figure=fig),
+    ]
+)
+
+
+@callback(Output(&quot;clear-example&quot;, &quot;figure&quot;), Input(&quot;clear-button&quot;, &quot;n_clicks&quot;))
+def add_data_to_fig(n_clicks):
+    patched_figure = Patch()
+    if n_clicks and n_clicks % 2 != 0:
+        patched_figure[&quot;layout&quot;][&quot;annotations&quot;].clear()
+    else:
+        patched_figure[&quot;layout&quot;][&quot;annotations&quot;].extend(
+            [
+                dict(
+                    x=2,
+                    y=5,
+                    text=&quot;Text annotation with arrow&quot;,
+                    showarrow=True,
+                    arrowhead=1,
+                ),
+                dict(
+                    x=4,
+                    y=4,
+                    text=&quot;Text annotation without arrow&quot;,
+                    showarrow=False,
+                    yshift=10,
+                ),
+            ]
+        )
+    return patched_figure
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Show/Clear Annotations</p>
+<p>0123456780123456</p>
+<p>Text annotation with arrowText annotation without arrowText annotation with
+arrowText annotation without arrow</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="update">
+<h3>Update<a class="headerlink" href="#update" title="Permalink to this heading">#</a></h3>
+<p>For a property attribute that is a dictionary, you can use the <code class="docutils literal notranslate"><span class="pre">update</span></code> method
+to merge another dictionary into it. In this example, the <code class="docutils literal notranslate"><span class="pre">RadioItems</span></code>
+component’s options are created as a dictionary. The initial dictionary has
+three key-value pairs, and when the button is selected, three additional key-
+value pairs are merged into it.</p>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">update</span></code> performs a single-level merge, not a deep merge.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, Patch, callback
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Add options&quot;, id=&quot;add-options&quot;),
+        dcc.RadioItems(
+            options={
+                &quot;New York City&quot;: &quot;New York City&quot;,
+                &quot;Montreal&quot;: &quot;Montreal&quot;,
+                &quot;San Francisco&quot;: &quot;San Francisco&quot;,
+            },
+            value=&quot;Montreal&quot;,
+            id=&quot;city-dd&quot;,
+        ),
+        html.Div(id=&quot;city-output-container&quot;),
+    ]
+)
+
+
+@callback(Output(&quot;city-output-container&quot;, &quot;children&quot;), Input(&quot;city-dd&quot;, &quot;value&quot;))
+def update_output(value):
+    return f&quot;You have selected {value}&quot;
+
+
+@callback(
+    Output(&quot;city-dd&quot;, &quot;options&quot;),
+    Input(&quot;add-options&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def update_output(n_clicks):
+    patched_dropdown = Patch()
+    european_cities = {&quot;Paris&quot;: &quot;Paris&quot;, &quot;London&quot;: &quot;London&quot;, &quot;Berlin&quot;: &quot;Berlin&quot;}
+    patched_dropdown.update(european_cities)
+    return patched_dropdown
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Add options</p>
+<p>New York CityMontrealSan Francisco</p>
+<p>You have selected Montreal</p>
+</section>
+<section id="delete">
+<h3>Delete<a class="headerlink" href="#delete" title="Permalink to this heading">#</a></h3>
+<p>You can also make partial updates that delete parts of a property’s data. In
+this example, we delete the first row of the table by deleting the element in
+<code class="docutils literal notranslate"><span class="pre">data</span></code> at index 0:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dash_table, html, Input, Output, Patch, callback
+import pandas as pd
+
+df = pd.read_csv(&quot;https://raw.githubusercontent.com/plotly/datasets/master/solar.csv&quot;)
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Delete first row&quot;, id=&quot;delete-button-1&quot;),
+        dash_table.DataTable(
+            df.to_dict(&quot;records&quot;),
+            [{&quot;name&quot;: i, &quot;id&quot;: i} for i in df.columns],
+            id=&quot;table-example-for-delete-1&quot;,
+        ),
+    ]
+)
+
+# Deleting row at index 0 in the data when the delete button is clicked
+@callback(
+    Output(&quot;table-example-for-delete-1&quot;, &quot;data&quot;),
+    Input(&quot;delete-button-1&quot;, &quot;n_clicks&quot;)
+)
+def delete_records(n_clicks):
+    patched_table = Patch()
+    del patched_table[0]
+    return patched_table
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Delete first row</p>
+<p>State</p>
+<p>|</p>
+<p>Number of Solar Plants</p>
+<p>|</p>
+<p>Installed Capacity (MW)</p>
+<p>|</p>
+<p>Average MW Per Plant</p>
+<p>|</p>
+<p>Generation (GWh)</p>
+<p>—|—|—|—|—</p>
+<p>Arizona</p>
+<p>|</p>
+<p>48</p>
+<p>|</p>
+<p>1078</p>
+<p>|</p>
+<p>22.5</p>
+<p>|</p>
+<p>2550</p>
+<p>Nevada</p>
+<p>|</p>
+<p>11</p>
+<p>|</p>
+<p>238</p>
+<p>|</p>
+<p>21.6</p>
+<p>|</p>
+<p>557</p>
+<p>New Mexico</p>
+<p>|</p>
+<p>33</p>
+<p>|</p>
+<p>261</p>
+<p>|</p>
+<p>7.9</p>
+<p>|</p>
+<p>590</p>
+<p>Colorado</p>
+<p>|</p>
+<p>20</p>
+<p>|</p>
+<p>118</p>
+<p>|</p>
+<p>5.9</p>
+<p>|</p>
+<p>235</p>
+<p>Texas</p>
+<p>|</p>
+<p>12</p>
+<p>|</p>
+<p>187</p>
+<p>|</p>
+<p>15.6</p>
+<p>|</p>
+<p>354</p>
+<p>North Carolina</p>
+<p>|</p>
+<p>148</p>
+<p>|</p>
+<p>669</p>
+<p>|</p>
+<p>4.5</p>
+<p>|</p>
+<p>1162</p>
+<p>New York</p>
+<p>|</p>
+<p>13</p>
+<p>|</p>
+<p>53</p>
+<p>|</p>
+<p>4.1</p>
+<p>|</p>
+<p>84</p>
+</section>
+<section id="remove">
+<h3>Remove<a class="headerlink" href="#remove" title="Permalink to this heading">#</a></h3>
+<p>You can also make partial updates that <code class="docutils literal notranslate"><span class="pre">remove</span></code> parts of a property’s data
+that matches a given value. In this example, when the button is selected, we
+remove all items in the <code class="docutils literal notranslate"><span class="pre">Checklist</span></code> that are in the list <code class="docutils literal notranslate"><span class="pre">canandian_cities</span></code>.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, Patch, callback
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Remove items&quot;, id=&quot;remove-button&quot;),
+        dcc.Checklist(id=&quot;checklist-remove-items&quot;),
+    ]
+)
+
+@callback(
+    Output(&quot;checklist-remove-items&quot;, &quot;options&quot;),
+    Input(&quot;remove-button&quot;, &quot;n_clicks&quot;),
+)
+def remove_records(n_clicks):
+    if not n_clicks:
+        return [
+            &quot;Boston&quot;,
+            &quot;Montreal&quot;,
+            &quot;New York&quot;,
+            &quot;Toronto&quot;,
+            &quot;San Francisco&quot;,
+            &quot;Vancouver&quot;,
+        ]
+    else:
+        canadian_cities = [&quot;Montreal&quot;, &quot;Toronto&quot;, &quot;Vancouver&quot;]
+        patched_list = Patch()
+        for x in canadian_cities:
+            patched_list.remove(x)
+        return patched_list
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Remove items</p>
+<p>BostonMontrealNew YorkTorontoSan FranciscoVancouver</p>
+</section>
+<section id="math-operations">
+<h3>Math Operations<a class="headerlink" href="#math-operations" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Patch</span></code> also supports math operations, for example, to increment, decrement,
+multiply, and divide values. In this example, we increment the value on the
+y-axis when a bar is selected.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+x = [&quot;Product A&quot;, &quot;Product B&quot;, &quot;Product C&quot;]
+y = [20, 14, 23]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        dcc.Graph(figure=fig, id=&quot;increment-example-graph&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;increment-example-graph&quot;, &quot;figure&quot;),
+    Input(&quot;increment-example-graph&quot;, &quot;clickData&quot;),
+    prevent_initial_call=True,
+)
+def check_selected_data(click_data):
+    selected_product = click_data[&quot;points&quot;][0][&quot;label&quot;]
+    patched_figure = Patch()
+    if selected_product == &quot;Product A&quot;:
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;][0] += 1
+    elif selected_product == &quot;Product B&quot;:
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;][1] += 1
+    elif selected_product == &quot;Product C&quot;:
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;][2] += 1
+    return patched_figure
+
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Product AProduct BProduct C05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="method-summary">
+<h3>Method Summary<a class="headerlink" href="#method-summary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>There are multiple ways you can use Patch objects to make partial updates:</strong></p></li>
+</ul>
+<p>Lists: <code class="docutils literal notranslate"><span class="pre">prepend</span></code>, <code class="docutils literal notranslate"><span class="pre">extend</span></code>, <code class="docutils literal notranslate"><span class="pre">append</span></code>, <code class="docutils literal notranslate"><span class="pre">reverse</span></code>, <code class="docutils literal notranslate"><span class="pre">insert</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">remove</span></code>,
+and assignment using <code class="docutils literal notranslate"><span class="pre">=</span></code></p>
+<p>Dictionaries: <code class="docutils literal notranslate"><span class="pre">update</span></code>, and assignment using <code class="docutils literal notranslate"><span class="pre">=</span></code></p>
+<p>Strings: assignment using <code class="docutils literal notranslate"><span class="pre">=</span></code></p>
+<p>Numbers: assignment using <code class="docutils literal notranslate"><span class="pre">=</span></code></p>
+<ul>
+<li><p><strong>The location of the update can be specified with square bracket or dot notation:</strong> For example, both of these are valid:</p>
+<p>patched_figure = Patch()
+patched_figure[‘layout’][‘title’] = ‘New Title’</p>
+<p>patched_figure = Patch()
+patched_figure.layout.title = ‘New Title’</p>
+</li>
+<li><p><strong>But dot notation does not work for list indices, as it can only be used with<a class="reference external" href="https://docs.python.org/3/reference/lexical_analysis.html#identifiers">valid Python identifiers</a></strong>.</p>
+<p>patched_figure = Patch()
+patched_figure[‘data’][0][‘y’] = [1, 2, 3]</p>
+</li>
+</ul>
+<p>Replacing <code class="docutils literal notranslate"><span class="pre">patched_figure['data'][0]['y']</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> with
+<code class="docutils literal notranslate"><span class="pre">patched_figure.data.0.y</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code> in the above example would not work.</p>
+</section>
+</section>
+<section id="combining-patch-methods">
+<h2>Combining Patch Methods<a class="headerlink" href="#combining-patch-methods" title="Permalink to this heading">#</a></h2>
+<p>You can combine the different <code class="docutils literal notranslate"><span class="pre">Patch</span></code> methods mentioned above. In this
+example, we use <code class="docutils literal notranslate"><span class="pre">prepend</span></code> and <code class="docutils literal notranslate"><span class="pre">append</span></code> with the same object to update the same
+attribute. The operations are applied in the order that they are defined in
+the callback.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+x = [&quot;Product A&quot;, &quot;Product B&quot;, &quot;Product C&quot;]
+y = [20, 14, 23]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update products&quot;, id=&quot;add-product-d-e&quot;),
+        dcc.Graph(figure=fig, id=&quot;prepend-append-example-graph&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;prepend-append-example-graph&quot;, &quot;figure&quot;),
+    Input(&quot;add-product-d-e&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    if n_clicks % 2 != 0:
+        patched_figure = Patch()
+        patched_figure[&quot;data&quot;][0][&quot;x&quot;].prepend(&quot;Product D&quot;)
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;].prepend(34)
+        patched_figure[&quot;data&quot;][0][&quot;x&quot;].append(&quot;Product E&quot;)
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;].append(34)
+        return patched_figure
+    else:
+        return fig
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update products</p>
+<p>Product AProduct BProduct C05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+</section>
+<section id="using-patches-on-multiple-outputs">
+<h2>Using Patches on Multiple Outputs<a class="headerlink" href="#using-patches-on-multiple-outputs" title="Permalink to this heading">#</a></h2>
+<p>You can use multiple <code class="docutils literal notranslate"><span class="pre">Patch</span></code> objects within a callback. In this example, we
+create one <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object, <code class="docutils literal notranslate"><span class="pre">patched_figure</span></code> to append to the figure data, and
+we create another <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object, <code class="docutils literal notranslate"><span class="pre">patched_table</span></code>, to update the <code class="docutils literal notranslate"><span class="pre">DataTable</span></code>’s
+<code class="docutils literal notranslate"><span class="pre">data</span></code> property.</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, dcc, Input, Output, Patch, dash_table, callback
+from plotly import graph_objects as go
+
+app = Dash(__name__)
+
+# Initial data for the figure and datatable
+x = [&quot;Product A&quot;, &quot;Product B&quot;, &quot;Product C&quot;]
+y = [20, 14, 23]
+
+table_data = [{&quot;Product&quot;: x_value, &quot;Value&quot;: y_value} for x_value, y_value in zip(x, y)]
+
+# Additional data for the figure and datatable
+additional_products_x = [&quot;Product D&quot;, &quot;Product E&quot;, &quot;Product F&quot;]
+additional_products_y = [10, 24, 8]
+
+fig = go.Figure(data=[go.Bar(x=x, y=y)])
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Update Products&quot;, id=&quot;add-additional-products&quot;),
+        dcc.Graph(figure=fig, id=&quot;multiple-outputs-fig&quot;),
+        dash_table.DataTable(data=table_data, id=&quot;multiple-outputs-table&quot;),
+    ]
+)
+
+
+@callback(
+    Output(&quot;multiple-outputs-fig&quot;, &quot;figure&quot;),
+    Output(&quot;multiple-outputs-table&quot;, &quot;data&quot;),
+    Input(&quot;add-additional-products&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True,
+)
+def add_data_to_fig(n_clicks):
+    if n_clicks % 2 != 0:
+        patched_figure = Patch()
+        patched_table = Patch()
+
+        additional_table_data = [
+            {&quot;Product&quot;: x_value, &quot;Value&quot;: y_value}
+            for x_value, y_value in zip(additional_products_x, additional_products_y)
+        ]
+
+        patched_table.extend(additional_table_data)
+
+        patched_figure[&quot;data&quot;][0][&quot;x&quot;].extend(additional_products_x)
+        patched_figure[&quot;data&quot;][0][&quot;y&quot;].extend(additional_products_y)
+
+        return patched_figure, patched_table
+    else:
+        return fig, table_data
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Update Products</p>
+<p>Product AProduct BProduct C05101520</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Product</p>
+<p>|</p>
+<p>Value</p>
+<p>—|—</p>
+<p>Product A</p>
+<p>|</p>
+<p>20</p>
+<p>Product B</p>
+<p>|</p>
+<p>14</p>
+<p>Product C</p>
+<p>|</p>
+<p>23</p>
+</section>
+<section id="allowing-duplicate-callback-outputs">
+<h2>Allowing Duplicate Callback Outputs<a class="headerlink" href="#allowing-duplicate-callback-outputs" title="Permalink to this heading">#</a></h2>
+<p>Sometimes you’ll want to update the same component-property pair from multiple
+callback outputs. For example, you could have one callback output to update
+the color of a graph, and another callback output to update the data. You can
+do this by setting <code class="docutils literal notranslate"><span class="pre">allow_duplicate=True</span></code> on any outputs that are used more
+than once.</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> to do full updates on one callback output
+and a partial update on another. In this example, clicking one button deletes
+the first row of the data. The second button sends the full data back to the
+component.</p>
+<blockquote>
+<div><p>When using duplicate callback outputs (with <code class="docutils literal notranslate"><span class="pre">allow_duplicate=True</span></code>), the
+order in which callbacks that run at the same time are updated is not
+guaranteed. See <span class="xref myst">Duplicate Callback Outputs</span>.</p>
+</div></blockquote>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dash_table, html, Input, Output, Patch, callback
+import pandas as pd
+
+df = pd.read_csv(&quot;https://raw.githubusercontent.com/plotly/datasets/master/solar.csv&quot;)
+
+app = Dash(__name__)
+
+app.layout = html.Div(
+    [
+        html.Button(&quot;Delete first row&quot;, id=&quot;delete-button&quot;),
+        html.Button(&quot;Reload data&quot;, id=&quot;reload-button&quot;),
+        dash_table.DataTable(
+            df.to_dict(&quot;records&quot;),
+            [{&quot;name&quot;: i, &quot;id&quot;: i} for i in df.columns],
+            id=&quot;table-example-for-delete&quot;,
+        ),
+    ]
+)
+
+# Returning all records from the dataframe to the component when the reload button is clicked
+@callback(
+    Output(&quot;table-example-for-delete&quot;, &quot;data&quot;),
+    Input(&quot;reload-button&quot;, &quot;n_clicks&quot;)
+)
+def reload_data(n_clicks):
+    return df.to_dict(&quot;records&quot;)
+
+# Deleting row at index 0 in the data when the delete button is clicked
+@callback(
+    Output(&quot;table-example-for-delete&quot;, &quot;data&quot;, allow_duplicate=True),
+    Input(&quot;delete-button&quot;, &quot;n_clicks&quot;),
+    prevent_initial_call=True
+)
+def delete_records(n_clicks):
+    patched_table = Patch()
+    del patched_table[0]
+    return patched_table
+
+if __name__ == &quot;__main__&quot;:
+    app.run(debug=True)
+</pre></div>
+</div>
+<p>Delete first rowReload data</p>
+<p>State</p>
+<p>|</p>
+<p>Number of Solar Plants</p>
+<p>|</p>
+<p>Installed Capacity (MW)</p>
+<p>|</p>
+<p>Average MW Per Plant</p>
+<p>|</p>
+<p>Generation (GWh)</p>
+<p>—|—|—|—|—</p>
+<p>California</p>
+<p>|</p>
+<p>289</p>
+<p>|</p>
+<p>4395</p>
+<p>|</p>
+<p>15.3</p>
+<p>|</p>
+<p>10826</p>
+<p>Arizona</p>
+<p>|</p>
+<p>48</p>
+<p>|</p>
+<p>1078</p>
+<p>|</p>
+<p>22.5</p>
+<p>|</p>
+<p>2550</p>
+<p>Nevada</p>
+<p>|</p>
+<p>11</p>
+<p>|</p>
+<p>238</p>
+<p>|</p>
+<p>21.6</p>
+<p>|</p>
+<p>557</p>
+<p>New Mexico</p>
+<p>|</p>
+<p>33</p>
+<p>|</p>
+<p>261</p>
+<p>|</p>
+<p>7.9</p>
+<p>|</p>
+<p>590</p>
+<p>Colorado</p>
+<p>|</p>
+<p>20</p>
+<p>|</p>
+<p>118</p>
+<p>|</p>
+<p>5.9</p>
+<p>|</p>
+<p>235</p>
+<p>Texas</p>
+<p>|</p>
+<p>12</p>
+<p>|</p>
+<p>187</p>
+<p>|</p>
+<p>15.6</p>
+<p>|</p>
+<p>354</p>
+<p>North Carolina</p>
+<p>|</p>
+<p>148</p>
+<p>|</p>
+<p>669</p>
+<p>|</p>
+<p>4.5</p>
+<p>|</p>
+<p>1162</p>
+<p>New York</p>
+<p>|</p>
+<p>13</p>
+<p>|</p>
+<p>53</p>
+<p>|</p>
+<p>4.1</p>
+<p>|</p>
+<p>84</p>
+</section>
+<section id="exploring-the-structure-of-properties">
+<h2>Exploring the Structure of Properties<a class="headerlink" href="#exploring-the-structure-of-properties" title="Permalink to this heading">#</a></h2>
+<p>To make partial updates to a property, you need to know the structure of the
+property you want to update. To understand the structure of any component
+property, check out the reference docs for it. For example, you’ll find the
+reference docs for each Dash Core Component at the end of the component’s
+page. For example, [the Dropdown properties](/dash-core-
+components/dropdown#dropdown-properties).</p>
+<section id="graph-objects">
+<h3>Graph Objects<a class="headerlink" href="#graph-objects" title="Permalink to this heading">#</a></h3>
+<p>As we’ve seen in the examples above, a great use for partial updates is
+updating individual parts of <a class="reference external" href="http://Plotly.py">Plotly.py</a> Graph Objects <code class="docutils literal notranslate"><span class="pre">Figure</span></code> objects, which
+you can pass to the <code class="docutils literal notranslate"><span class="pre">figure</span></code> parameter of a <code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> component. Often
+you’ll only want to update a small detail on a graph, such as a color, and
+avoid sending all the graph’s data back to the browser.</p>
+<p>To do this successfully, you’ll need to understand the structure of a
+<code class="docutils literal notranslate"><span class="pre">Figure</span></code>.</p>
+<p>Here is an example of the structure of a simple <code class="docutils literal notranslate"><span class="pre">Figure</span></code> object.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Figure({
+    &#39;data&#39;: [{&#39;hovertemplate&#39;: &#39;x=%{x}&lt;br&gt;y=%{y}&lt;extra&gt;&lt;/extra&gt;&#39;,
+              &#39;legendgroup&#39;: &#39;&#39;,
+              &#39;line&#39;: {&#39;color&#39;: &#39;#636efa&#39;, &#39;dash&#39;: &#39;solid&#39;},
+              &#39;marker&#39;: {&#39;symbol&#39;: &#39;circle&#39;},
+              &#39;mode&#39;: &#39;lines&#39;,
+              &#39;name&#39;: &#39;&#39;,
+              &#39;orientation&#39;: &#39;v&#39;,
+              &#39;showlegend&#39;: False,
+              &#39;type&#39;: &#39;scatter&#39;,
+              &#39;x&#39;: array([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], dtype=object),
+              &#39;xaxis&#39;: &#39;x&#39;,
+              &#39;y&#39;: array([1, 3, 2]),
+              &#39;yaxis&#39;: &#39;y&#39;}],
+    &#39;layout&#39;: {&#39;legend&#39;: {&#39;tracegroupgap&#39;: 0},
+               &#39;template&#39;: &#39;...&#39;,
+               &#39;title&#39;: {&#39;font&#39;: {&#39;color&#39;: &#39;red&#39;}, &#39;text&#39;: &#39;sample figure&#39;},
+               &#39;xaxis&#39;: {&#39;anchor&#39;: &#39;y&#39;, &#39;domain&#39;: [0.0, 1.0], &#39;title&#39;: {&#39;text&#39;: &#39;x&#39;}},
+               &#39;yaxis&#39;: {&#39;anchor&#39;: &#39;x&#39;, &#39;domain&#39;: [0.0, 1.0], &#39;title&#39;: {&#39;text&#39;: &#39;y&#39;}}}
+})
+</pre></div>
+</div>
+<p>In our first <code class="docutils literal notranslate"><span class="pre">Patch</span></code> example above, we assigned a color to the title.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure[&#39;layout&#39;][&#39;title&#39;][&#39;font&#39;][&#39;color&#39;] = new_color
+</pre></div>
+</div>
+<p>Similarly, we could update the title’s text, which is currently set to <code class="docutils literal notranslate"><span class="pre">sample</span> <span class="pre">figure</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patched_figure[&#39;layout&#39;][&#39;title&#39;][&#39;text&#39;] = &quot;my new title text&quot;
+</pre></div>
+</div>
+<p>When working with a <code class="docutils literal notranslate"><span class="pre">Figure</span></code>, you can see its structure by printing it.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fig = px.line(x=[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;], y=[1,3,2], title=&quot;sample figure&quot;)
+
+fig.update_layout(
+    title_font_color=&quot;red&quot;
+)
+print(fig)
+</pre></div>
+</div>
+<p>See the <a class="reference external" href="https://plotly.com/python/figure-structure/">The Figure Data Structure in
+Python</a> page in the Graphing
+Library docs for more details.</p>
+</section>
+</section>
+<section id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Patch</span></code> object is a representation of the operation to apply to part of an output property. It doesn’t give you access to a property’s values. For example, the following won’t work:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>patch_output = Patch()
+</pre></div>
+</div>
+<p>formatted_property = f”My prop: {patch_output[“my_prop”]}”</p>
+</li>
+</ul>
+<p>If you need access to the property’s value, use [State](/basic-callbacks#dash-
+app-with-state) on your callback.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Patch</span></code> is not available on clientside callbacks.</p></li>
+<li><p>Each time you <code class="docutils literal notranslate"><span class="pre">extend</span></code> a list, it adds to the existing data. It’s not currently possible to limit the maximum number of values in the list.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"> Pattern-Matching</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dash-patch-class">The Dash Patch Class</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-title-color-with-a-partial-update">Updating Title Color with a Partial Update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance">Performance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-update-methods">Partial Update Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assign">Assign</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-assigning-new-data">Examples of Assigning New Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-point-colors">Updating Point Colors</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#append">Append</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-x-and-y-axes-of-a-graph">Example with X and Y Axes of a Graph</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-append-with-pattern-matching-callbacks">Example of Append with Pattern-Matching Callbacks</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepend">Prepend</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extend">Extend</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-a-dataframe">Example with a Dataframe</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insert">Insert</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reverse">Reverse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clear">Clear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delete">Delete</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#remove">Remove</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math-operations">Math Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-summary">Method Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-patch-methods">Combining Patch Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-patches-on-multiple-outputs">Using Patches on Multiple Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-duplicate-callback-outputs">Allowing Duplicate Callback Outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-structure-of-properties">Exploring the Structure of Properties</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-objects">Graph Objects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

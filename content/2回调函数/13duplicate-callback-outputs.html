@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Duplicate Callback &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/2回调函数/13duplicate-callback-outputs';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../1%E5%9F%BA%E7%A1%80/2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/2回调函数/13duplicate-callback-outputs.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/2回调函数/13duplicate-callback-outputs.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1> Duplicate Callback</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#duplicate-callback-outputs-example">Duplicate Callback Outputs Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-same-output-from-different-inputs">Updating the Same Output From Different Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-allow-duplicate-on-duplicate-outputs">Setting <code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> on Duplicate Outputs</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="duplicate-callback">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Duplicate Callback<a class="headerlink" href="#duplicate-callback" title="Permalink to this heading">#</a></h1>
+<p>Outputs</p>
+<blockquote>
+<div><p>New in Dash 2.9: Dash supports the <code class="docutils literal notranslate"><span class="pre">allow_duplicate=True</span></code> argument to allow
+multiple callbacks to target the same output. See the “Setting
+<code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> on Duplicate Outputs” example below.</p>
+</div></blockquote>
+<p>A duplicate callback output is when the same component-property pair is an
+<code class="docutils literal notranslate"><span class="pre">Output</span></code> on more than one callback. A component-property pair means the <code class="docutils literal notranslate"><span class="pre">id</span></code>
+of the component and the <code class="docutils literal notranslate"><span class="pre">property</span></code>. In this <code class="docutils literal notranslate"><span class="pre">html.H1</span></code> component, the
+component-property pair is <code class="docutils literal notranslate"><span class="pre">'app-heading',</span> <span class="pre">'children'</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>html.H1(children=&#39;Analytics app&#39;, id=&#39;app-heading&#39;)
+</pre></div>
+</div>
+<p>If you add <code class="docutils literal notranslate"><span class="pre">'app-heading',</span> <span class="pre">'children'</span></code> as an <code class="docutils literal notranslate"><span class="pre">Output</span></code> on two callbacks in your
+app you’ll get a “Duplicate callback outputs” error when running in debug mode
+as the the default behavior of callbacks is that a component/property pair can
+only be the <code class="docutils literal notranslate"><span class="pre">Output</span></code> of one callback.</p>
+<p>![Duplicate callback outputs](./..//assets/images/input-
+triggered/duplicate_outputs.jpg)</p>
+<section id="duplicate-callback-outputs-example">
+<h2>Duplicate Callback Outputs Example<a class="headerlink" href="#duplicate-callback-outputs-example" title="Permalink to this heading">#</a></h2>
+<p>This is a complete example demonstrating an app that throws a “Duplicate
+callback outputs” error. Here we have two <code class="docutils literal notranslate"><span class="pre">html.Button</span></code> components and a
+<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> component in our <code class="docutils literal notranslate"><span class="pre">app.layout</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>app.layout = html.Div([
+    html.Button(&#39;Draw Graph&#39;, id=&#39;draw&#39;),
+    html.Button(&#39;Reset Graph&#39;, id=&#39;reset&#39;),
+    dcc.Graph(id=&#39;our-graph&#39;)
+])
+</pre></div>
+</div>
+<p>If we try to update the graph component’s (<code class="docutils literal notranslate"><span class="pre">'our-graph'</span></code>) <code class="docutils literal notranslate"><span class="pre">'fig'</span></code> property
+differently depending on which button is clicked, we <em>cannot</em> do this by
+adding <code class="docutils literal notranslate"><span class="pre">'our-graph'</span></code>, <code class="docutils literal notranslate"><span class="pre">'fig'</span></code> as an <code class="docutils literal notranslate"><span class="pre">Output</span></code> on two callbacks:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@callback(
+    Output(&#39;our-graph&#39;, &#39;figure&#39;),
+    Input(&#39;draw&#39;, &#39;n_clicks&#39;),
+    prevent_initial_call=True
+)
+def draw_graph(_):
+    df = px.data.iris()
+    return px.scatter(df, x=df.columns[0], y=df.columns[1])
+
+@callback(
+    Output(&#39;our-graph&#39;, &#39;figure&#39;),
+    Input(&#39;reset&#39;, &#39;n_clicks&#39;),
+    prevent_initial_call=True
+)
+def reset_graph(_):
+    return go.Figure()
+</pre></div>
+</div>
+</section>
+<section id="updating-the-same-output-from-different-inputs">
+<h2>Updating the Same Output From Different Inputs<a class="headerlink" href="#updating-the-same-output-from-different-inputs" title="Permalink to this heading">#</a></h2>
+<p>We can update our graph in the above example differently based on the inputs
+by combining the inputs into one callback and using <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> to
+determine which input triggered the callback.</p>
+<p>Here is the same example rewritten. Our new callback has the two inputs. It
+gets the ID of the component that triggered the callback using
+<code class="docutils literal notranslate"><span class="pre">ctx.triggered_id</span></code>. This will return either <code class="docutils literal notranslate"><span class="pre">draw</span></code> or <code class="docutils literal notranslate"><span class="pre">reset</span></code>. If it is
+<code class="docutils literal notranslate"><span class="pre">draw</span></code>, the callback returns <code class="docutils literal notranslate"><span class="pre">draw_graph()</span></code>. If it is <code class="docutils literal notranslate"><span class="pre">reset</span></code> it returns
+<code class="docutils literal notranslate"><span class="pre">reset_graph()</span></code>:</p>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, Input, Output, ctx, html, dcc, callback
+import plotly.express as px
+import plotly.graph_objects as go
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.Button(&#39;Draw Graph&#39;, id=&#39;draw&#39;),
+    html.Button(&#39;Reset Graph&#39;, id=&#39;reset&#39;),
+    dcc.Graph(id=&#39;graph&#39;)
+])
+
+@callback(
+    Output(&#39;graph&#39;, &#39;figure&#39;),
+    Input(&#39;reset&#39;, &#39;n_clicks&#39;),
+    Input(&#39;draw&#39;, &#39;n_clicks&#39;),
+    prevent_initial_call=True
+)
+def update_graph(b1, b2):
+    triggered_id = ctx.triggered_id
+    print(triggered_id)
+    if triggered_id == &#39;reset&#39;:
+         return reset_graph()
+    elif triggered_id == &#39;draw&#39;:
+         return draw_graph()
+
+def draw_graph():
+    df = px.data.iris()
+    return px.scatter(df, x=df.columns[0], y=df.columns[1])
+
+def reset_graph():
+    return go.Figure()
+
+app.run(debug=True)
+</pre></div>
+</div>
+<p>Draw GraphReset Graph</p>
+<p>−10123456−101234</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>See [Determining Which Callback Input Changed](/determining-which-callback-
+input-changed) for more on <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> and understanding which
+input triggered a callback.</p>
+</section>
+<section id="setting-allow-duplicate-on-duplicate-outputs">
+<h2>Setting <code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> on Duplicate Outputs<a class="headerlink" href="#setting-allow-duplicate-on-duplicate-outputs" title="Permalink to this heading">#</a></h2>
+<p>In Dash 2.9 and later, you can set <code class="docutils literal notranslate"><span class="pre">allow_duplicate=True</span></code> on a callback output
+if it is already used as an output on another callback. This will allow you to
+target the same component-property from different callbacks. Here is the
+earlier example rewritten to allow duplicates.</p>
+<blockquote>
+<div><p>When setting <code class="docutils literal notranslate"><span class="pre">allow_duplicate=True</span></code> on a callback output, you’ll need to
+either set <code class="docutils literal notranslate"><span class="pre">prevent_initial_call=True</span></code> on the callback, or set <code class="docutils literal notranslate"><span class="pre">app</span> <span class="pre">=</span> <span class="pre">Dash(prevent_initial_callbacks=&quot;initial_duplicate&quot;)</span></code> on your app. This
+prevents callbacks that target the same output running at the same time when
+the page initially loads. <code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> is common when using the <span class="xref myst">Patch
+object for Partial Property Updates</span>.</p>
+</div></blockquote>
+<p>__</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, Input, Output, html, dcc, callback
+import plotly.express as px
+import plotly.graph_objects as go
+
+app = Dash(__name__)
+
+app.layout = html.Div([
+    html.Button(&#39;Draw Graph&#39;, id=&#39;draw-2&#39;),
+    html.Button(&#39;Reset Graph&#39;, id=&#39;reset-2&#39;),
+    dcc.Graph(id=&#39;duplicate-output-graph&#39;)
+])
+
+@callback(
+    Output(&#39;duplicate-output-graph&#39;, &#39;figure&#39;, allow_duplicate=True),
+    Input(&#39;draw-2&#39;, &#39;n_clicks&#39;),
+    prevent_initial_call=True
+)
+def draw_graph(n_clicks):
+    df = px.data.iris()
+    return px.scatter(df, x=df.columns[0], y=df.columns[1])
+
+@callback(
+    Output(&#39;duplicate-output-graph&#39;, &#39;figure&#39;),
+    Input(&#39;reset-2&#39;, &#39;n_clicks&#39;),
+)
+def reset_graph(input):
+    return go.Figure()
+
+app.run(debug=True)
+</pre></div>
+</div>
+<p>Draw GraphReset Graph</p>
+<p>−10123456−101234</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>Where you have multiple callbacks targeting the same output, and they both run
+at the same time, the order in which updates happen is not guaranteed. This
+may be an issue if you are updating the same part of the property from each
+callback. For example, a callback output that updates the entire figure and
+another one that updates the figure layout.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/2回调函数"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#duplicate-callback-outputs-example">Duplicate Callback Outputs Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-same-output-from-different-inputs">Updating the Same Output From Different Inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-allow-duplicate-on-duplicate-outputs">Setting <code class="docutils literal notranslate"><span class="pre">allow_duplicate</span></code> on Duplicate Outputs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,928 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>布局 &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/1基础/1.0布局';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="基础回调" href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html" />
+    <link rel="prev" title="Dash 速览" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.2%E4%BA%A4%E4%BA%92%E7%BB%98%E5%9B%BE%E4%B8%8E%E8%BF%87%E6%BB%A4.html">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/1基础/1.0布局.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/1基础/1.0布局.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>布局</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-your-first-change">Making Your First Change</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#html">更多关于HTML组件的信息</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">滚动条库</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">更多关于可视化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown">Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-and-markdown">Dash and Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">核心组件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">帮助</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">摘要</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>布局<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<blockquote>
+<div><p>这是dash基础的第一章，下一章是dash回调函数</p>
+</div></blockquote>
+<p>本教程将引导您了解Dash应用程序的基本方面，即应用程序“布局”，通过六个独立的应用程序 <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=&quot;https://plotly.com/dash/design-kit/?utm_medium=dash_docs&amp;amp;utm_content=layout&quot;&gt;</span></code>Design Kit <code class="docutils literal notranslate"><span class="pre">&lt;/a&gt;</span></code></p>
+<p>对于生产Dash应用程序，我们建议使用Dash企业 <a class="reference external" href="https://plotly.com/dash/design-kit/?utm_medium=dash_docs&amp;utm_content=layout">Design KIt</a></p>
+<hr class="docutils" />
+<p>Dash应用程序由两部分组成。第一部分是“布局”，它描述了应用程序的外观。第二部分描述了应用程序的交互性，将在下一章中介绍</p>
+<p>注意:在本文档中，每个Python代码示例都可以通过将其保存到<code class="docutils literal notranslate"><span class="pre">app.py</span></code>文件并使用<code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">app.py</span></code>或在Jupyter笔记本单元格中运行来运行</p>
+<blockquote>
+<div><p>If you’re using Dash Enterprise’s <a class="reference external" href="https://plotly.com/dash/workspaces/?utm_medium=dash_docs&amp;utm_content=layout">Data Science Workspaces</a>,
+copy &amp; paste the below code into your Workspace (<a class="reference external" href="https://plotly.com/dash/workspaces/?utm_medium=dash_docs&amp;utm_content=layout#screencast">see video</a>).
+<a class="reference external" href="https://go.plotly.com/company-lookup?utm_medium=dash_docs&amp;utm_content=layout">Find out if your company is using Dash Enterprise</a>_</p>
+</div></blockquote>
+<p>首先，创建一个名为<code class="docutils literal notranslate"><span class="pre">app.py</span></code>的文件，将下面的代码复制到其中，然后使用<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">app.py</span></code>运行它</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># assume you have a &quot;long-form&quot; data frame</span>
+<span class="c1"># see https://plotly.com/python/px-arguments/ for more options</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Fruit&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Apples&quot;</span><span class="p">,</span> <span class="s2">&quot;Oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;Bananas&quot;</span><span class="p">,</span> <span class="s2">&quot;Apples&quot;</span><span class="p">,</span> <span class="s2">&quot;Oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;Bananas&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Amount&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Fruit&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Amount&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;City&quot;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;Hello Dash&#39;</span><span class="p">),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        Dash: A web application framework for your data.</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span>
+
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;example-graph&#39;</span><span class="p">,</span>
+        <span class="n">figure</span><span class="o">=</span><span class="n">fig</span>
+    <span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hello Dash</p>
+<p>Dash: A web application framework for your data.</p>
+<p>ApplesOrangesBananas012345</p>
+<p>CitySFMontrealFruitAmount</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python app.py
+...Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
+</pre></div>
+</div>
+<p>Visit <a class="reference external" href="http://127.0.0.1:8050/">http://127.0.0.1:8050/</a> in your web browser. You should see an app that
+looks like the one above.</p>
+<p>Note:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">layout</span></code> 由组件树组成，如： <code class="docutils literal notranslate"><span class="pre">html.Div</span></code> 和 <code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>.</p></li>
+<li><p>Dash的HTML组件模块<code class="docutils literal notranslate"><span class="pre">dash.html</span></code> 对每个组件标签都有一个对应的组件，如： <code class="docutils literal notranslate"><span class="pre">html.H1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">html.H2</span></code>. <code class="docutils literal notranslate"><span class="pre">html.H1(children='Hello</span> <span class="pre">Dash')</span></code>将在你的应用中生成<code class="docutils literal notranslate"><span class="pre">&lt;h1&gt;Hello</span> <span class="pre">Dash&lt;/h1&gt;</span></code>.</p></li>
+<li><p>并非所有组件都是纯HTML。Dash核心组件模块<code class="docutils literal notranslate"><span class="pre">Dash.dcc</span></code>包含更高级的组件，这些组件是交互式的，是通过React.js库用JavaScript、HTML和CSS生成的。</p></li>
+<li><p>每个组件完全通过关键字属性来描述。Dash是声明性的:你将主要通过这些属性来描述你的应用。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">children</span></code>属性是特殊的。按照惯例，它总是第一个属性，这意味着您可以省略它:<code class="docutils literal notranslate"><span class="pre">html。H1(children='Hello</span> <span class="pre">Dash')</span></code>与<code class="docutils literal notranslate"><span class="pre">html.H1('Hello</span> <span class="pre">Dash')</span></code>。它可以包含字符串、数字、单个组件或组件列表。</p></li>
+<li><p>你应用程序中的字体看起来会和这里显示的略有不同。这个应用程序使用自定义CSS样式表和Dash Enterprise <a class="reference external" href="https://plotly.com/dash/design-kit/?utm_medium=dash_docs&amp;utm_content=layout">Design Kit</a>来修改元素的默认样式。你可以在<span class="xref myst">CSS教程</span>中了解更多关于自定义CSS的信息。</p></li>
+</ol>
+<section id="making-your-first-change">
+<h2>Making Your First Change<a class="headerlink" href="#making-your-first-change" title="Permalink to this heading">#</a></h2>
+<p>Dash包括“热重载”。当你使用<code class="docutils literal notranslate"><span class="pre">app.run(debug=True)</span></code>运行应用程序时，默认会激活此功能。这意味着当您更改代码时，Dash将自动刷新您的浏览器</p>
+<p>试试吧:在你的应用中改变标题“Hello Dash”，或者改变“x”或“y”数据。你的应用应该会随着你的改变自动刷新</p>
+<blockquote>
+<div><p>Don’t like hot-reloading? You can turn this off
+with <code class="docutils literal notranslate"><span class="pre">app.run(dev_tools_hot_reload=False)</span></code>. Learn more in <span class="xref myst">Dash Dev Tools
+documentation</span> Questions? See the <a class="reference external" href="https://community.plotly.com/t/announcing-hot-reload/14177">community forum hot reloading
+discussion</a>.</p>
+</div></blockquote>
+<p><strong>Sign up for Dash Club</strong> → Two free cheat sheets plus updates from Chris
+Parmer and Adam Schroeder delivered to your inbox every two months. Includes
+tips and tricks, community apps, and deep dives into the Dash architecture.
+<em>[Join now](<a class="reference external" href="https://go.plotly.com/dash-">https://go.plotly.com/dash-</a>
+club?utm_medium=dash_docs&amp;utm_content=layout)</em>.</p>
+</section>
+<section id="html">
+<h2>更多关于HTML组件的信息<a class="headerlink" href="#html" title="Permalink to this heading">#</a></h2>
+<p>Dash HTML组件(‘Dash.HTML’)包含每个HTML标签的组件类以及所有HTML参数的关键字参数</p>
+<p>让我们通过修改组件的内联样式来定制应用中的文本。用下面的代码创建一个名为“<a class="reference external" href="http://app.py">app.py</a>”的文件</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;background&#39;</span><span class="p">:</span> <span class="s1">&#39;#111111&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;#7FDBFF&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># assume you have a &quot;long-form&quot; data frame</span>
+<span class="c1"># see https://plotly.com/python/px-arguments/ for more options</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Fruit&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Apples&quot;</span><span class="p">,</span> <span class="s2">&quot;Oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;Bananas&quot;</span><span class="p">,</span> <span class="s2">&quot;Apples&quot;</span><span class="p">,</span> <span class="s2">&quot;Oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;Bananas&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;Amount&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">&quot;City&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;SF&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">,</span> <span class="s2">&quot;Montreal&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Fruit&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Amount&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;City&quot;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">plot_bgcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">],</span>
+    <span class="n">paper_bgcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">],</span>
+    <span class="n">font_color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]},</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span>
+        <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Hello Dash&#39;</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;textAlign&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;Dash: A web application framework for your data.&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;textAlign&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+    <span class="p">}),</span>
+
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;example-graph-2&#39;</span><span class="p">,</span>
+        <span class="n">figure</span><span class="o">=</span><span class="n">fig</span>
+    <span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hello Dash</p>
+<p>Dash: A web application framework for your data.</p>
+<p>ApplesOrangesBananas012345</p>
+<p>CitySFMontrealFruitAmount</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>在这个案例中，我们使用<code class="docutils literal notranslate"><span class="pre">style</span></code>修改了<code class="docutils literal notranslate"><span class="pre">html.Div</span></code>和<code class="docutils literal notranslate"><span class="pre">html.H1</span></code>组件的样式。</p>
+<blockquote>
+<div><p>html.H1(‘Hello Dash’, style={‘textAlign’: ‘center’, ‘color’: ‘#7FDBFF’})</p>
+</div></blockquote>
+<p>上面的代码在Dash应用中呈现为: <code class="docutils literal notranslate"><span class="pre">&lt;h1</span> <span class="pre">style=&quot;text-align:</span> <span class="pre">center;</span> <span class="pre">color:</span> <span class="pre">#7FDBFF&quot;&gt;Hello</span> <span class="pre">Dash&lt;/h1&gt;</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dash.html</span></code>和HTML属性之间有一些重要的区别：</p>
+<ol class="arabic simple">
+<li><p>HTML中的style属性是一个以分号分隔的字符串。在Dash中，您可以只提供字典</p></li>
+<li><p>style字典中的键是[驼峰命名](<a class="reference external" href="https://en.wikipedia.org/wiki/Camel">https://en.wikipedia.org/wiki/Camel</a> case)。所以不是” text-align “而是” textAlign</p></li>
+<li><p>HTML ‘class’属性在Dash中是’className’</p></li>
+<li><p>HTML标签的子元素是通过’children’关键字参数指定的。按照惯例，这总是第一个参数，因此它经常被省略</p></li>
+</ol>
+<p>除此之外，所有可用的HTML属性和标记都可以在Python上下文中使用</p>
+<hr class="docutils" />
+</section>
+<section id="id2">
+<h2>滚动条库<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>通过用Python编写标记，我们可以创建复杂的可重用组件，如表，而无需切换上下文或语言</p>
+<p>下面是一个从Pandas数据框生成“Table”的快速示例。用下面的代码创建一个名为“<a class="reference external" href="http://app.py">app.py</a>”的文件</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://gist.githubusercontent.com/chriddyp/c78bf172206ce24f77d6363a2d754b59/raw/c353e8ef842413cae56ae3920b8fd78468aa4cb2/usa-agricultural-exports-2011.csv&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">generate_table</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">max_rows</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Table</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Thead</span><span class="p">(</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Th</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">])</span>
+        <span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Tbody</span><span class="p">([</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Tr</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Td</span><span class="p">(</span><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span>
+            <span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataframe</span><span class="p">),</span> <span class="n">max_rows</span><span class="p">))</span>
+        <span class="p">])</span>
+    <span class="p">])</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="s1">&#39;US Agriculture Exports (2011)&#39;</span><span class="p">),</span>
+    <span class="n">generate_table</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run this app with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">app.py</span></code> and</p>
+<p>visit <a class="reference external" href="http://127.0.0.1:8050/">http://127.0.0.1:8050/</a> in your web browser.</p>
+</section>
+<section id="id3">
+<h2>更多关于可视化<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>Dash核心组件模块(‘Dash.dcc’)包含一个名为’Graph’的组件</p>
+<p><code class="docutils literal notranslate"><span class="pre">Graph</span></code>使用开源的<a class="reference external" href="https://github.com/plotly/plotly.js">plotly.js</a> JavaScript图形库呈现交互式数据可视化。js支持超过35种图表类型，并以矢量质量的SVG和高性能的WebGL呈现图表
+<code class="docutils literal notranslate"><span class="pre">graph</span></code>组件中的’figure’参数与’<a class="reference external" href="http://Plotly.py">Plotly.py</a>’(Plotly的开源Python绘图库)使用的’figure’参数相同。请查看<a class="reference external" href="https://plotly.com/python">plot .py文档和图库</a>了解更多信息</p>
+<p>下面是一个从Pandas数据框创建散点图的示例。用下面的代码创建一个名为“<a class="reference external" href="http://app.py">app.py</a>”的文件</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://gist.githubusercontent.com/chriddyp/5d1ea79569ed194d432e56108a04d188/raw/a9f9e8076b837d541398e999dcbac2b2826a81f8/gdp-life-exp-2007.csv&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;gdp per capita&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;life expectancy&quot;</span><span class="p">,</span>
+                 <span class="n">size</span><span class="o">=</span><span class="s2">&quot;population&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;continent&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;country&quot;</span><span class="p">,</span>
+                 <span class="n">log_x</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size_max</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;life-exp-vs-gdp&#39;</span><span class="p">,</span>
+        <span class="n">figure</span><span class="o">=</span><span class="n">fig</span>
+    <span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>continentAsiaEuropeAfricaAmericasOceaniagdp per capitalife expectancy</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p><em>These graphs are interactive and responsive. <strong>Hover</strong> over points to see
+their values, <strong>click</strong> on legend items to toggle traces, <strong>click and drag</strong>
+to zoom, <strong>hold down shift, and click and drag</strong> to pan.</em></p>
+</section>
+<section id="markdown">
+<h2>Markdown<a class="headerlink" href="#markdown" title="Permalink to this heading">#</a></h2>
+<p>虽然Dash通过Dash HTML组件(‘Dash.HTML’)公开HTML，但用HTML编写副本可能会很繁琐。要编写文本块，您可以使用Dash核心组件(‘Dash.dcc’)中的’Markdown’组件。用下面的代码创建一个名为“<a class="reference external" href="http://app.py">app.py</a>”的文件</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">markdown_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">### Dash and Markdown</span>
+
+<span class="s1">Dash apps can be written in Markdown.</span>
+<span class="s1">Dash uses the [CommonMark](http://commonmark.org/)</span>
+<span class="s1">specification of Markdown.</span>
+<span class="s1">Check out their [60 Second Markdown Tutorial](http://commonmark.org/help/)</span>
+<span class="s1">if this is your first introduction to Markdown!</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">markdown_text</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Run this app with`python app.py` and
+# visit http://127.0.0.1:8050/ in your web browser.
+
+
+from dash import Dash, html, dcc
+</pre></div>
+</div>
+<blockquote>
+<div></div></blockquote>
+</section>
+<section id="dash-and-markdown">
+<h2>Dash and Markdown<a class="headerlink" href="#dash-and-markdown" title="Permalink to this heading">#</a></h2>
+<p>Dash apps can be written in Markdown. Dash uses the
+<a class="reference external" href="http://commonmark.org/">CommonMark</a> specification of Markdown. Check out
+their <a class="reference external" href="http://commonmark.org/help/">60 Second Markdown Tutorial</a> if this is
+your first introduction to Markdown!</p>
+</section>
+<section id="id4">
+<h2>核心组件<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Dash核心组件(‘Dash.dcc’)包括一组高级组件，如下拉菜单、图形、标记块等。
+与所有Dash组件一样，它们完全是声明式描述的。每个可配置的选项都可以作为组件的关键字参数使用。
+我们将在整个教程中看到许多这样的组件。你可以在[Dash Core components概览]中查看所有可用的组件。
+下面是一些可用的组件。用下面的代码创建一个名为“<a class="reference external" href="http://app.py">app.py</a>”的文件</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this app with `python app.py` and</span>
+<span class="c1"># visit http://127.0.0.1:8050/ in your web browser.</span>
+
+
+<span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Dropdown&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">([</span><span class="s1">&#39;New York City&#39;</span><span class="p">,</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">],</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Multi-Select Dropdown&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">([</span><span class="s1">&#39;New York City&#39;</span><span class="p">,</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">],</span>
+                     <span class="p">[</span><span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">],</span>
+                     <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Radio Items&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">([</span><span class="s1">&#39;New York City&#39;</span><span class="p">,</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">],</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">),</span>
+    <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;flex&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Checkboxes&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Checklist</span><span class="p">([</span><span class="s1">&#39;New York City&#39;</span><span class="p">,</span> <span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">],</span>
+                      <span class="p">[</span><span class="s1">&#39;Montréal&#39;</span><span class="p">,</span> <span class="s1">&#39;San Francisco&#39;</span><span class="p">]</span>
+        <span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Text Input&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;MTL&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Br</span><span class="p">(),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s1">&#39;Slider&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+            <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="nb">max</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+            <span class="n">marks</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Label </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)},</span>
+            <span class="n">value</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;flex&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;flex&#39;</span><span class="p">,</span> <span class="s1">&#39;flex-direction&#39;</span><span class="p">:</span> <span class="s1">&#39;row&#39;</span><span class="p">})</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dropdown</p>
+<p>Montréal</p>
+<p>×</p>
+<p>Multi-Select Dropdown</p>
+<p>×Montréal</p>
+<p>×San Francisco</p>
+<p>×</p>
+<p>Radio Items</p>
+<p>New York CityMontréalSan Francisco</p>
+<p>Checkboxes</p>
+<p>New York CityMontréalSan Francisco</p>
+<p>Text Input
+Slider</p>
+<p>Label 12345</p>
+</section>
+<section id="id5">
+<h2>帮助<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>Dash组件是声明性的:这些组件的每个可配置方面都在实例化期间作为关键字参数设置。
+在任何组件的Python控制台中调用’help’以了解有关组件及其可用参数的更多信息</p>
+<blockquote>
+<div><p>help(dcc.Dropdown)
+class Dropdown(dash.development.base_component.Component)
+|  A Dropdown component.
+|  Dropdown is an interactive dropdown element for selecting one or more
+|  items.
+|  The values and labels of the dropdown items are specified in the <code class="docutils literal notranslate"><span class="pre">options</span></code>
+|  property and the selected item(s) are specified with the <code class="docutils literal notranslate"><span class="pre">value</span></code> property.
+|
+|  Use a dropdown when you have many options (more than 5) or when you are
+|  constrained for space. Otherwise, you can use RadioItems or a Checklist,
+|  which have the benefit of showing the users all of the items at once.
+|
+|  Keyword arguments:
+|  - id (string; optional)
+|  - className (string; optional)
+|  - disabled (boolean; optional): If true, the option is disabled
+|  - multi (boolean; optional): If true, the user can select multiple values
+|  - options (list; optional)
+|  - placeholder (string; optional): The grey, default text shown when no option is selected
+|  - value (string | list; optional): The value of the input. If <code class="docutils literal notranslate"><span class="pre">multi</span></code> is false (the default)
+|  then value is just a string that corresponds to the values
+|  provided in the <code class="docutils literal notranslate"><span class="pre">options</span></code> property. If <code class="docutils literal notranslate"><span class="pre">multi</span></code> is true, then
+|  multiple values can be selected at once, and <code class="docutils literal notranslate"><span class="pre">value</span></code> is an
+|  array of items with values corresponding to those in the
+|  <code class="docutils literal notranslate"><span class="pre">options</span></code> prop.</p>
+</div></blockquote>
+</section>
+<section id="id6">
+<h2>摘要<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Dash应用的“布局”描述了应用的外观。“布局”是一个组件的层次树。
+Dash HTML组件(‘Dash.HTML’)为所有HTML标签提供类，关键字参数描述HTML属性，如’style’， ‘class’和’id’。Dash核心组件(‘Dash.dcc’)生成控件和图形等高级组件</p>
+<p>For reference, see:</p>
+<ul class="simple">
+<li><p><span class="xref myst">Dash Core Components overview</span></p></li>
+<li><p><span class="xref myst">Dash HTML Components overview</span></p></li>
+</ul>
+<p>Dash基础的下一部分将介绍如何使这些应用程序具有交互性</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/1基础"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dash 速览</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">基础回调</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-your-first-change">Making Your First Change</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#html">更多关于HTML组件的信息</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">滚动条库</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">更多关于可视化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markdown">Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-and-markdown">Dash and Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">核心组件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">帮助</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">摘要</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

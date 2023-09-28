@@ -1,0 +1,976 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>交互可视化 &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/1基础/2.2交互绘图与过滤';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="回调函数共享数据" href="2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html" />
+    <link rel="prev" title="基础回调" href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">p1 快速入门</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/0.%E5%AE%89%E8%A3%85.html">Dash 安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/1minimal-app.html">Dash App 案例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/2tutorial.html">Dash 速览</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p2 基础</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.0%E5%B8%83%E5%B1%80.html">布局</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html">基础回调</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">交互可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html">回调函数共享数据</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.0%E9%AB%98%E7%BA%A7%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0.html"> Advanced Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../2%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0/2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/1基础/2.2交互绘图与过滤.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/1基础/2.2交互绘图与过滤.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>交互可视化</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">更新悬停图形</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">通用交叉过滤配方</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">目前的限制</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>交互可视化<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p>Visualizations</p>
+<blockquote>
+<div><p>这是<span class="xref myst">Dash Fundamentals</span>的第三章。<span class="xref myst">上一章</span>介绍了基本的回调用法。下一章(/sharing-data-between-callbacks)描述了如何在回调之间共享数据。
+刚刚开始?确保&gt;[安装必要的依赖项](/install . conf)</p>
+</div></blockquote>
+<p>The Dash Core Components (<code class="docutils literal notranslate"><span class="pre">dash.dcc</span></code>) module includes a Graph component called
+<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>.
+Dash核心组件(<code class="docutils literal notranslate"><span class="pre">Dash.dcc</span></code>)模块包括一个名为<code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>的图形组件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dd.Graph</span></code>使用开源的<a class="reference external" href="https://github.com/plotly/plotly.js">plotly.js</a> JavaScript图形库呈现交互式数据可视化。
+js支持超过35种图表类型，并以矢量质量的SVG和高性能的WebGL呈现图表</p>
+<p><code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code>组件中的·<code class="docutils literal notranslate"><span class="pre">figure</span></code>参数与<code class="docutils literal notranslate"><span class="pre">plotly.py</span></code>中的·<code class="docutils literal notranslate"><span class="pre">figure</span></code>参数相同。
+请查看<a class="reference external" href="https://plotly.com/python">plot .py文档和图库</a>了解更多信息</p>
+<p>正如我们已经看到的，Dash组件是由一组属性描述的。这些属性中的任何一个都可以通过回调函数更新，但是只有这些属性的一个子集可以通过用户交互更新，比如在<code class="docutils literal notranslate"><span class="pre">dcc.Input</span></code>组件，
+下拉选择<code class="docutils literal notranslate"><span class="pre">dcc.Dropdown</span></code>组件.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dcc.Graph</span></code> 组件有四个属性可以通过用户交互改变:<code class="docutils literal notranslate"><span class="pre">hoverData</span></code>, <code class="docutils literal notranslate"><span class="pre">clickData</span></code>, <code class="docutils literal notranslate"><span class="pre">selectedData</span></code>, <code class="docutils literal notranslate"><span class="pre">relayoutData</span></code>。
+当您将鼠标悬停在点上、单击点或选择图中点的区域时，这些属性会更新</p>
+<p>为了获得最佳的用户交互和图表加载性能，生产中的Dash应用程序应该考虑Dash Enterprise的<a class="reference external" href="https://plotly.com/dash/job-queue/?utm_medium=dash_docs&amp;utm_content=interactive-graphing">Job Queue</a>、<a class="reference external" href="https://plotly.com/dash/big-data-for-python/?utm_medium=dash_docs&amp;utm_content=interactive-graphing">HPC</a>、
+<a class="reference external" href="https://plotly.com/dash/big-data-for-python/?utm_medium=dash_docs&amp;utm_content=interactive-graphing">Datashader</a>和水平扩展能力
+下面是一个将这些属性打印到屏幕上的简单示例</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="n">styles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;pre&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;border&#39;</span><span class="p">:</span> <span class="s1">&#39;thin lightgrey solid&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;overflowX&#39;</span><span class="p">:</span> <span class="s1">&#39;scroll&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+    <span class="s2">&quot;customdata&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+    <span class="s2">&quot;fruit&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;fruit&quot;</span><span class="p">,</span> <span class="n">custom_data</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;customdata&quot;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">clickmode</span><span class="o">=</span><span class="s1">&#39;event+select&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">marker_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;basic-interactions&#39;</span><span class="p">,</span>
+        <span class="n">figure</span><span class="o">=</span><span class="n">fig</span>
+    <span class="p">),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">className</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                **Hover Data**</span>
+
+<span class="s2">                Mouse over values in the graph.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;hover-data&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="s1">&#39;pre&#39;</span><span class="p">])</span>
+        <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s1">&#39;three columns&#39;</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                **Click Data**</span>
+
+<span class="s2">                Click on points in the graph.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;click-data&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="s1">&#39;pre&#39;</span><span class="p">]),</span>
+        <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s1">&#39;three columns&#39;</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                **Selection Data**</span>
+
+<span class="s2">                Choose the lasso or rectangle tool in the graph&#39;s menu</span>
+<span class="s2">                bar and then select points in the graph.</span>
+
+<span class="s2">                Note that if `layout.clickmode = &#39;event+select&#39;`, selection data also</span>
+<span class="s2">                accumulates (or un-accumulates) selected data if you hold down the shift</span>
+<span class="s2">                button while clicking.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;selected-data&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="s1">&#39;pre&#39;</span><span class="p">]),</span>
+        <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s1">&#39;three columns&#39;</span><span class="p">),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                **Zoom and Relayout Data**</span>
+
+<span class="s2">                Click and drag on the graph to zoom or click on the zoom</span>
+<span class="s2">                buttons in the graph&#39;s menu bar.</span>
+<span class="s2">                Clicking on legend items will also fire</span>
+<span class="s2">                this event.</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Pre</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;relayout-data&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="s1">&#39;pre&#39;</span><span class="p">]),</span>
+        <span class="p">],</span> <span class="n">className</span><span class="o">=</span><span class="s1">&#39;three columns&#39;</span><span class="p">)</span>
+    <span class="p">])</span>
+<span class="p">])</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;hover-data&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;basic-interactions&#39;</span><span class="p">,</span> <span class="s1">&#39;hoverData&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_hover_data</span><span class="p">(</span><span class="n">hoverData</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">hoverData</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;click-data&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;basic-interactions&#39;</span><span class="p">,</span> <span class="s1">&#39;clickData&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_click_data</span><span class="p">(</span><span class="n">clickData</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">clickData</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;selected-data&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;basic-interactions&#39;</span><span class="p">,</span> <span class="s1">&#39;selectedData&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_selected_data</span><span class="p">(</span><span class="n">selectedData</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">selectedData</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;relayout-data&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;basic-interactions&#39;</span><span class="p">,</span> <span class="s1">&#39;relayoutData&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">display_relayout_data</span><span class="p">(</span><span class="n">relayoutData</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">relayoutData</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>11.21.41.61.8211.522.533.54</p>
+<p>fruitappleorangexy</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p><strong>Hover Data</strong></p>
+<p>Mouse over values in the graph.</p>
+<p>​<br />
+null</p>
+<p><strong>Click Data</strong></p>
+<p>Click on points in the graph.</p>
+<p>​<br />
+null</p>
+<p><strong>Selection Data</strong></p>
+<p>Choose the lasso or rectangle tool in the graph’s menu bar and then select
+points in the graph.</p>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">layout.clickmode</span> <span class="pre">=</span> <span class="pre">'event+select'</span></code>, selection data also
+accumulates (or un-accumulates) selected data if you hold down the shift
+button while clicking.</p>
+<p>​<br />
+null</p>
+<p><strong>Zoom and Relayout Data</strong></p>
+<p>Click and drag on the graph to zoom or click on the zoom buttons in the
+graph’s menu bar. Clicking on legend items will also fire this event.</p>
+<p>​<br />
+{
+“autosize”: true
+}</p>
+<section id="id2">
+<h2>更新悬停图形<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>让我们通过更新时间序列来更新前一章的世界指标示例，当我们将鼠标悬停在散点图上时</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://plotly.github.io/datasets/country_indicators.csv&#39;</span><span class="p">)</span>
+
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                <span class="s1">&#39;Fertility rate, total (births per woman)&#39;</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-xaxis-column&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;Log&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-xaxis-type&#39;</span><span class="p">,</span>
+                <span class="n">labelStyle</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">,</span> <span class="s1">&#39;marginTop&#39;</span><span class="p">:</span> <span class="s1">&#39;5px&#39;</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+        <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;49%&#39;</span><span class="p">,</span> <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">}),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                <span class="s1">&#39;Life expectancy at birth, total (years)&#39;</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-yaxis-column&#39;</span>
+            <span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">RadioItems</span><span class="p">(</span>
+                <span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">,</span> <span class="s1">&#39;Log&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;Linear&#39;</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-yaxis-type&#39;</span><span class="p">,</span>
+                <span class="n">labelStyle</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">,</span> <span class="s1">&#39;marginTop&#39;</span><span class="p">:</span> <span class="s1">&#39;5px&#39;</span><span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;49%&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">})</span>
+    <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="s1">&#39;10px 5px&#39;</span>
+    <span class="p">}),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-indicator-scatter&#39;</span><span class="p">,</span>
+            <span class="n">hoverData</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;customdata&#39;</span><span class="p">:</span> <span class="s1">&#39;Japan&#39;</span><span class="p">}]}</span>
+        <span class="p">)</span>
+    <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;49%&#39;</span><span class="p">,</span> <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="s1">&#39;0 20&#39;</span><span class="p">}),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;x-time-series&#39;</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;y-time-series&#39;</span><span class="p">),</span>
+    <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;49%&#39;</span><span class="p">}),</span>
+
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+        <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;crossfilter-year--slider&#39;</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+        <span class="n">marks</span><span class="o">=</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()}</span>
+    <span class="p">),</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;49%&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">:</span> <span class="s1">&#39;0px 20px 20px 20px&#39;</span><span class="p">})</span>
+<span class="p">])</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;crossfilter-indicator-scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-xaxis-column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-yaxis-column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-xaxis-type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-yaxis-type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-year--slider&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">xaxis_column_name</span><span class="p">,</span> <span class="n">yaxis_column_name</span><span class="p">,</span>
+                 <span class="n">xaxis_type</span><span class="p">,</span> <span class="n">yaxis_type</span><span class="p">,</span>
+                 <span class="n">year_value</span><span class="p">):</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">year_value</span><span class="p">]</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">xaxis_column_name</span><span class="p">][</span><span class="s1">&#39;Value&#39;</span><span class="p">],</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">yaxis_column_name</span><span class="p">][</span><span class="s1">&#39;Value&#39;</span><span class="p">],</span>
+            <span class="n">hover_name</span><span class="o">=</span><span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">yaxis_column_name</span><span class="p">][</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">customdata</span><span class="o">=</span><span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">yaxis_column_name</span><span class="p">][</span><span class="s1">&#39;Country Name&#39;</span><span class="p">])</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">xaxis_column_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span> <span class="k">if</span> <span class="n">xaxis_type</span> <span class="o">==</span> <span class="s1">&#39;Linear&#39;</span> <span class="k">else</span> <span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">yaxis_column_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span> <span class="k">if</span> <span class="n">yaxis_type</span> <span class="o">==</span> <span class="s1">&#39;Linear&#39;</span> <span class="k">else</span> <span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">hovermode</span><span class="o">=</span><span class="s1">&#39;closest&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="k">def</span> <span class="nf">create_time_series</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">axis_type</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">showgrid</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span> <span class="k">if</span> <span class="n">axis_type</span> <span class="o">==</span> <span class="s1">&#39;Linear&#39;</span> <span class="k">else</span> <span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_annotation</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">xanchor</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">yanchor</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+                       <span class="n">xref</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">yref</span><span class="o">=</span><span class="s1">&#39;paper&#39;</span><span class="p">,</span> <span class="n">showarrow</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+                       <span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">225</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;x-time-series&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-indicator-scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;hoverData&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-xaxis-column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-xaxis-type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_x_timeseries</span><span class="p">(</span><span class="n">hoverData</span><span class="p">,</span> <span class="n">xaxis_column_name</span><span class="p">,</span> <span class="n">axis_type</span><span class="p">):</span>
+    <span class="n">country_name</span> <span class="o">=</span> <span class="n">hoverData</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;customdata&#39;</span><span class="p">]</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">country_name</span><span class="p">]</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">xaxis_column_name</span><span class="p">]</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;&lt;b&gt;</span><span class="si">{}</span><span class="s1">&lt;/b&gt;&lt;br&gt;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">country_name</span><span class="p">,</span> <span class="n">xaxis_column_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">create_time_series</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">axis_type</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+
+
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;y-time-series&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-indicator-scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;hoverData&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-yaxis-column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;crossfilter-yaxis-type&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">update_y_timeseries</span><span class="p">(</span><span class="n">hoverData</span><span class="p">,</span> <span class="n">yaxis_column_name</span><span class="p">,</span> <span class="n">axis_type</span><span class="p">):</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">hoverData</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;customdata&#39;</span><span class="p">]]</span>
+    <span class="n">dff</span> <span class="o">=</span> <span class="n">dff</span><span class="p">[</span><span class="n">dff</span><span class="p">[</span><span class="s1">&#39;Indicator Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">yaxis_column_name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">create_time_series</span><span class="p">(</span><span class="n">dff</span><span class="p">,</span> <span class="n">axis_type</span><span class="p">,</span> <span class="n">yaxis_column_name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Fertility rate, total (births per woman)</p>
+<p>×</p>
+<p>LinearLog</p>
+<p>Life expectancy at birth, total (years)</p>
+<p>×</p>
+<p>LinearLog</p>
+<p>2468455055606570758085</p>
+<p>Fertility rate, total (births per woman)Life expectancy at birth, total
+(years)</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>1960197019801990200020101.41.61.822.2</p>
+<p>YearValueJapanFertility rate, total (births per woman)</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>196019701980199020002010707580</p>
+<p>YearValueLife expectancy at birth, total (years)</p>
+<p><a class="reference external" href="https://plotly.com/"> plotly-logomark </a></p>
+<p>1962196719721977198219871992199720022007</p>
+<p>尝试将鼠标移动到左侧散点图中的点上。请注意，右边的线形图是如何根据悬停在其上的点进行更新的
+<strong>Sign up for Dash Club</strong> → Two free cheat sheets plus updates from Chris
+Parmer and Adam Schroeder delivered to your inbox every two months. Includes
+tips and tricks, community apps, and deep dives into the Dash architecture.
+<em><a class="reference external" href="https://go.plotly.com/dash-club?utm_medium=dash_docs&amp;utm_content=interactive-graphing">Join now</a></em>.</p>
+</section>
+<section id="id3">
+<h2>通用交叉过滤配方<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>下面是一个比较通用的跨六列数据集进行交叉过滤的示例。每个散点图的选择过滤底层数据集</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;https://codepen.io/chriddyp/pen/bWLwgP.css&quot;</span><span class="p">]</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
+
+<span class="c1"># make a sample data frame with 6 columns</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># no-display</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Col &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)})</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;g1&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;displayModeBar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}),</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;four columns&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;g2&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;displayModeBar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}),</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;four columns&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;g3&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;displayModeBar&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}),</span>
+            <span class="n">className</span><span class="o">=</span><span class="s2">&quot;four columns&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">className</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_figure</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x_col</span><span class="p">,</span> <span class="n">y_col</span><span class="p">,</span> <span class="n">selectedpoints</span><span class="p">,</span> <span class="n">selectedpoints_local</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">selectedpoints_local</span> <span class="ow">and</span> <span class="n">selectedpoints_local</span><span class="p">[</span><span class="s2">&quot;range&quot;</span><span class="p">]:</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="n">selectedpoints_local</span><span class="p">[</span><span class="s2">&quot;range&quot;</span><span class="p">]</span>
+        <span class="n">selection_bounds</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;x0&quot;</span><span class="p">:</span> <span class="n">ranges</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">ranges</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;y0&quot;</span><span class="p">:</span> <span class="n">ranges</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;y1&quot;</span><span class="p">:</span> <span class="n">ranges</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">selection_bounds</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;x0&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x_col</span><span class="p">]),</span>
+            <span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x_col</span><span class="p">]),</span>
+            <span class="s2">&quot;y0&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y_col</span><span class="p">]),</span>
+            <span class="s2">&quot;y1&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y_col</span><span class="p">]),</span>
+        <span class="p">}</span>
+
+    <span class="c1"># set which points are selected with the `selectedpoints` property</span>
+    <span class="c1"># and style those points with the `selected` and `unselected`</span>
+    <span class="c1"># attribute. see</span>
+    <span class="c1"># https://medium.com/@plotlygraphs/notes-from-the-latest-plotly-js-release-b035a5b43e21</span>
+    <span class="c1"># for an explanation</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">x_col</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">y_col</span><span class="p">],</span> <span class="n">text</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+        <span class="n">selectedpoints</span><span class="o">=</span><span class="n">selectedpoints</span><span class="p">,</span>
+        <span class="n">customdata</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;markers+text&quot;</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;rgba(0, 116, 217, 0.7)&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+        <span class="n">unselected</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;marker&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span>
+            <span class="s2">&quot;textfont&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;rgba(0, 0, 0, 0)&quot;</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">margin</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+        <span class="n">dragmode</span><span class="o">=</span><span class="s2">&quot;select&quot;</span><span class="p">,</span>
+        <span class="n">hovermode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">newselection_mode</span><span class="o">=</span><span class="s2">&quot;gradual&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_shape</span><span class="p">(</span>
+        <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;rect&quot;</span><span class="p">,</span> <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;dash&quot;</span><span class="p">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkgrey&quot;</span><span class="p">}},</span>
+            <span class="o">**</span><span class="n">selection_bounds</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="c1"># this callback defines 3 figures</span>
+<span class="c1"># as a function of the intersection of their 3 selections</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;g1&quot;</span><span class="p">,</span> <span class="s2">&quot;figure&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;g2&quot;</span><span class="p">,</span> <span class="s2">&quot;figure&quot;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;g3&quot;</span><span class="p">,</span> <span class="s2">&quot;figure&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;g1&quot;</span><span class="p">,</span> <span class="s2">&quot;selectedData&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;g2&quot;</span><span class="p">,</span> <span class="s2">&quot;selectedData&quot;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s2">&quot;g3&quot;</span><span class="p">,</span> <span class="s2">&quot;selectedData&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">selection1</span><span class="p">,</span> <span class="n">selection2</span><span class="p">,</span> <span class="n">selection3</span><span class="p">):</span>
+    <span class="n">selectedpoints</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
+    <span class="k">for</span> <span class="n">selected_data</span> <span class="ow">in</span> <span class="p">[</span><span class="n">selection1</span><span class="p">,</span> <span class="n">selection2</span><span class="p">,</span> <span class="n">selection3</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">selected_data</span> <span class="ow">and</span> <span class="n">selected_data</span><span class="p">[</span><span class="s2">&quot;points&quot;</span><span class="p">]:</span>
+            <span class="n">selectedpoints</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span>
+                <span class="n">selectedpoints</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;customdata&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="p">[</span><span class="s2">&quot;points&quot;</span><span class="p">]]</span>
+            <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">get_figure</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;Col 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Col 2&quot;</span><span class="p">,</span> <span class="n">selectedpoints</span><span class="p">,</span> <span class="n">selection1</span><span class="p">),</span>
+        <span class="n">get_figure</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;Col 3&quot;</span><span class="p">,</span> <span class="s2">&quot;Col 4&quot;</span><span class="p">,</span> <span class="n">selectedpoints</span><span class="p">,</span> <span class="n">selection2</span><span class="p">),</span>
+        <span class="n">get_figure</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">&quot;Col 5&quot;</span><span class="p">,</span> <span class="s2">&quot;Col 6&quot;</span><span class="p">,</span> <span class="n">selectedpoints</span><span class="p">,</span> <span class="n">selection3</span><span class="p">),</span>
+    <span class="p">]</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Dash Data Selection Example" src="assets/images/interactive-graphing/select.gif" /></p>
+<p>在每次选择时，使用每个绘图的最新选定区域触发三个图形回调。根据所选点对pandas数据框进行过滤，并重新绘制图形，其中突出显示所选点，并将所选区域绘制为虚线矩形</p>
+<blockquote>
+<div><p>顺便说一句，如果你发现自己在过滤和可视化高维数据集，你应该考虑查看 <a class="reference external" href="https://plotly.com/python/parallel-coordinates-plot/">parallel coordinates</a>图表类型</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="id4">
+<h2>目前的限制<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>目前在图形交互方面有一些限制</p>
+<ul class="simple">
+<li><p>目前无法自定义悬停交互或选择框的样式。这个问题正在&lt;<a class="github reference external" href="https://github.com/plotly/plotly.js/issues/1847">plotly/plotly.js#1847</a> &gt;中得到解决</p></li>
+</ul>
+<p>你可以用这些交互式绘图功能做很多事情。如果您需要帮助来探索您的用例，请在<a class="reference external" href="https://community.plotly.com/c/python/25">Dash社区论坛</a>中打开一个线程</p>
+<hr class="docutils" />
+<p>Dash基础的下一章将解释如何在回调之间共享数据。Dash基本原理第4部分在回调之间共享数据](Sharing - Data - Between -回调</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/1基础"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.1%E5%9F%BA%E7%A1%80%E5%9B%9E%E8%B0%83.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">基础回调</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.3%E5%9B%9E%E8%B0%83%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">回调函数共享数据</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">更新悬停图形</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">通用交叉过滤配方</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">目前的限制</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
