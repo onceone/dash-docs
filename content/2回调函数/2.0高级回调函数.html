@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Advanced Callbacks &#8212; My sample book</title>
+    <title>高级回调函数 &#8212; Dash 中文文档</title>
   
   
   
@@ -141,8 +141,8 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../_static/logo3.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo3.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
 </a></div>
@@ -152,7 +152,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../../intro.html">
-                    Welcome to your Jupyter Book
+                    Dash 中文文档
                 </a>
             </li>
         </ul>
@@ -171,7 +171,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">p3 回调函数</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"> Advanced Callbacks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"> 高级回调函数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.1%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E8%B0%83.html"> Clientside Callbacks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.2%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E5%9B%9E%E8%B0%83.html"> Pattern-Matching</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.3%E9%83%A8%E5%88%86%E5%B1%9E%E6%80%A7%E6%9B%B4%E6%96%B0.html"> Partial Property Updates</a></li>
@@ -358,7 +358,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1> Advanced Callbacks</h1>
+    <h1> 高级回调函数</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -369,9 +369,9 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-errors-with-dash-no-update">Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-no-update">使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>显示错误</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-for-callback-context">Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context"><code class="docutils literal notranslate"><span class="pre">callback_context</span></code>属性</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legacy-behavior-using-timestamps">Legacy Behavior: Using Timestamps</a></li>
 </ul>
 </li>
@@ -401,117 +401,103 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="advanced-callbacks">
-<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> Advanced Callbacks<a class="headerlink" href="#advanced-callbacks" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><img alt="" src="assets/images/language_icons/python_50px.svg" /> 高级回调函数<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <blockquote>
-<div><p>To get the most out of this page, make sure you’ve read about <span class="xref myst">Basic
-Callbacks</span> in the Dash Fundamentals.</p>
+<div><p>为了充分利用本页内容，请确保您已经阅读了Dash Fundamentals中的[Basic callback](/ Basic -callback)</p>
 </div></blockquote>
 <section id="catching-errors-with-preventupdate">
 <h2>Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code><a class="headerlink" href="#catching-errors-with-preventupdate" title="Permalink to this heading">#</a></h2>
-<p>In certain situations, you don’t want to update the callback output. You can
-achieve this by raising a <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code> exception in the callback function.</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, html, Input, Output, callback
-from dash.exceptions import PreventUpdate
+<p>在某些情况下，您不希望更新回调输出。你可以通过在回调函数中引发’ PreventUpdate ‘异常来实现这一点</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span>
+<span class="kn">from</span> <span class="nn">dash.exceptions</span> <span class="kn">import</span> <span class="n">PreventUpdate</span>
 
-external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
 
-app.layout = html.Div([
-    html.Button(&#39;Click here to see the content&#39;, id=&#39;show-secret&#39;),
-    html.Div(id=&#39;body-div&#39;)
-])
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Click here to see the content&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;show-secret&#39;</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;body-div&#39;</span><span class="p">)</span>
+<span class="p">])</span>
 
-@callback(
-    Output(&#39;body-div&#39;, &#39;children&#39;),
-    Input(&#39;show-secret&#39;, &#39;n_clicks&#39;)
-)
-def update_output(n_clicks):
-    if n_clicks is None:
-        raise PreventUpdate
-    else:
-        return &quot;Elephants are the only animal that can&#39;t jump&quot;
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;body-div&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;show-secret&#39;</span><span class="p">,</span> <span class="s1">&#39;n_clicks&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_output</span><span class="p">(</span><span class="n">n_clicks</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n_clicks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Elephants are the only animal that can&#39;t jump&quot;</span>
 
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Click here to see the content</p>
 </section>
-<section id="displaying-errors-with-dash-no-update">
-<h2>Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code><a class="headerlink" href="#displaying-errors-with-dash-no-update" title="Permalink to this heading">#</a></h2>
-<p>This example illustrates how you can show an error while keeping the previous
-input, using <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code> to update only some of the callback outputs.</p>
-<p>__</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> from dash import Dash, dcc, html, Input, Output, callback, no_update
-from dash.exceptions import PreventUpdate
+<section id="dash-no-update">
+<h2>使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>显示错误<a class="headerlink" href="#dash-no-update" title="Permalink to this heading">#</a></h2>
+<p>这个示例演示了如何在保持先前输入的同时显示错误，使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>只更新部分回调输出</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">no_update</span>
+<span class="kn">from</span> <span class="nn">dash.exceptions</span> <span class="kn">import</span> <span class="n">PreventUpdate</span>
 
-external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;]
+<span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;</span><span class="p">]</span>
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">external_stylesheets</span><span class="o">=</span><span class="n">external_stylesheets</span><span class="p">)</span>
 
-app.layout = html.Div([
-    html.P(&#39;Enter a composite number to see its prime factors&#39;),
-    dcc.Input(id=&#39;num&#39;, type=&#39;number&#39;, debounce=True, min=2, step=1),
-    html.P(id=&#39;err&#39;, style={&#39;color&#39;: &#39;red&#39;}),
-    html.P(id=&#39;out&#39;)
-])
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s1">&#39;Enter a composite number to see its prime factors&#39;</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;err&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">}),</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">)</span>
+<span class="p">])</span>
 
-@callback(
-    Output(&#39;out&#39;, &#39;children&#39;),
-    Output(&#39;err&#39;, &#39;children&#39;),
-    Input(&#39;num&#39;, &#39;value&#39;)
-)
-def show_factors(num):
-    if num is None:
-        # PreventUpdate prevents ALL outputs updating
-        raise PreventUpdate
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;err&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">show_factors</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># PreventUpdate prevents ALL outputs updating</span>
+        <span class="k">raise</span> <span class="n">PreventUpdate</span>
 
-    factors = prime_factors(num)
-    if len(factors) == 1:
-        # dash.no_update prevents any single output updating
-        # (note: it&#39;s OK to use for a single-output callback too)
-        return no_update, &#39;{} is prime!&#39;.format(num)
+    <span class="n">factors</span> <span class="o">=</span> <span class="n">prime_factors</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># dash.no_update prevents any single output updating</span>
+        <span class="c1"># (note: it&#39;s OK to use for a single-output callback too)</span>
+        <span class="k">return</span> <span class="n">no_update</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is prime!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
 
-    return &#39;{} is {}&#39;.format(num, &#39; * &#39;.join(str(n) for n in factors)), &#39;&#39;
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s1">&#39; * &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">)),</span> <span class="s1">&#39;&#39;</span>
 
-def prime_factors(num):
-    n, i, out = num, 2, []
-    while i * i &lt;= n:
-        if n % i == 0:
-            n = int(n / i)
-            out.append(i)
-        else:
-            i += 1 if i == 2 else 2
-    out.append(n)
-    return out
+<span class="k">def</span> <span class="nf">prime_factors</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">num</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">2</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
 
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True)
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Enter a composite number to see its prime factors</p>
 </section>
 <section id="determining-which-input-has-fired-with-dash-callback-context">
 <h2>Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code><a class="headerlink" href="#determining-which-input-has-fired-with-dash-callback-context" title="Permalink to this heading">#</a></h2>
-<p>In addition to event properties like <code class="docutils literal notranslate"><span class="pre">n_clicks</span></code> that change whenever an event
-happens (in this case a click), there is a global variable
-<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, available only inside a callback. Using
-<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, you can determine which component/property pairs
-triggered a callback.</p>
-<p>Below is a summary of properties of <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> outlining the
-basics of when to use them. For more detail and examples see <span class="xref myst">Determining
-Which Callback Input Changed</span>.</p>
-<p>For more examples of minimal Dash apps that use <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>, go to
-the community-driven [Example Index](https://dash-example-
-<a class="reference external" href="http://index.herokuapp.com/?code=ctx">index.herokuapp.com/?code=ctx</a>).</p>
-<section id="properties-for-callback-context">
-<h3>Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code><a class="headerlink" href="#properties-for-callback-context" title="Permalink to this heading">#</a></h3>
+<p>除了像<code class="docutils literal notranslate"><span class="pre">n_clicks</span></code>这样的事件属性会在事件发生时改变(在这里是点击)，还有一个全局变量<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>，只在回调中可用。使用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>，您可以确定哪个组件/属性对触发了回调</p>
+<p>下面是<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>的属性总结。概述了何时使用它们的基本知识。有关更多细节和示例，请参阅<span class="xref myst">Which Callback Input Changed</span></p>
+<p>更多关于是用<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code>的案例，请查阅<a class="reference external" href="https://dash-example-index.herokuapp.com/?code=ctx">Example Index</a>.</p>
+<section id="callback-context">
+<h3><code class="docutils literal notranslate"><span class="pre">callback_context</span></code>属性<a class="headerlink" href="#callback-context" title="Permalink to this heading">#</a></h3>
 <blockquote>
-<div><p>In Dash 2.4 and later, <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> (or <code class="docutils literal notranslate"><span class="pre">dash.ctx</span></code>) has three
-additional properties to make it easier to work with.</p>
+<div><p>在Dash 2.4及以后的版本中，<code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code> (or <code class="docutils literal notranslate"><span class="pre">dash.ctx</span></code>)有三个额外的属性，使其更容易使用</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">triggered_id</span></code>: The <code class="docutils literal notranslate"><span class="pre">id</span></code> of the component that triggered the callback.</p></li>
@@ -1135,9 +1121,9 @@ if __name__ == &quot;__main__&quot;:
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-errors-with-preventupdate">Catching Errors with <code class="docutils literal notranslate"><span class="pre">PreventUpdate</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-errors-with-dash-no-update">Displaying Errors with <code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dash-no-update">使用<code class="docutils literal notranslate"><span class="pre">dash.no_update</span></code>显示错误</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-which-input-has-fired-with-dash-callback-context">Determining which <code class="docutils literal notranslate"><span class="pre">Input</span></code> Has Fired with <code class="docutils literal notranslate"><span class="pre">dash.callback_context</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-for-callback-context">Properties for <code class="docutils literal notranslate"><span class="pre">callback_context</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#callback-context"><code class="docutils literal notranslate"><span class="pre">callback_context</span></code>属性</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legacy-behavior-using-timestamps">Legacy Behavior: Using Timestamps</a></li>
 </ul>
 </li>
@@ -1170,7 +1156,7 @@ if __name__ == &quot;__main__&quot;:
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By hutalk Community
 </p>
 
   </div>
